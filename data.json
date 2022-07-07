@@ -1,0 +1,49 @@
+{
+    "Pasajes": [
+        {
+            "fecha": "17\/08\/03",
+            "estado": "pendiente",
+            "vuelo": "AA2279",
+            "asiendo_nro": "AA2279-1"
+        }
+    ],
+    "Clientes": [
+        {
+            "numero_dni": 40807582,
+            "domicilio": "Eiffel 1715",
+            "numero_telefono": 2994647809,
+            "apellido": "Giuliano",
+            "fecha_nacimiento": "31\/12\/1997",
+            "tipo_dni": "DNI",
+            "nombre": "Dante"
+        }
+    ],
+    "Aeropuertos": [
+        {
+            "codigo": "NQN",
+            "telefono": "299-4792345",
+            "nombre": "Neuquen"
+        },
+        {
+            "codigo": "AEP",
+            "telefono": "299-4562087",
+            "nombre": "Aeroparque de la ciudad de buenos aires"
+        }
+    ],
+    "Vuelos": [
+        {
+            "hora_llegada": "21:00",
+            "codigo": "AA2279",
+            "Aeropuerto_destino": "AEP",
+            "hora_salida": "18:00",
+            "vuelos": [
+                {
+                    "fecha": "17\/08\/03",
+                    "cantidad_asientos_vendidos": 50,
+                    "cantidad_asientos_totales": 80
+                }
+            ],
+            "Aeropuerto_origen": "NQN"
+        }
+    ]
+}
