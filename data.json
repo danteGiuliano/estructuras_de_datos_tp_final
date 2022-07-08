@@ -9,9 +9,9 @@
     ],
     "Clientes": [
         {
-            "numero_dni": 40807582,
+            "numero_dni": "40807582",
             "domicilio": "Eiffel 1715",
-            "numero_telefono": 2994647809,
+            "numero_telefono": "2994647809",
             "apellido": "Giuliano",
             "fecha_nacimiento": "31\/12\/1997",
             "tipo_dni": "DNI",
@@ -34,9 +34,9 @@
         {
             "hora_llegada": "21:00",
             "codigo": "AA2279",
-            "Aeropuerto_destino": "AEP",
+            "aeropuerto_destino": "AEP",
             "hora_salida": "18:00",
-            "vuelos": [
+            "registro_vuelos": [
                 {
                     "fecha": "17\/08\/03",
                     "cantidad_asientos_vendidos": 50,

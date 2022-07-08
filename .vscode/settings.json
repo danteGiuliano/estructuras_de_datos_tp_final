@@ -1,6 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "Librerias/json-simple-1.1.1.jar"
+        "Librerias/json-simple-1.1.1.jar",
+        "ORM.java"
     ]
 }

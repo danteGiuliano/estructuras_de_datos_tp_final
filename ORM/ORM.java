@@ -1,23 +1,24 @@
+package ORM;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class CargarDatos {
+import Dominio.Cliente;
 
+public class ORM {
     /**
      *  
      * Algoritmo extra para leer/cargar/guardar informacion en el JSON
      * 
      */
-
-
 
     static String ruta = System.getProperty("user.dir") + "/data.json";
     static JSONParser parser = new JSONParser();
@@ -26,6 +27,8 @@ public class CargarDatos {
     static JSONArray aeropuertos;
     static JSONArray clientes;
     static JSONArray pasajes;
+
+    public ORM(){};
 
     static Scanner edat = new Scanner(System.in);
 
@@ -39,20 +42,10 @@ public class CargarDatos {
 
     }
 
-    public static void main(String[] args) {
-
-        System.out.println("Algoritmo para cargar informacion de data.json");
-        cargar_info();
-       // mostrar_consola(aeropuertos);
-       // mostrar_consola(clientes);
-        
-    }
-
+  
     public static void cargar_info() {
         try {
             leer_json();
-            cargar_cliente();
-            cargar_Aeropuerto();
         } 
         catch (FileNotFoundException f) {}
         catch (IOException e) {System.err.println("Archivo no existe");} 
@@ -90,33 +83,9 @@ public class CargarDatos {
 
     }
 
-    public static void cargar_cliente(){
+    public static void cargar_cliente(String nombre,String apellido,String tipo_dni,String numero_dni,String 
+        domicilio,String fecha_nacimiento,String numero_documento,String telefono){
 
-        String nombre,numero_documento,tipo_dni,apellido,domicilio,telefono,fecha_nacimiento;
-
-
-        System.out.println("ingrese un nombre");
-        nombre=edat.next();
-        System.out.println("ingrese un apellido");
-        apellido=edat.next();
-        System.out.println("Ingrese un numero de documento");
-        numero_documento=edat.next();
-        System.out.println("Ingrese un tipo de documento");
-        tipo_dni=edat.next();
-        System.out.println("ingrese un domicilio");
-        domicilio=edat.next();
-        System.out.println("ingrese un telefono");
-        telefono=edat.next();
-        System.out.println("ingrese una fecha dd/mm/aaaa");
-        fecha_nacimiento=edat.next();
-
-        System.out.println("Su informacion es: \n"+
-                            " Nombre: "+nombre+"\n Apellido: "+apellido+
-                            "\n Tipo DNI: "+tipo_dni+"\n Nro DNI: "+numero_documento+
-                            "\n Domicilio: "+domicilio+"\n Telefono: "+telefono);
-
-        System.out.println("Desea aceptarla? true/false");
-        if(edat.nextBoolean()){
             JSONObject cliente = new JSONObject();
             cliente.put("nombre", nombre);
             cliente.put("apellido",apellido);
@@ -128,19 +97,9 @@ public class CargarDatos {
 
             clientes.add(cliente);
             guardar_info();
-
-        }else{
-            System.out.println("Informacion rechazada");
-        }
-
     }
 
-    public static void menu_carga(){
-        System.out.println("ingrese alguna opcion de carga");
-
-    }
-
-    public static void cargar_Aeropuerto(){
+    public static void cargar_aeropuerto(){
         String nombre,codigo,telefono;
 
         System.out.println("ingrese el nombre de aeropuerto");
@@ -169,7 +128,6 @@ public class CargarDatos {
 
     }
 
-
     private static void guardar_info(){
         try{
             FileWriter fr= new FileWriter(ruta);
@@ -180,4 +138,38 @@ public class CargarDatos {
         catch (FileNotFoundException f) {}
         catch (IOException e) {System.err.println("Archivo no existe");}
     }
+
+    public static ArrayList<Cliente> get_clientes(){
+
+        verifica_carga();
+
+        ArrayList<Cliente> clientes_cliente = new ArrayList<Cliente>();
+        
+        clientes.forEach(e->{
+
+            JSONObject elemento=(JSONObject)e;
+            String nombre,apellido,tipo_dni,numero_dni,domicilio,fecha_nacimiento,telefono;
+
+            nombre=(String) elemento.get("nombre");
+            apellido=(String)elemento.get("apellido");
+            tipo_dni=(String)elemento.get("tipo_dni");
+            numero_dni=(String)elemento.get("numero_dni");
+            domicilio=(String)elemento.get("domicilio");
+            telefono=(String)elemento.get("telefono");
+            fecha_nacimiento=(String)elemento.get("fecha_nacimiento");
+
+           Cliente cliente = new Cliente(numero_dni, nombre, apellido, tipo_dni,telefono, domicilio, fecha_nacimiento);
+           clientes_cliente.add(cliente);
+        });
+
+        return clientes_cliente;
+    }
+
+
+    private static void verifica_carga(){
+        if(clientes==null||vuelos==null||pasajes==null||aeropuertos==null){
+            cargar_info();
+        }
+    }
 }
+

@@ -1,12 +1,12 @@
-package dominio;
+package Dominio;
 
 public class Cliente {
-    int numero_dni;
-    String nombre, apellido, tipo_dni, numero_telefono, domicilio, fecha_nacimiento;
+    String numero_dni,nombre, apellido, tipo_dni, numero_telefono, domicilio, fecha_nacimiento;
     
     
-    public Cliente(int numero_dni, String nombre, String apellido, String tipo_dni, String numero_telefono,
-            String domicilio, String fecha_nacimiento) {
+    public Cliente(String numero_dni, String nombre, String apellido, String tipo_dni, String numero_telefono,
+                String domicilio, String fecha_nacimiento) {
+                
         this.numero_dni = numero_dni;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -16,11 +16,11 @@ public class Cliente {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public int get_numero_dni() {
+    public String get_numero_dni() {
         return numero_dni;
     }
 
-    public void set_numero_dni(int numero_dni) {
+    public void set_numero_dni(String numero_dni) {
         this.numero_dni = numero_dni;
     }
 
@@ -72,5 +72,9 @@ public class Cliente {
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
+    public String[] print(){
+        return new String[]{this.nombre,this.apellido,this.domicilio,this.fecha_nacimiento,this.tipo_dni,this.numero_dni+""};
+
+    }
 
 }

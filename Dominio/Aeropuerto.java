@@ -1,10 +1,10 @@
-package dominio;
+package Dominio;
 
 public class Aeropuerto {
     
-    String codigo;
-    String telefono;
-    String nombre;
+    private String codigo;
+    private String telefono;
+    private String nombre;
     
     public Aeropuerto(String codigo, String telefono, String nombre) {
         this.codigo = codigo;
