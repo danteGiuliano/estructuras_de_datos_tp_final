@@ -6,18 +6,22 @@ public class NodoAVL {
     private NodoAVL derecho;
     private int altura;
     
-    public NodoAVL(Comparable argElemento, NodoAVL argNodoIzquierdo, NodoAVL argNodoDerecho){
-        this.elemento = argElemento;
-        this.izquirdo = argNodoIzquierdo;
-        this.derecho = argNodoDerecho;
+    public NodoAVL(Comparable elemento, NodoAVL nodo_izquierdo, NodoAVL nodo_derecho){
+        this.elemento = elemento;
+        this.izquirdo = nodo_izquierdo;
+        this.derecho = nodo_derecho;
         this.altura = 0;
     }
-    public NodoAVL() {
+    public NodoAVL(Comparable elemento) {
+        this.derecho=null;
+        this.izquirdo=null;
+        this.elemento=elemento;
+        this.altura=0;
 
     }
     
-    public void set_elemento(Comparable argElemento){
-        this.elemento = argElemento;
+    public void set_elemento(Comparable elemento){
+        this.elemento = elemento;
     }
     
     public Comparable get_elemento(){
@@ -27,16 +31,16 @@ public class NodoAVL {
     public int get_altura(){
         return this.altura;
     }
-    public void set_izquierdo(NodoAVL argNodoIzquierdo){
-        this.izquirdo = argNodoIzquierdo;
+    public void set_izquierdo(NodoAVL nodo_izquierdo){
+        this.izquirdo = nodo_izquierdo;
     }
     
     public NodoAVL get_izquierdo(){
         return this.izquirdo;
     }
     
-    public void set_derecho(NodoAVL argNodoDerecho){
-        this.derecho = argNodoDerecho;
+    public void set_derecho(NodoAVL nodo_derecho){
+        this.derecho = nodo_derecho;
     }
     
     public NodoAVL get_derecho(){

@@ -8,10 +8,10 @@ public class Pasaje {
     
 
     public Pasaje(String vuelo,String fecha,String asiento_nro,String estado){
-        this.fecha=fecha;
-        this.estado=estado;
-        this.vuelo=vuelo;
-        this.asiento_nro=asiento_nro;
+        this.fecha          =   fecha;
+        this.estado         =   estado;
+        this.vuelo          =   vuelo;
+        this.asiento_nro    =   asiento_nro;
     }
 
     public String get_fecha(){

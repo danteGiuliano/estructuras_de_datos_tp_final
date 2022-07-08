@@ -7,9 +7,9 @@ public class Aeropuerto {
     private String nombre;
     
     public Aeropuerto(String codigo, String telefono, String nombre) {
-        this.codigo = codigo;
-        this.telefono = telefono;
-        this.nombre = nombre;
+        this.codigo     = codigo;
+        this.telefono   = telefono;
+        this.nombre     = nombre;
     }
     
     public String get_codigo() {

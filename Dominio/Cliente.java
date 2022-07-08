@@ -7,13 +7,13 @@ public class Cliente {
     public Cliente(String numero_dni, String nombre, String apellido, String tipo_dni, String numero_telefono,
                 String domicilio, String fecha_nacimiento) {
                 
-        this.numero_dni = numero_dni;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.tipo_dni = tipo_dni;
-        this.numero_telefono = numero_telefono;
-        this.domicilio = domicilio;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.numero_dni          =   numero_dni;
+        this.nombre              =   nombre;
+        this.apellido            =   apellido;
+        this.tipo_dni            =   tipo_dni;
+        this.numero_telefono     =   numero_telefono;
+        this.domicilio           =   domicilio;
+        this.fecha_nacimiento    =   fecha_nacimiento;
     }
 
     public String get_numero_dni() {
@@ -70,11 +70,6 @@ public class Cliente {
 
     public void set_fecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
-    }
-
-    public String[] print(){
-        return new String[]{this.nombre,this.apellido,this.domicilio,this.fecha_nacimiento,this.tipo_dni,this.numero_dni+""};
-
     }
 
 }

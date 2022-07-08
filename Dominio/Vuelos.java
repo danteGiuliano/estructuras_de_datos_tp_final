@@ -3,20 +3,21 @@ package Dominio;
 import java.lang.reflect.Array;
 
 public class Vuelos {
-   
-     private String hora_llegada;
-     private String codigo;
-     private String aeropuerto_destino;
-     private String hora_salida;
-     private Array registro_vuelos;
-     
+
+    private String hora_llegada;
+    private String codigo;
+    private String aeropuerto_destino;
+    private String hora_salida;
+    private Array registro_vuelos;
+
     public Vuelos(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida,
             Array registro_vuelos) {
-        this.hora_llegada = hora_llegada;
-        this.codigo = codigo;
-        this.aeropuerto_destino = aeropuerto_destino;
-        this.hora_salida = hora_salida;
-        this.registro_vuelos = registro_vuelos;
+
+            this.hora_llegada            =   hora_llegada;
+            this.codigo                  =   codigo;
+            this.aeropuerto_destino      =   aeropuerto_destino;
+            this.hora_salida             =   hora_salida;
+            this.registro_vuelos         =   registro_vuelos;
     }
 
     public String get_hora_llegada() {
