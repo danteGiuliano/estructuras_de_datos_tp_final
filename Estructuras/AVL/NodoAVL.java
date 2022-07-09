@@ -17,8 +17,8 @@ public class NodoAVL {
         this.izquirdo=null;
         this.elemento=elemento;
         this.altura=0;
-
     }
+    
     
     public void set_elemento(Comparable elemento){
         this.elemento = elemento;
@@ -48,7 +48,6 @@ public class NodoAVL {
     }
     
     /**
-     * 
      * una vez balanceado los nodos, se debe recalcular la altura
      * 
      */

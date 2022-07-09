@@ -48,7 +48,7 @@ public class ORM {
             leer_json();
         } 
         catch (FileNotFoundException f) {}
-        catch (IOException e) {System.err.println("Archivo no existe");} 
+        catch (IOException e) {System.err.println("El archivo no existe");} 
         catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
 
     }
