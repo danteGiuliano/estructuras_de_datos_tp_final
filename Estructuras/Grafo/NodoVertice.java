@@ -15,29 +15,40 @@ public class NodoVertice {
     public NodoVertice(Object elemento){
         this.elememento=elemento;
     }
+     public NodoVertice(Object elemento,NodoVertice siguiente_vertice){
+        this.siguiente_vertice=siguiente_vertice;
+        this.elememento=elemento;
+    }
 
-    public Object getElememento() {
+    public Object get_elememento() {
         return elememento;
     }
 
-    public void setElememento(Object elememento) {
+    public void set_elememento(Object elememento) {
         this.elememento = elememento;
     }
 
-    public NodoVertice getSiguiente_vertice() {
+    public NodoVertice get_siguiente_vertice() {
         return siguiente_vertice;
     }
 
-    public void setSiguiente_vertice(NodoVertice siguiente_vertice) {
+    public void set_siguiente_vertice(NodoVertice siguiente_vertice) {
         this.siguiente_vertice = siguiente_vertice;
     }
 
-    public NodoAdyacente getPrimer_nodo() {
+    public NodoAdyacente get_primer_nodo() {
         return primer_nodo;
     }
 
-    public void setPrimer_nodo(NodoAdyacente primer_nodo) {
+    public void set_primer_nodo(NodoAdyacente primer_nodo) {
         this.primer_nodo = primer_nodo;
     }
-    
+    @Override
+    public boolean equals(Object obj) {
+        return elememento.equals(obj);
+    }
+    @Override
+    public String toString() {
+        return this.elememento.toString();
+    }
 }

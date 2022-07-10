@@ -1,16 +1,34 @@
 package Estructuras.Grafo;
 
-public class NodoAdyacente {
+
+class NodoAdyacente {
     private Object etiqueta;
+    
+    
     private NodoVertice vertice;
     private NodoAdyacente nodoAdyacente;
     
+    public NodoAdyacente(NodoVertice vertice) {
+        this.vertice = vertice;
+    }
+    
+     public NodoAdyacente(NodoVertice vertice,Object etiqueta) {
+        this.vertice = vertice;
+        this.etiqueta=etiqueta;
+    }
     public NodoAdyacente(Object etiqueta, NodoVertice vertice, NodoAdyacente nodoAdyacente) {
         this.etiqueta = etiqueta;
         this.vertice = vertice;
         this.nodoAdyacente = nodoAdyacente;
     }
+    
+    public Object get_etiqueta() {
+        return etiqueta;
+    }
 
+    public void set_etiqueta(Object etiqueta) {
+        this.etiqueta = etiqueta;
+    }
     public NodoVertice get_vertice() {
         return vertice;
     }
@@ -26,6 +44,6 @@ public class NodoAdyacente {
     public void set_nodo_adyacente(NodoAdyacente nodoAdyacente) {
         this.nodoAdyacente = nodoAdyacente;
     }
-    
+
     
 }

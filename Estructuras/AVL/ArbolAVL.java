@@ -74,7 +74,7 @@ public class ArbolAVL {
      * 
      * @param raiz Nodo AVL
      */
-
+    
     private void balancear_arbol(NodoAVL raiz) {
 
         int balance = obtener_balance(raiz);
@@ -96,7 +96,6 @@ public class ArbolAVL {
             } else {
                 rotar_derecha(raiz);
             }
-
         }
     }
 

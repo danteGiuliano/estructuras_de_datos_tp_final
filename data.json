@@ -28,6 +28,46 @@
             "codigo": "AEP",
             "telefono": "299-4562087",
             "nombre": "Aeroparque de la ciudad de buenos aires"
+        },
+        {
+            "codigo": "CBA",
+            "telefono": "299-4562087",
+            "nombre": "Aeroparque de Cordoba"
+        },
+        {
+            "codigo": "ACS",
+            "telefono": "299-4563327",
+            "nombre": "Aeroparque Costa Sur"
+        },
+        {
+            "codigo": "APV",
+            "telefono": "299-4533322",
+            "nombre": "Aeroparque Patriota de la Victoria"
+        },
+        {
+            "codigo": "NDM",
+            "telefono": "299-4533119",
+            "nombre": "Nacion de Mexico"
+        },
+        {
+            "codigo": "AMB",
+            "telefono": "299-4533119",
+            "nombre": "Aerodronomo Microcentro de Bahia"
+        },
+        {
+            "codigo": "ANJ",
+            "telefono": "299-422119",
+            "nombre": "Aerodronomo Nacional de Junin"
+        },
+        {
+            "codigo": "ETC",
+            "telefono": "299-2133119",
+            "nombre": "Estado de Tucuman"
+        },
+        {
+            "codigo": "SJM",
+            "telefono": "299-2917419",
+            "nombre": "San Juan Microcentro"
         }
     ],
     "Vuelos": [
@@ -44,6 +84,83 @@
                 }
             ],
             "Aeropuerto_origen": "NQN"
+        }
+    ],
+    "Rutas": [
+        {
+            "x": "NQN",
+            "y": "AEP",
+            "hora": "4000"
+        },
+        {
+            "x": "NQN",
+            "y": "ACS",
+            "hora": "2000"
+        },
+        {
+            "x": "NQN",
+            "y": "APV",
+            "hora": "2000"
+        },
+        {
+            "x": "NQN",
+            "y": "CBA",
+            "hora": "1000"
+        },
+        {
+            "x": "ACS",
+            "y": "AEP",
+            "hora": "1000"
+        },
+        {
+            "x": "ANJ",
+            "y": "ETC",
+            "hora": "2000"
+        },
+        {
+            "x": "ANJ",
+            "y": "AEP",
+            "hora": "5000"
+        },
+        {
+            "x": "ANJ",
+            "y": "NDM",
+            "hora": "4000"
+        },
+        {
+            "x": "ETC",
+            "y": "NDM",
+            "hora": "3000"
+        },
+        {
+            "x": "ANJ",
+            "y": "SJM",
+            "hora": "2000"
+        },
+        {
+            "x": "NDM",
+            "y": "SJM",
+            "hora": "3000"
+        },
+        {
+            "x": "AMB",
+            "y": "SJM",
+            "hora": "1000"
+        },
+        {
+            "x": "ACS",
+            "y": "NDM",
+            "hora": "4000"
+        },
+        {
+            "x": "CBA",
+            "y": "NDM",
+            "hora": "3000"
+        },
+        {
+            "x": "NDM",
+            "y": "APV",
+            "hora": "6000"
         }
     ]
 }

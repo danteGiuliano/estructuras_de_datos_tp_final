@@ -30,5 +30,10 @@ public class Aeropuerto {
     public void set_nombre(String nombre) {
         this.nombre = nombre;
     }
-    
+    public String toString(){
+        return this.codigo;
+    }
+    public boolean equals(Object aeropuerto) {
+       return this.codigo.equals(aeropuerto.toString());
+    }
 }

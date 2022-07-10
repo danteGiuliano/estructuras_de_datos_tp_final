@@ -11,7 +11,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import Dominio.Aeropuerto;
 import Dominio.Cliente;
+import Estructuras.Grafo.Grafo;
 
 public class ORM {
     /**
@@ -24,9 +26,10 @@ public class ORM {
     static JSONParser parser = new JSONParser();
     static JSONObject data;
     static JSONArray vuelos;
-    static JSONArray aeropuertos;
     static JSONArray clientes;
     static JSONArray pasajes;
+    static JSONArray rutas;
+    static JSONArray aeropuertos;
 
     public ORM(){};
 
@@ -39,7 +42,16 @@ public class ORM {
         aeropuertos  =        (JSONArray) data.get("Aeropuertos");
         clientes     =        (JSONArray) data.get("Clientes");
         pasajes      =        (JSONArray) data.get("Pasajes");
+        rutas        =        (JSONArray) data.get("Rutas");
+    }
 
+
+    public static void main(String[] args) {
+        System.out.println("Mostrar cargas");
+        verifica_carga();
+        mostrar_consola(vuelos);
+        mostrar_consola(aeropuertos);
+        mostrar_consola(rutas);
     }
 
   
@@ -77,10 +89,6 @@ public class ORM {
             codigo_elegido=codigoEmpresas[opcion_elegida];
         }   
        
-     
-        
-        
-
     }
 
     public static void cargar_cliente(String nombre,String apellido,String tipo_dni,String numero_dni,String 
@@ -167,9 +175,54 @@ public class ORM {
 
 
     private static void verifica_carga(){
-        if(clientes==null||vuelos==null||pasajes==null||aeropuertos==null){
+        if(clientes==null||vuelos==null||pasajes==null||aeropuertos==null||rutas==null){
             cargar_info();
         }
     }
+
+    public static Grafo get_aeropuertos(){
+        Grafo mapa_aeroportuario = new Grafo();
+
+        verifica_carga();
+        
+        aeropuertos.forEach( e -> {
+
+            /**
+             *  {
+             *   "codigo": "NQN",
+             *   "telefono": "299-4792345",
+             *   "nombre": "Neuquen"
+             *  }
+             */
+            JSONObject elemento = (JSONObject) e;
+            
+            String codigo   =(String) elemento.get("codigo");
+            String telefono =(String) elemento.get("telefono");
+            String nombre   =(String)elemento.get("nombre");
+
+            Aeropuerto aeropuerto = new Aeropuerto(codigo,telefono ,nombre);
+            
+             if(!mapa_aeroportuario.insertar_vertice(aeropuerto)){
+                 System.out.println("ERROR EN LA CARGA DE "+aeropuerto.toString()+" "+aeropuerto.get_nombre());
+            }
+        });
+        
+   rutas.forEach(e ->{
+
+            JSONObject elemento = (JSONObject)e;
+
+            String aeropuerto_a = (String) elemento.get("x");
+            String aeropuerto_b = (String) elemento.get("y");
+            String etiqueta = (String) elemento.get("hora");
+
+            if(!mapa_aeroportuario.insertar_arco(aeropuerto_a, aeropuerto_b, etiqueta)){
+                System.out.println("Error en la carga Ruta "+aeropuerto_a +"-"+aeropuerto_b+"-"+etiqueta);
+            }
+        }); 
+        
+        return mapa_aeroportuario;
+        
+    }
+
 }
 
