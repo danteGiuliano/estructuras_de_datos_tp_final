@@ -14,6 +14,8 @@ public class NodoVertice {
 
     public NodoVertice(Object elemento){
         this.elememento=elemento;
+        this.siguiente_vertice=null;
+        this.primer_nodo=null;
     }
      public NodoVertice(Object elemento,NodoVertice siguiente_vertice){
         this.siguiente_vertice=siguiente_vertice;

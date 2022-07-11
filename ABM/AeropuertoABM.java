@@ -12,6 +12,8 @@ public class AeropuertoABM{
         cargar_mapa();
         System.out.println("Mostrar aeropuertos");
         System.out.println(mapa_aeroportuario.toString());
+        mapa_aeroportuario.eliminar_vertice("ETC");
+        System.out.println(mapa_aeroportuario.toString());
 
     }
     private static void cargar_mapa(){

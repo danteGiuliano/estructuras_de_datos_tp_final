@@ -10,11 +10,18 @@ class NodoAdyacente {
     
     public NodoAdyacente(NodoVertice vertice) {
         this.vertice = vertice;
+        this.nodoAdyacente=null;
     }
     
      public NodoAdyacente(NodoVertice vertice,Object etiqueta) {
         this.vertice = vertice;
         this.etiqueta=etiqueta;
+        this.nodoAdyacente=null;
+    }
+    public NodoAdyacente(NodoVertice vertice,NodoAdyacente etiqueta) {
+        this.vertice = vertice;
+        this.etiqueta=etiqueta;
+        this.nodoAdyacente=null;
     }
     public NodoAdyacente(Object etiqueta, NodoVertice vertice, NodoAdyacente nodoAdyacente) {
         this.etiqueta = etiqueta;
