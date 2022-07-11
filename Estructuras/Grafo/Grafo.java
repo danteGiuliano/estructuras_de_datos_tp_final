@@ -8,16 +8,6 @@ public class Grafo {
         this.inicio = null;
     }
 
-    public boolean insertar_vertice(Object elemento) {
-        boolean insercion = false;
-        NodoVertice repetido = buscar_nodo(elemento);
-        if (repetido == null) {
-            this.inicio = new NodoVertice(elemento, this.inicio);
-            insercion = true;
-        }
-        return insercion;
-    }
-
     public boolean eliminar_vertice(Object elemento) {
         boolean borrado = false;
         NodoVertice enlace = buscar_enlace(elemento);
@@ -66,6 +56,16 @@ public class Grafo {
         return ultimo;
     }
 
+    public boolean insertar_vertice(Object elemento) {
+        boolean insercion = false;
+        NodoVertice repetido = buscar_nodo(elemento);
+        if (repetido == null) {
+            this.inicio = new NodoVertice(elemento, this.inicio);
+            insercion = true;
+        }
+        return insercion;
+    }
+
     /**
      * Busca si existe el Nodo Vertice en mi grafo
      * 
@@ -85,10 +85,10 @@ public class Grafo {
     public boolean insertar_arco(Object vertice_x, Object vertice_y, Object etiqueta) {
         boolean insercion = false;
 
-        NodoVertice nodo_x = buscar_nodo(vertice_x); 
+        NodoVertice nodo_x = buscar_nodo(vertice_x);
         NodoVertice nodo_y = buscar_nodo(vertice_y);
 
-        if (nodo_x != null && nodo_y != null) { 
+        if (nodo_x != null && nodo_y != null) {
 
             if (nodo_x.get_primer_nodo() != null) {
                 nodo_x.set_primer_nodo(new NodoAdyacente(etiqueta, nodo_y, nodo_x.get_primer_nodo()));
@@ -100,7 +100,7 @@ public class Grafo {
             } else {
                 nodo_y.set_primer_nodo(new NodoAdyacente(nodo_x, etiqueta));
             }
-            insercion=true;
+            insercion = true;
         }
         return insercion;
 
@@ -140,26 +140,53 @@ public class Grafo {
         return borrado;
     }
 
-    /**
-     * 
-     * Busca el ultimo nodo adyacente de un nodo vertice Orden O(n)
-     * 
-     * @param nodo
-     * @return null o ultimo nodo adyacente
-     */
-
-    private NodoAdyacente ultimo_adyacente(NodoVertice nodo) {
-
-        NodoAdyacente ultimo = nodo.get_primer_nodo();
-        boolean es_ultimo = false;
-        while (ultimo != null && !es_ultimo) {
-            if (ultimo.get_nodo_adyacente() == null) {
-                es_ultimo = true;
+    public boolean existe_vertice(Object elemento) {
+        boolean existe = false;
+        NodoVertice recorrido = this.inicio;
+        while (recorrido != null && !existe) {
+            if (recorrido.get_elememento().equals(elemento)) {
+                existe = true;
             } else {
-                ultimo = ultimo.get_nodo_adyacente();
+                recorrido = recorrido.get_siguiente_vertice();
             }
         }
-        return ultimo;
+        return existe;
+    }
+
+    public boolean existe_arco(Object elemento_x, Object elemento_y) {
+        NodoVertice recorrido = this.inicio;
+        NodoAdyacente candidado = null;
+        Object busqueda = null;
+        boolean existe = false, existe_arco = false;
+
+        while (recorrido != null & !existe_arco) {
+            if (recorrido.get_elememento().equals(elemento_x)) {
+                busqueda = elemento_y;
+                existe_arco = true;
+            }
+            if (recorrido.get_elememento().equals(elemento_y)) {
+                busqueda = elemento_x;
+                existe_arco = true;
+            }
+            if (existe_arco) {
+                candidado = recorrido.get_primer_nodo();
+            }
+            recorrido = recorrido.get_siguiente_vertice();
+
+        }
+        if (existe_arco) {
+            while (candidado != null && !existe) {
+
+                if (candidado.get_vertice().equals(busqueda)) {
+                    existe = true;
+                } else {
+                    candidado = candidado.get_nodo_adyacente();
+                }
+
+            }
+        }
+
+        return existe;
     }
 
     /**

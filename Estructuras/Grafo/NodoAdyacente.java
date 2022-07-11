@@ -2,9 +2,8 @@ package Estructuras.Grafo;
 
 
 class NodoAdyacente {
+    
     private Object etiqueta;
-    
-    
     private NodoVertice vertice;
     private NodoAdyacente nodoAdyacente;
     
