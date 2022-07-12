@@ -1,5 +1,7 @@
 package Estructuras.Grafo;
 
+import Dominio.Aeropuerto;
+
 public class Grafo {
 
     private NodoVertice inicio;
@@ -189,14 +191,17 @@ public class Grafo {
         return existe;
     }
 
+    public Object extraer_vertice(Object tipo){
+        return buscar_nodo(tipo).get_elememento();
+    }
+
+
+
     /**
      * Metodo de debug
      * 
      * Orden O(n²)
-     * 
-     * 
      */
-
     public String toString() {
         String salida = "";
 
@@ -223,5 +228,6 @@ public class Grafo {
 
         return salida;
     }
+
 
 }

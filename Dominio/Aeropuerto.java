@@ -36,4 +36,10 @@ public class Aeropuerto {
     public boolean equals(Object aeropuerto) {
        return this.codigo.equals(aeropuerto.toString());
     }
+    public String info_aeropuerto(){
+        return "|Codigo :"+this.codigo+"\n"+
+                "|Nombre :"+this.nombre+"\n"+
+                "|Telefono :"+this.telefono;
+
+    }
 }
