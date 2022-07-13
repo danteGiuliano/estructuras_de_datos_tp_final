@@ -90,77 +90,77 @@
         {
             "x": "NQN",
             "y": "AEP",
-            "hora": "4000"
+            "hora": "4"
         },
         {
             "x": "NQN",
             "y": "ACS",
-            "hora": "2000"
+            "hora": "2"
         },
         {
             "x": "NQN",
             "y": "APV",
-            "hora": "2000"
+            "hora": "2"
         },
         {
             "x": "NQN",
             "y": "CBA",
-            "hora": "1000"
+            "hora": "1"
         },
         {
             "x": "ACS",
             "y": "AEP",
-            "hora": "1000"
+            "hora": "1"
         },
         {
             "x": "ANJ",
             "y": "ETC",
-            "hora": "2000"
+            "hora": "2"
         },
         {
             "x": "ANJ",
             "y": "AEP",
-            "hora": "5000"
+            "hora": "5"
         },
         {
             "x": "ANJ",
             "y": "NDM",
-            "hora": "4000"
+            "hora": "4"
         },
         {
             "x": "ETC",
             "y": "NDM",
-            "hora": "3000"
+            "hora": "3"
         },
         {
             "x": "ANJ",
             "y": "SJM",
-            "hora": "2000"
+            "hora": "2"
         },
         {
             "x": "NDM",
             "y": "SJM",
-            "hora": "3000"
+            "hora": "3"
         },
         {
             "x": "AMB",
             "y": "SJM",
-            "hora": "1000"
+            "hora": "1"
         },
         {
             "x": "ACS",
             "y": "NDM",
-            "hora": "4000"
+            "hora": "4"
         },
         {
             "x": "CBA",
             "y": "NDM",
-            "hora": "3000"
+            "hora": "3"
         },
         {
             "x": "NDM",
             "y": "APV",
-            "hora": "6000"
+            "hora": "6"
         }
     ]
 }

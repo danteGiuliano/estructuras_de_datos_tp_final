@@ -218,10 +218,8 @@ public class Grafo {
 
                 if (candidado.get_vertice().equals(busqueda)) {
                     lista.insertar(candidado.get_etiqueta(), 1);
-                } else {
-                    candidado = candidado.get_nodo_adyacente();
                 }
-
+                candidado = candidado.get_nodo_adyacente();
             }
         }
         return lista;

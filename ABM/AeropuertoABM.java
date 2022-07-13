@@ -3,6 +3,8 @@ package ABM;
 import java.io.Console;
 import java.util.Scanner;
 
+import javax.swing.text.html.HTMLEditorKit.Parser;
+
 import Dominio.Aeropuerto;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Lista.Lista;
@@ -289,16 +291,36 @@ public class AeropuertoABM {
     }
 
     private static void modificar_ruta() {
-        boolean ruta_valida = false;
-        Object arco;
+        int opcion = 0;
+        boolean sesion=true;
         System.out.println("Seleccione los aeropuertos para ver las rutas disponibles");
         String aeropuerto_a = validar_aeropuerto();
         String aeropuerto_b = validar_aeropuerto();
         Lista rutas = mapa_aeroportuario.listar_arcos(aeropuerto_a, aeropuerto_b);
+        while(sesion){
+
         System.out.println("Rutas:");
-        for (int i = 0; i < rutas.longitud(); i++) {
-            System.out.print(" " + rutas.recuperar(i));
+        for (int i = 1; i <= rutas.longitud(); i++) {
+            System.out.print("[ " + i + " -> " + rutas.recuperar(i) + " ],");
         }
+        System.out.println("Seleccione una ruta a modificar 0 para salir");
+        opcion = validar_numero();
+        if (opcion != 0) {
+            int distancia = 0;
+            String ruta = (String) rutas.recuperar(opcion);
+            System.out.println("Selecciono la ruta de :" + ruta + " hrs");
+            System.out.println("Ingrese una nueva distancia , 0 para cancelar");
+            distancia = validar_numero();
+            if (distancia != 0) {
+                mapa_aeroportuario.eliminar_arco(aeropuerto_a, aeropuerto_b, ruta);
+                mapa_aeroportuario.insertar_arco(aeropuerto_a, aeropuerto_b, String.valueOf(distancia));
+                System.out.println("RUTA MODIFICADA CON EXITO");
+            }
+
+        }else{
+            sesion=false;
+        }
+    }
 
     }
 
@@ -396,6 +418,23 @@ public class AeropuertoABM {
             }
         }
         return distancia;
+
+    }
+
+    private static int validar_numero() {
+        boolean numero_valido = false;
+        String numero = "";
+        String numeros = "^[0-9]*$";
+        System.out.println("Ingrese un numero valido");
+        while (!numero_valido) {
+            numero = edat.nextLine();
+            if (numero == "" || !numero.matches(numeros)) {
+                System.out.println("Formato invalido ");
+            } else {
+                numero_valido = true;
+            }
+        }
+        return Integer.parseInt(numero);
 
     }
 }
