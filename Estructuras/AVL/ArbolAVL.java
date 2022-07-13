@@ -335,6 +335,7 @@ public class ArbolAVL {
         }
         return hijo;
     }
+
     public boolean pertenece(Comparable elemento) {
         boolean flag = false;
         if (this.raiz != null && elemento != null) {
@@ -357,6 +358,30 @@ public class ArbolAVL {
             }
         }
         return flag;
+    }
+
+    public Comparable extraer_elemento(Object referencia) {
+        Comparable elemento=null;
+        if (this.raiz != null && referencia != null) {
+            elemento = extraer_elemento_aux(this.raiz, referencia);
+        }
+        return elemento;
+    }
+
+    private Comparable extraer_elemento_aux(NodoAVL node, Object referencia) {
+        Comparable elemento =null;
+        if (node != null) {
+            if (node.get_elemento().compareTo(referencia) == 0) {
+                elemento = node.get_elemento();
+            } else {
+                if (node.get_elemento().compareTo(referencia) < 0) {
+                    elemento = extraer_elemento_aux(node.get_derecho(), referencia);
+                } else {
+                    elemento = extraer_elemento_aux(node.get_izquierdo(), referencia);
+                }
+            }
+        }
+        return elemento;
     }
 
     /**

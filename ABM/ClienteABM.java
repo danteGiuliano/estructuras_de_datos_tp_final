@@ -58,9 +58,11 @@ public class ClienteABM {
                 case 1:
                     cargar_cliente();
                     break;
-                case 2:System.out.println(clientes.toString());
+                case 2:
+                    modificar_cliente();
                     break;
                 case 3:
+                    borrar_cliente();
                     break;
                 case 4:
                     mostrar_clientes();
@@ -94,6 +96,7 @@ public class ClienteABM {
             mostrar_cliente(cliente);
         }
     }
+
     private static void mostrar_cliente(Cliente cliente) {
         String tipo_dni = cliente.get_tipo_dni();
         String numero_documento = cliente.get_numero_dni();
@@ -106,6 +109,65 @@ public class ClienteABM {
         System.out.format(formato_cliente, tipo_dni, numero_documento, nombre, apellido, domicilio, telefono,
                 fecha_nacimiento);
         System.out.println("");
+    }
+
+    private static void modificar_cliente() {
+
+        Cliente cliente = validar_cliente();
+
+        do {
+            System.out.println("_____________________________________________________________________________________");
+            System.out
+                    .println("                  Cliente " + cliente.get_nombre() + " " + cliente.get_apellido());
+            System.out.println("_____________________________________________________________________________________");
+            System.out.printf(formato_menu, "N°", "OPCION");
+            System.out.println();
+            System.out.println("-------------------------------------------------------------------------------------");
+            System.out.format(formato_menu, "1 |", "Modificar Domicilio");
+            System.out.println("");
+            System.out.format(formato_menu, "2 |", "Modificar Telefono");
+            System.out.println("");
+            System.out.format(formato_menu, "3 |", "Mostrar informacion");
+            System.out.println("");
+            System.out.format(formato_menu, "4 |", "volver atras");
+            System.out.println("");
+            System.out.println("____________________________________________________________________________________");
+            System.out.print("Opcion ->");
+        } while (opcion_modificar(edat.nextLine(), cliente));
+
+    }
+
+    private static boolean opcion_modificar(String opcion, Cliente cliente) {
+        boolean sesion = true;
+        int opcion_numerica = 0;
+        try {
+            opcion_numerica = Integer.parseInt(opcion);
+            switch (opcion_numerica) {
+                case 1:
+                    String domicilio = validar_nombre('D');
+                    cliente.set_domicilio(domicilio);
+                    System.out.println("DOMICILIO CAMBIADO CON EXITO!");
+                    break;
+                case 2:
+                    String telefono = validar_telefono();
+                    cliente.set_domicilio(telefono);
+                    System.out.println("TELEFONO CAMBIADO CON EXITO!");
+                    break;
+                case 3:
+                    mostrar_cliente(cliente);
+                    break;
+                case 4:
+                    sesion = false;
+                    break;
+                default:
+                    System.out.println("Error de opcion ingrese una opcion valida");
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("");
+        }
+        return sesion;
+
     }
 
     private static void cargar_cliente() {
@@ -123,44 +185,35 @@ public class ClienteABM {
 
     }
 
-    private static void borrar_cliente(){
-        boolean existe=false;
-        while(!existe){
-            String tipo_documento=validar_tipo_dni();
-            String numero_documento=validar_documento();
-            if(true);
+    private static void borrar_cliente() {
+        boolean sesion = true;
+        Cliente cliente = null;
+
+        boolean lectura = false;
+        while (sesion) {
+            String tipo_documento = validar_tipo_dni();
+            String numero_documento = validar_documento();
+            cliente = (Cliente) clientes.extraer_elemento(tipo_documento + numero_documento);
+            if (cliente != null) {
+                System.out.println("Esta seguro que quiere borrar el cliente ");
+                mostrar_cliente(cliente);
+                lectura = validar_opcion();
+
+                if (lectura) {
+                    boolean borrado = clientes.eliminar(cliente);
+                    if (borrado) {
+                        System.out.println("Cliente Borrado con exito");
+                    }
+                }
+                sesion = false;
+            } else {
+                System.out.println("Usuario invalido, desea continuar");
+                sesion = validar_opcion();
+            }
 
         }
-     
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Validadores
@@ -257,4 +310,43 @@ public class ClienteABM {
         return numero_telefono;
     }
 
+    private static boolean validar_opcion() {
+        String opcion = "^S|N$";
+        String lectura = "";
+        boolean aceptado = false;
+        while (!aceptado) {
+            System.out.println("S/N ?");
+            lectura = edat.nextLine().toUpperCase();
+            if (!lectura.matches(opcion)) {
+                System.out.println("Formato invalido ingrese S para Si N para No");
+            } else {
+                aceptado = true;
+            }
+        }
+        if (lectura.charAt(0) == 'S') {
+            aceptado = true;
+        } else {
+            aceptado = false;
+        }
+        return aceptado;
+    }
+
+    private static Cliente validar_cliente() {
+        boolean existe = false;
+        System.out.println("Busqueda de cliente");
+        String tipo_dni = "";
+        String numero_documento = "";
+        Cliente cliente = null;
+        while (!existe) {
+            tipo_dni = validar_tipo_dni();
+            numero_documento = validar_documento();
+            cliente = (Cliente) clientes.extraer_elemento(tipo_dni + numero_documento);
+            if (cliente == null) {
+                System.out.println("El cliente no existe en el registro");
+            } else {
+                existe = true;
+            }
+        }
+        return cliente;
+    }
 }

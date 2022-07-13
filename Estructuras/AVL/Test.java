@@ -6,7 +6,8 @@ public class Test {
     static ArbolAVL avl2 = new ArbolAVL();
 
     public static void main(String[] args) {
-        rotacionesDobles2();
+        rotacionesDerechas();
+        borrar();
     }
 
     private static void rotacionesDerechas(){
@@ -22,13 +23,7 @@ public class Test {
         avl.insertar(10);
         avl.insertar(11);
         avl.insertar(12);
-
-        System.out.println(avl.toString());
-        avl.eliminar(1);
-        avl.eliminar(2);
-        avl.eliminar(8);    
-        avl.eliminar(9);    
-        avl.eliminar(10);    
+          
         System.out.println(avl.toString());
 
     }
@@ -52,5 +47,14 @@ public class Test {
         avl2.insertar(20);
         avl2.insertar(25);
         System.out.println(avl2.toString());
+    }
+    private static void borrar(){
+        avl.eliminar(1);
+        avl.eliminar(2);
+        avl.eliminar(8);    
+        avl.eliminar(9);    
+        avl.eliminar(10);
+        System.out.println(avl.toString()   );
+
     }
 }

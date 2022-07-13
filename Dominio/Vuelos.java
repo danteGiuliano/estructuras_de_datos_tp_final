@@ -1,6 +1,6 @@
 package Dominio;
 
-import java.lang.reflect.Array;
+import Estructuras.Lista.Lista;
 
 public class Vuelos {
 
@@ -8,16 +8,15 @@ public class Vuelos {
     private String codigo;
     private String aeropuerto_destino;
     private String hora_salida;
-    private Array registro_vuelos;
+    private Lista registro_vuelos;
 
-    public Vuelos(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida,
-            Array registro_vuelos) {
+    public Vuelos(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida) {
 
             this.hora_llegada            =   hora_llegada;
             this.codigo                  =   codigo;
             this.aeropuerto_destino      =   aeropuerto_destino;
             this.hora_salida             =   hora_salida;
-            this.registro_vuelos         =   registro_vuelos;
+            this.registro_vuelos         =   new Lista();
     }
 
     public String get_hora_llegada() {
@@ -52,11 +51,11 @@ public class Vuelos {
         this.hora_salida = hora_salida;
     }
 
-    public Array get_registro_vuelos() {
+    public Lista get_registro_vuelos() {
         return registro_vuelos;
     }
 
-    public void set_registro_vuelos(Array registro_vuelos) {
+    public void set_registro_vuelos(Lista registro_vuelos) {
         this.registro_vuelos = registro_vuelos;
     }
 
