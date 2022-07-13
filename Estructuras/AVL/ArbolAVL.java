@@ -102,7 +102,6 @@ public class ArbolAVL {
 
             if (obtener_balance(raiz.get_izquierdo()) == -1) {
                 // Rotacion doble izquierda - derecha
-
                 NodoAVL aux = rotar_izquierda(raiz.get_izquierdo());
                 raiz.set_izquierdo(aux);
                 raiz = rotar_derecha(raiz);
@@ -145,7 +144,7 @@ public class ArbolAVL {
         NodoAVL hijo_izquierdo = pivote.get_izquierdo();
         NodoAVL temp = null;
         if (hijo_izquierdo != null) {
-            temp = hijo_izquierdo.get_izquierdo();
+            temp = hijo_izquierdo.get_derecho();
         }
         hijo_izquierdo.set_derecho(pivote);
         pivote.set_izquierdo(temp);
@@ -302,12 +301,12 @@ public class ArbolAVL {
             if (nodo.get_derecho() != null || nodo.get_izquierdo() != null) {
                 cadena += "Nodo: " + nodo.get_elemento();
                 if (nodo.get_izquierdo() != null) {
-                    cadena += "[ HI: " + nodo.get_izquierdo().get_elemento() + " ]";
+                    cadena += "[ HI: " + nodo.get_izquierdo().get_elemento().toString() + " ]";
                 } else {
                     cadena += "[ HI: null ]";
                 }
                 if (nodo.get_derecho() != null) {
-                    cadena += "[ HD: " + nodo.get_derecho().get_elemento() + " ]" + "\n";
+                    cadena += "[ HD: " + nodo.get_derecho().get_elemento().toString() + " ]" + "\n";
                 } else {
                     cadena += "[ HD: null ] \n";
                 }
@@ -335,6 +334,29 @@ public class ArbolAVL {
             hijo = new NodoAVL(aux.get_elemento(),clonarAux(aux.get_izquierdo()),clonarAux(aux.get_derecho()));
         }
         return hijo;
+    }
+    public boolean pertenece(Comparable elemento) {
+        boolean flag = false;
+        if (this.raiz != null && elemento != null) {
+            flag = perteneceAux(this.raiz, elemento);
+        }
+        return flag;
+    }
+
+    private boolean perteneceAux(NodoAVL node, Comparable var) {
+        boolean flag = false;
+        if (node != null) {
+            if (node.get_elemento().compareTo(var) == 0) {
+                flag = true;
+            } else {
+                if (node.get_elemento().compareTo(var) < 0) {
+                    flag = perteneceAux(node.get_derecho(), var);
+                } else {
+                    flag = perteneceAux(node.get_izquierdo(), var);
+                }
+            }
+        }
+        return flag;
     }
 
     /**

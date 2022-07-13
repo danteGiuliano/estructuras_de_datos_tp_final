@@ -1,9 +1,7 @@
 package ABM;
 
-import java.io.Console;
 import java.util.Scanner;
 
-import javax.swing.text.html.HTMLEditorKit.Parser;
 
 import Dominio.Aeropuerto;
 import Estructuras.Grafo.Grafo;
@@ -19,14 +17,10 @@ public class AeropuertoABM {
     static String nombre_valido = "^([a-zA-Z]+[ ]*){17}$"; // Formato de nombres
     static String codigo_valido = "^[A-Z]{3}$"; // Formato XXX
 
-    static Grafo mapa_aeroportuario = new Grafo();
+    static Grafo mapa_aeroportuario = ORM.get_aeropuertos();
 
-    private static void cargar_mapa() {
-        mapa_aeroportuario = ORM.get_aeropuertos();
-    }
 
     public static void main(String[] args) {
-        cargar_mapa();
         menu();
         System.out.println("Programa terminado");
     }

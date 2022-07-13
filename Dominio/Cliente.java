@@ -1,6 +1,7 @@
 package Dominio;
 
-public class Cliente {
+
+public class Cliente implements Comparable{
     String numero_dni,nombre, apellido, tipo_dni, numero_telefono, domicilio, fecha_nacimiento;
     
     
@@ -70,6 +71,17 @@ public class Cliente {
 
     public void set_fecha_nacimiento(String fecha_nacimiento) {
         this.fecha_nacimiento = fecha_nacimiento;
+    }
+
+    public String  toString(){
+        return this.tipo_dni+this.numero_dni;
+    }
+    
+  
+
+    @Override
+    public int compareTo(Object o) {
+        return this.toString().compareTo(o.toString());
     }
 
 }

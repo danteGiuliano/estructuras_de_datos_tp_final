@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 
 import Dominio.Aeropuerto;
 import Dominio.Cliente;
+import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 
 public class ORM {
@@ -148,11 +149,11 @@ public class ORM {
         catch (IOException e) {System.err.println("Archivo no existe");}
     }
 
-    public static ArrayList<Cliente> get_clientes(){
+    public static ArbolAVL get_clientes(){
 
         verifica_carga();
 
-        ArrayList<Cliente> clientes_cliente = new ArrayList<Cliente>();
+        ArbolAVL clientes_cliente = new ArbolAVL();
         
         clientes.forEach(e->{
 
@@ -164,11 +165,11 @@ public class ORM {
             tipo_dni=(String)elemento.get("tipo_dni");
             numero_dni=(String)elemento.get("numero_dni");
             domicilio=(String)elemento.get("domicilio");
-            telefono=(String)elemento.get("telefono");
+            telefono=(String)elemento.get("numero_telefono");
             fecha_nacimiento=(String)elemento.get("fecha_nacimiento");
 
            Cliente cliente = new Cliente(numero_dni, nombre, apellido, tipo_dni,telefono, domicilio, fecha_nacimiento);
-           clientes_cliente.add(cliente);
+           clientes_cliente.insertar(cliente);
         });
 
         return clientes_cliente;
