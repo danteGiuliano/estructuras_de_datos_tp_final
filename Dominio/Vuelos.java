@@ -11,7 +11,6 @@ public class Vuelos {
     private Lista registro_vuelos;
 
     public Vuelos(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida) {
-
             this.hora_llegada            =   hora_llegada;
             this.codigo                  =   codigo;
             this.aeropuerto_destino      =   aeropuerto_destino;

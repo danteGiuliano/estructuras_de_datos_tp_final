@@ -4,7 +4,9 @@
             "fecha": "17\/08\/03",
             "estado": "pendiente",
             "vuelo": "AA2279",
-            "asiendo_nro": "AA2279-1"
+            "asiendo_nro": "AA2279-1",
+            "tipo_documento":"DNI",
+            "numero_dni": "40807582"
         }
     ],
     "Clientes": [
@@ -14,7 +16,7 @@
             "numero_telefono": "299-4647809",
             "apellido": "Giuliano",
             "fecha_nacimiento": "31\/12\/1997",
-            "tipo_dni": "DNI",
+            "tipo_documento": "DNI",
             "nombre": "Dante"
         },{
             "numero_dni": "12807582",
@@ -22,7 +24,7 @@
             "numero_telefono": "299-1235709",
             "apellido": "Pele",
             "fecha_nacimiento": "30\/4\/1989",
-            "tipo_dni": "DNI",
+            "tipo_documento": "DNI",
             "nombre": "Roberto Carlos"
         },
         {
@@ -31,7 +33,7 @@
             "numero_telefono": "299-6734809",
             "apellido": "Alvarez",
             "fecha_nacimiento": "29\/6\/1998",
-            "tipo_dni": "DNI",
+            "tipo_documento": "DNI",
             "nombre": "Julian Pepe"
         }
     ],
