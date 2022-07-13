@@ -1,6 +1,7 @@
 package Estructuras.Grafo;
 
 import Dominio.Aeropuerto;
+import Estructuras.Lista.Lista;
 
 public class Grafo {
 
@@ -187,8 +188,81 @@ public class Grafo {
 
             }
         }
-
         return existe;
+    }
+
+    public Lista listar_arcos(Object elemento_x, Object elemento_y) {
+        Lista lista = new Lista();
+        NodoVertice recorrido = this.inicio;
+        NodoAdyacente candidado = null;
+        Object busqueda = null;
+        boolean existe = false, existe_arco = false;
+
+        while (recorrido != null & !existe_arco) {
+            if (recorrido.get_elememento().equals(elemento_x)) {
+                busqueda = elemento_y;
+                existe_arco = true;
+            }
+            if (recorrido.get_elememento().equals(elemento_y)) {
+                busqueda = elemento_x;
+                existe_arco = true;
+            }
+            if (existe_arco) {
+                candidado = recorrido.get_primer_nodo();
+            }
+            recorrido = recorrido.get_siguiente_vertice();
+
+        }
+        if (existe_arco) {
+            while (candidado != null && !existe) {
+
+                if (candidado.get_vertice().equals(busqueda)) {
+                    lista.insertar(candidado.get_etiqueta(), 1);
+                } else {
+                    candidado = candidado.get_nodo_adyacente();
+                }
+
+            }
+        }
+        return lista;
+    }
+    public Object extraer_arco(Object elemento_x, Object elemento_y,Object etiqueta) {
+        Object arco = null;
+        NodoVertice recorrido = this.inicio;
+        NodoAdyacente candidado = null;
+        Object busqueda = null;
+        boolean existe = false, existe_arco = false;
+
+        while (recorrido != null & !existe_arco) {
+            if (recorrido.get_elememento().equals(elemento_x)) {
+                busqueda = elemento_y;
+                existe_arco = true;
+            }
+            if (recorrido.get_elememento().equals(elemento_y)) {
+                busqueda = elemento_x;
+                existe_arco = true;
+            }
+            if (existe_arco) {
+                candidado = recorrido.get_primer_nodo();
+            }
+            recorrido = recorrido.get_siguiente_vertice();
+
+        }
+        if (existe_arco) {
+            while (candidado != null && !existe) {
+
+                if (candidado.get_vertice().equals(busqueda)) {
+                   if(candidado.get_etiqueta().equals(etiqueta)){
+                    arco=candidado.get_etiqueta();
+                    existe=true;
+                   }
+                } else {
+                    candidado = candidado.get_nodo_adyacente();
+                }
+
+            }
+        }
+        return arco;
     }
 
     public Object extraer_vertice(Object tipo){
