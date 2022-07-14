@@ -19,10 +19,9 @@ public class PasajeABM {
     static String formato_pasaje_opcion = "%10s %20s %20s %20s %20s";
     static String formato_menu = "%20s %60s";
 
-    
-
-    static Map<Integer, Lista> map = ORM.get_pasajes();
+    static Map<Integer, Lista> pasajes = ORM.get_pasajes();
     static ArbolAVL clientes = ORM.get_clientes();
+    static ArbolAVL vuelos = ORM.get_vuelos();
 
     public static void main(String[] args) {
         menu();
@@ -80,16 +79,24 @@ public class PasajeABM {
     }
 
     public static void comprar_pasaje() {
-        Cliente cliente = Validador.validar_cliente();;
-        String fecha =Validador.validar_fecha();
+        Cliente cliente = Validador.validar_cliente();
+        ;
+        String fecha = Validador.validar_fecha();
         String estado = "pendiente";
-        // String vuelo = validar_vuelo();
+        String vuelo = Validador.validar_vuelo();
+        System.out.println("Numero de asiento ");
+        int asiento = Validador.validar_numero();
+
+        Pasaje pasaje = new Pasaje(vuelo, fecha, vuelo + "-" + asiento, estado);
+        Lista l1 = (Lista) pasajes.get(cliente.hashCode());
+        l1.insertar(pasaje, 1);
+        pasajes.put(cliente.hashCode(), l1);
 
     }
 
     public static void ver_pasajes_cliente() {
         Cliente cliente = Validador.validar_cliente();
-        Lista pasajes = map.get(cliente.hashCode());
+        Lista lista_pasajes = pasajes.get(cliente.hashCode());
         if (pasajes != null) {
             System.out.println(
                     "-------------------------------------------------------------------------------------------------");
@@ -97,8 +104,8 @@ public class PasajeABM {
             System.out.println();
             System.out.println(
                     "-------------------------------------------------------------------------------------------------");
-            for (int i = 1; i <= pasajes.longitud(); i++) {
-                mostrar_pasaje((Pasaje) pasajes.recuperar(i));
+            for (int i = 1; i <= lista_pasajes.longitud(); i++) {
+                mostrar_pasaje((Pasaje) lista_pasajes.recuperar(i));
             }
         }
 
@@ -116,31 +123,31 @@ public class PasajeABM {
     public static void modificar_pasaje() {
         Cliente cliente = Validador.validar_cliente();
         int opcion = 0;
-        boolean sesion=true;
+        boolean sesion = true;
         while (sesion) {
             System.out.println("Seleccione el pasaje de la lista 0 para salir");
-            Lista pasajes = map.get(cliente.hashCode());
+            Lista lista_pasajes = pasajes.get(cliente.hashCode());
             System.out.println(
                     "--------------------------------------------------------------------------------------");
             System.out.printf(formato_pasaje_opcion, "N°", "FECHA", " ESTADO", "VUELO", "ASIENTO NUMERO");
             System.out.println();
             System.out.println(
                     "--------------------------------------------------------------------------------------");
-            for (int i = 1; i <= pasajes.longitud(); i++) {
-                mostrar_pasaje_opcion((Pasaje) pasajes.recuperar(i), i);
+            for (int i = 1; i <= lista_pasajes.longitud(); i++) {
+                mostrar_pasaje_opcion((Pasaje) lista_pasajes.recuperar(i), i);
             }
             System.out.println("____________________________________________________________________________________");
             System.out.print("Opcion ->");
             opcion = Integer.parseInt(edat.nextLine());
             if (opcion != 0) {
-                Pasaje pasaje = (Pasaje) pasajes.recuperar(opcion);
+                Pasaje pasaje = (Pasaje) lista_pasajes.recuperar(opcion);
                 if (pasaje != null) {
-                    pasaje_modificar(pasaje, cliente, pasajes);
+                    pasaje_modificar(pasaje, cliente, lista_pasajes);
                 } else {
                     System.out.println("El pasaje no existe");
                 }
-            }else{
-                sesion=false;
+            } else {
+                sesion = false;
             }
         }
     }
@@ -209,7 +216,5 @@ public class PasajeABM {
         return sesion;
 
     }
-
-  
 
 }

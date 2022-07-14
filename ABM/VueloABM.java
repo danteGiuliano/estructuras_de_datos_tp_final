@@ -2,19 +2,24 @@ package ABM;
 
 import java.util.Scanner;
 
+import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import ORM.ORM;
+import Validadores.Validador;
 
 public class VueloABM {
 
     static String formato_menu = "%20s %60s";
+    static String formato_vuelo = "%10s %20s %20s %15s %15s";
+
     static Scanner edat = new Scanner(System.in);
 
     static ArbolAVL vuelos = ORM.get_vuelos();
 
     public static void main(String[] args) {
-        System.out.println(vuelos.toString());
-        //menu();
+        Vuelo v = (Vuelo) vuelos.extraer_elemento("AA2279");
+        System.out.println(v.get_hora_llegada());
+        menu();
     }
 
     public static void menu() {
@@ -45,6 +50,7 @@ public class VueloABM {
             opcion_numerica = Integer.parseInt(opcion);
             switch (opcion_numerica) {
                 case 1:
+                    cargar_vuelo();
                     break;
                 case 2:
                     seleccionar_vuelo();
@@ -63,26 +69,98 @@ public class VueloABM {
     }
 
     private static void seleccionar_vuelo() {
-        // Vuelo vuelo = validar_vuelo();
+        Vuelo vuelo = (Vuelo) vuelos.extraer_elemento(Validador.validar_vuelo());
+
         do {
             System.out.println("_____________________________________________________________________________________");
             System.out
-                    .println("                  Cliente ");
+                    .println("                  Vuelo " + vuelo.get_codigo());
             System.out.println("_____________________________________________________________________________________");
             System.out.printf(formato_menu, "N°", "OPCION");
             System.out.println();
             System.out.println("-------------------------------------------------------------------------------------");
-            System.out.format(formato_menu, "1 |", "Modificar Estado pasaje");
+            System.out.format(formato_menu, "1 |", "Ver informacion Vuelo");
             System.out.println("");
-            System.out.format(formato_menu, "2 |", "Ver informacion pasaje");
+            System.out.format(formato_menu, "2 |", "Eliminar Vuelo");
             System.out.println("");
-            System.out.format(formato_menu, "3 |", "Eliminar pasaje");
+            System.out.format(formato_menu, "3 |", "Modificar Hora Inicio");
             System.out.println("");
             System.out.format(formato_menu, "4 |", "volver atras");
             System.out.println("");
             System.out.println("____________________________________________________________________________________");
             System.out.print("Opcion ->");
-        } while (true);
+        } while (opcion_seleccionar(edat.nextLine(), vuelo));
+
+    }
+
+    private static boolean opcion_seleccionar(String opcion, Vuelo vuelo) {
+        boolean sesion = true;
+        int opcion_numerica = 0;
+        try {
+            opcion_numerica = Integer.parseInt(opcion);
+            switch (opcion_numerica) {
+                case 1:
+                    ver_informacion_vuelo(vuelo);
+                    break;
+                case 2:
+                    System.out.println("Esta seguro que quiere borrar el vuelo?");
+                    if (Validador.validar_opcion()) {
+                        vuelos.eliminar(vuelo);
+                        System.out.println("VUELO BORRADO CON EXITO");
+                        sesion = false;
+                    }
+                    break;
+                case 3:
+                    String hora = Validador.validar_hora();
+                    vuelo.set_hora_llegada(hora);
+                    System.out.println("HORA DE INICIO MODIFICADA");
+                    break;
+                case 4:
+                    sesion = false;
+                    break;
+                default:
+                    System.out.println("Error de opcion ingrese una opcion valida");
+                    break;
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("");
+        }
+        return sesion;
+    }
+
+    public static void ver_informacion_vuelo(Vuelo vuelo) {
+        String codigo = vuelo.get_codigo();
+        String aeropuerto_origen = vuelo.get_aeropuerto_origen();
+        String aeropuerto_destino = vuelo.get_aeropuerto_destino();
+        String hora_salida = vuelo.get_hora_salida();
+        String hora_llegada = vuelo.get_hora_llegada();
+
+        System.out.println(
+                "------------------------------------------------------------------------------------");
+        System.out.printf(formato_vuelo, "CODIGO", "AEROPUERTO ORIGEN", "AEROPUERTO DESTINO", "HORA SALIDA",
+                "HORA LLEGADA");
+        System.out.println();
+        System.out.println(
+                "------------------------------------------------------------------------------------");
+        System.out.format(formato_vuelo, codigo, aeropuerto_origen, aeropuerto_destino, hora_salida, hora_llegada);
+        System.out.println("");
+
+    }
+
+    public static void cargar_vuelo() {
+        String codigo = Validador.validar_vuelo();
+        System.out.println("Ingrese el aeropuerto de inicio");
+        String aeropuerto_origen = Validador.validar_aeropuerto();
+        String aeropuerto_destino = Validador.validar_aeropuerto();
+        System.out.println("Ingrese hora de inicio");
+        String hora_salida = Validador.validar_hora();
+        String hora_llegada = Validador.validar_hora();
+
+        Vuelo vuelo = new Vuelo(hora_llegada, codigo, aeropuerto_destino, hora_salida, aeropuerto_origen);
+
+        if (vuelos.insertar(vuelo)) {
+            System.out.println("VUELO AÑADIDO CON EXITO!");
+        }
 
     }
 }

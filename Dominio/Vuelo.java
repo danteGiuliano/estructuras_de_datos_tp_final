@@ -97,8 +97,7 @@ public class Vuelo implements Comparable {
     }
 
     public int compareTo(Object vuelo) {
-        Vuelo vue = (Vuelo) vuelo;
-        return codigo.compareTo(vue.codigo);
+        return codigo.compareTo(vuelo.toString());
     }
 
 }

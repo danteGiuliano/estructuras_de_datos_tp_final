@@ -3,6 +3,7 @@ package Validadores;
 import java.util.Scanner;
 
 import Dominio.Cliente;
+import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 import ORM.ORM;
@@ -11,6 +12,7 @@ public class Validador {
 
     static Grafo mapa_aeroportuario = ORM.get_aeropuertos();
     static ArbolAVL clientes = ORM.get_clientes();
+    static ArbolAVL vuelos = ORM.get_vuelos();
 
     /**
      * Entrada por teclado
@@ -25,8 +27,9 @@ public class Validador {
      * Formato Generales
      */
     static String numeros = "^[0-9]*$";
-    static String fecha_valida = "^([1-9]|1[0-9]|2[0-9]|3[0-1])/([1-9]|1[0-2])/([1-9][1-9][1-9][1-9])$";
+    static String fecha_valida = "^([1-9]|1[0-9]|2[0-9]|3[0-1])/(0?[1-9]|1[0-2])/([1-9][1-9][1-9][1-9])$";
     static String telefono_valido = "^[0-9]{3}+[-]+[0-9]{7}$";// Formato xxx-xxxxxxx
+    static String hora_valida = "^((0?[0-9])|(1[0-9])|(2[0-3])):([0-5][0-9])$"; // Formato hh:mm
 
     /**
      * Formato Aeropuerto
@@ -41,6 +44,13 @@ public class Validador {
     static String nombre_valido_cliente = "^([a-zA-Z]+[ ]*){2}$"; // Formato de nombres
     static String dni_valido = "^[A-Z]{3}$"; // Formato XXX
     static String numero_dni_valido = "^[0-9]{8}$"; // Formato xxxxxxxx 8
+
+    /**
+     * Formato de Vuelos
+     * 
+     */
+
+    static String codigo_valido_vuelo = "^[A-Z]{2}[0-9]{4}$";
 
     /**
      * 
@@ -69,7 +79,7 @@ public class Validador {
         String numero_telefono = "";
         boolean aceptado = false;
         while (!aceptado) {
-            System.out.println("Ingrese una fecha de nacimiento");
+            System.out.println("Ingrese una fecha valida dd/mm/aaaa");
             numero_telefono = edat.nextLine();
             if (!numero_telefono.matches(fecha_valida)) {
                 System.out.println("Formato de fecha invalida debe ser dd/mm/aaaa");
@@ -78,6 +88,21 @@ public class Validador {
             }
         }
         return numero_telefono;
+    }
+
+    public static String validar_hora() {
+        String hora = "";
+        boolean aceptado = false;
+        while (!aceptado) {
+            System.out.println("Ingrese una hora de tipo hh:mm");
+            hora = edat.nextLine();
+            if (!hora.matches(hora_valida)) {
+                System.out.println("Formato de fecha invalida debe ser hh:mm");
+            } else {
+                aceptado = true;
+            }
+        }
+        return hora;
     }
 
     public static boolean validar_opcion() {
@@ -296,6 +321,46 @@ public class Validador {
             }
         }
         return codigo_aeropuerto;
+    }
+
+    /**
+     * 
+     * Validador Vuelo
+     * 
+     * 
+     */
+
+    public static String validar_codigo_vuelo() {
+        String codigo_vuelo = "";
+        boolean aceptado = false;
+        while (!aceptado) {
+            System.out.println("Ingrese su codigo de vuelo EJ AA2279");
+            codigo_vuelo = edat.nextLine();
+            if (!codigo_vuelo.matches(codigo_valido_vuelo)) {
+                System.out.println("Formato invalido");
+            } else {
+                aceptado = true;
+            }
+        }
+        return codigo_vuelo;
+
+    }
+
+    public static String validar_vuelo() {
+        Vuelo vuelo = null;
+        boolean existe = false;
+        System.out.println("Busqueda de Vuelo");
+        String codigo_vuelo = "";
+        while (!existe) {
+            codigo_vuelo = validar_codigo_vuelo();
+            vuelo = (Vuelo) vuelos.extraer_elemento(codigo_vuelo);
+            if (vuelo == null) {
+                System.out.println("El Vuelo no existe en el registro");
+            } else {
+                existe = true;
+            }
+        }
+        return codigo_vuelo;
     }
 
 }
