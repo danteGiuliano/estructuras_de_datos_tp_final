@@ -2,16 +2,20 @@ package ABM;
 
 import java.util.Scanner;
 
-public class VueloABM{
+import Estructuras.AVL.ArbolAVL;
+import ORM.ORM;
+
+public class VueloABM {
 
     static String formato_menu = "%20s %60s";
     static Scanner edat = new Scanner(System.in);
 
-     public static void main(String[] args) {
-        menu();
-     }
+    static ArbolAVL vuelos = ORM.get_vuelos();
 
-
+    public static void main(String[] args) {
+        System.out.println(vuelos.toString());
+        //menu();
+    }
 
     public static void menu() {
 
@@ -43,7 +47,7 @@ public class VueloABM{
                 case 1:
                     break;
                 case 2:
-                seleccionar_vuelo();
+                    seleccionar_vuelo();
                     break;
                 case 3:
                     sesion = false;
@@ -58,13 +62,12 @@ public class VueloABM{
         return sesion;
     }
 
-
     private static void seleccionar_vuelo() {
-       // Vuelo vuelo = validar_vuelo();
+        // Vuelo vuelo = validar_vuelo();
         do {
             System.out.println("_____________________________________________________________________________________");
             System.out
-                    .println("                  Cliente " );
+                    .println("                  Cliente ");
             System.out.println("_____________________________________________________________________________________");
             System.out.printf(formato_menu, "N°", "OPCION");
             System.out.println();

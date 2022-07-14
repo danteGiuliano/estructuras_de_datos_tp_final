@@ -16,13 +16,15 @@ import org.json.simple.parser.JSONParser;
 import Dominio.Aeropuerto;
 import Dominio.Cliente;
 import Dominio.Pasaje;
+import Dominio.Viaje;
+import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Lista.Lista;
 
 public class ORM {
     /**
-     *  
+     * 
      * Algoritmo extra para leer/cargar/guardar informacion en el JSON
      * 
      */
@@ -36,21 +38,21 @@ public class ORM {
     static JSONArray rutas;
     static JSONArray aeropuertos;
 
-    public ORM(){};
+    public ORM() {
+    };
 
     static Scanner edat = new Scanner(System.in);
 
     private static void leer_json() throws IOException, org.json.simple.parser.ParseException {
 
-        data         =        (JSONObject) parser.parse(new FileReader(ruta));
-        vuelos       =        (JSONArray) data.get("Vuelos");
-        aeropuertos  =        (JSONArray) data.get("Aeropuertos");
-        clientes     =        (JSONArray) data.get("Clientes");
-        pasajes      =        (JSONArray) data.get("Pasajes");
-        rutas        =        (JSONArray) data.get("Rutas");
-        
-    }
+        data = (JSONObject) parser.parse(new FileReader(ruta));
+        vuelos = (JSONArray) data.get("Vuelos");
+        aeropuertos = (JSONArray) data.get("Aeropuertos");
+        clientes = (JSONArray) data.get("Clientes");
+        pasajes = (JSONArray) data.get("Pasajes");
+        rutas = (JSONArray) data.get("Rutas");
 
+    }
 
     public static void main(String[] args) {
         System.out.println("Mostrar cargas");
@@ -60,73 +62,75 @@ public class ORM {
         mostrar_consola(rutas);
     }
 
-  
     public static void cargar_info() {
         try {
             leer_json();
-        } 
-        catch (FileNotFoundException f) {}
-        catch (IOException e) {System.err.println("El archivo no existe");} 
-        catch (org.json.simple.parser.ParseException e) {e.printStackTrace();}
+        } catch (FileNotFoundException f) {
+        } catch (IOException e) {
+            System.err.println("El archivo no existe");
+        } catch (org.json.simple.parser.ParseException e) {
+            e.printStackTrace();
+        }
 
     }
-   
-    public static void mostrar_consola(JSONArray data){
-        data.forEach(e->{
-            JSONObject elemento = (JSONObject)e;
+
+    public static void mostrar_consola(JSONArray data) {
+        data.forEach(e -> {
+            JSONObject elemento = (JSONObject) e;
             System.out.println(elemento);
         });
     }
 
-    public static void cargar_vuelo(){
+    public static void cargar_vuelo() {
 
-        String empresas []={"Aerolineas Argentinas","Jet Smart" ,"Fly Bondi","Air Canada"};
-        String codigoEmpresas[]={"AA","JS","FB","AC"};
-        
+        String empresas[] = { "Aerolineas Argentinas", "Jet Smart", "Fly Bondi", "Air Canada" };
+        String codigoEmpresas[] = { "AA", "JS", "FB", "AC" };
+
         int opcion_elegida;
         String codigo_elegido;
 
         System.out.println("Seleccione una empresa disponible");
         for (int i = 0; i < empresas.length; i++) {
-            System.out.println(i+"-"+empresas[i]);
+            System.out.println(i + "-" + empresas[i]);
         }
-        opcion_elegida=edat.nextInt();
-        if(opcion_elegida>=0 && opcion_elegida <empresas.length){
-            codigo_elegido=codigoEmpresas[opcion_elegida];
-        }   
-       
+        opcion_elegida = edat.nextInt();
+        if (opcion_elegida >= 0 && opcion_elegida < empresas.length) {
+            codigo_elegido = codigoEmpresas[opcion_elegida];
+        }
+
     }
 
-    public static void cargar_cliente(String nombre,String apellido,String tipo_dni,String numero_dni,String 
-        domicilio,String fecha_nacimiento,String numero_documento,String telefono){
+    public static void cargar_cliente(String nombre, String apellido, String tipo_dni, String numero_dni,
+            String domicilio, String fecha_nacimiento, String numero_documento, String telefono) {
 
-            JSONObject cliente = new JSONObject();
-            cliente.put("nombre", nombre);
-            cliente.put("apellido",apellido);
-            cliente.put("tipo_dni",tipo_dni);
-            cliente.put("numero_dni",numero_documento);
-            cliente.put("domicilio",domicilio);
-            cliente.put("numero_telefono", telefono);
-            cliente.put("fecha_nacimiento",fecha_nacimiento);
+        JSONObject cliente = new JSONObject();
+        cliente.put("nombre", nombre);
+        cliente.put("apellido", apellido);
+        cliente.put("tipo_dni", tipo_dni);
+        cliente.put("numero_dni", numero_documento);
+        cliente.put("domicilio", domicilio);
+        cliente.put("numero_telefono", telefono);
+        cliente.put("fecha_nacimiento", fecha_nacimiento);
 
-            clientes.add(cliente);
-            guardar_info();
+        clientes.add(cliente);
+        guardar_info();
     }
 
-    public static void cargar_aeropuerto(){
-        String nombre,codigo,telefono;
+    public static void cargar_aeropuerto() {
+        String nombre, codigo, telefono;
 
         System.out.println("ingrese el nombre de aeropuerto");
-        nombre=edat.nextLine();
+        nombre = edat.nextLine();
         System.out.println("Ingrese su codigo unico de 3 letras");
-        codigo=edat.nextLine();
+        codigo = edat.nextLine();
         System.out.println("Ingrese su numero telefonico EJ: 299-473459");
-        telefono=edat.nextLine();
-        
-        System.out.println("Su informacion es: \n Nombre: "+nombre+"\n Codigo: "+codigo+"\n telefono: "+telefono);
+        telefono = edat.nextLine();
+
+        System.out.println(
+                "Su informacion es: \n Nombre: " + nombre + "\n Codigo: " + codigo + "\n telefono: " + telefono);
         System.out.println("Desea aceptarla? true/false");
 
-        if(edat.nextBoolean()){
+        if (edat.nextBoolean()) {
             JSONObject aeropuerto = new JSONObject();
 
             aeropuerto.put("codigo", codigo);
@@ -135,141 +139,189 @@ public class ORM {
 
             aeropuertos.add(aeropuerto);
             guardar_info();
-           
-        }else{
+
+        } else {
             System.out.println("Informacion rechazada");
         }
 
     }
 
-    private static void guardar_info(){
-        try{
-            FileWriter fr= new FileWriter(ruta);
+    private static void guardar_info() {
+        try {
+            FileWriter fr = new FileWriter(ruta);
             fr.write(data.toJSONString());
             fr.flush();
             fr.close();
+        } catch (FileNotFoundException f) {
+        } catch (IOException e) {
+            System.err.println("Archivo no existe");
         }
-        catch (FileNotFoundException f) {}
-        catch (IOException e) {System.err.println("Archivo no existe");}
     }
 
-    public static ArbolAVL get_clientes(){
+    public static ArbolAVL get_clientes() {
 
         verifica_carga();
 
         ArbolAVL clientes_cliente = new ArbolAVL();
-        
-        clientes.forEach(e->{
 
-            JSONObject elemento=(JSONObject)e;
-            String nombre,apellido,tipo_dni,numero_dni,domicilio,fecha_nacimiento,telefono;
+        clientes.forEach(e -> {
 
-            nombre=(String) elemento.get("nombre");
-            apellido=(String)elemento.get("apellido");
-            tipo_dni=(String)elemento.get("tipo_documento");
-            numero_dni=(String)elemento.get("numero_dni");
-            domicilio=(String)elemento.get("domicilio");
-            telefono=(String)elemento.get("numero_telefono");
-            fecha_nacimiento=(String)elemento.get("fecha_nacimiento");
+            JSONObject elemento = (JSONObject) e;
+            String nombre, apellido, tipo_dni, numero_dni, domicilio, fecha_nacimiento, telefono;
 
-           Cliente cliente = new Cliente(numero_dni, nombre, apellido, tipo_dni,telefono, domicilio, fecha_nacimiento);
-           clientes_cliente.insertar(cliente);
+            nombre = (String) elemento.get("nombre");
+            apellido = (String) elemento.get("apellido");
+            tipo_dni = (String) elemento.get("tipo_documento");
+            numero_dni = (String) elemento.get("numero_dni");
+            domicilio = (String) elemento.get("domicilio");
+            telefono = (String) elemento.get("numero_telefono");
+            fecha_nacimiento = (String) elemento.get("fecha_nacimiento");
+
+            Cliente cliente = new Cliente(numero_dni, nombre, apellido, tipo_dni, telefono, domicilio,
+                    fecha_nacimiento);
+            clientes_cliente.insertar(cliente);
         });
 
         return clientes_cliente;
     }
 
-
-    private static void verifica_carga(){
-        if(clientes==null||vuelos==null||pasajes==null||aeropuertos==null||rutas==null){
+    private static void verifica_carga() {
+        if (clientes == null || vuelos == null || pasajes == null || aeropuertos == null || rutas == null) {
             cargar_info();
         }
     }
 
-    public static Grafo get_aeropuertos(){
+    public static Grafo get_aeropuertos() {
         Grafo mapa_aeroportuario = new Grafo();
 
         verifica_carga();
-        
-        aeropuertos.forEach( e -> {
+
+        aeropuertos.forEach(e -> {
 
             /**
-             *  {
-             *   "codigo": "NQN",
-             *   "telefono": "299-4792345",
-             *   "nombre": "Neuquen"
-             *  }
+             * {
+             * "codigo": "NQN",
+             * "telefono": "299-4792345",
+             * "nombre": "Neuquen"
+             * }
              */
             JSONObject elemento = (JSONObject) e;
-            
-            String codigo   =(String) elemento.get("codigo");
-            String telefono =(String) elemento.get("telefono");
-            String nombre   =(String)elemento.get("nombre");
 
-            Aeropuerto aeropuerto = new Aeropuerto(codigo,telefono ,nombre);
-            
-             if(!mapa_aeroportuario.insertar_vertice(aeropuerto)){
-                 System.out.println("ERROR EN LA CARGA DE "+aeropuerto.toString()+" "+aeropuerto.get_nombre());
+            String codigo = (String) elemento.get("codigo");
+            String telefono = (String) elemento.get("telefono");
+            String nombre = (String) elemento.get("nombre");
+
+            Aeropuerto aeropuerto = new Aeropuerto(codigo, telefono, nombre);
+
+            if (!mapa_aeroportuario.insertar_vertice(aeropuerto)) {
+                System.out.println("ERROR EN LA CARGA DE " + aeropuerto.toString() + " " + aeropuerto.get_nombre());
             }
         });
-        
-   rutas.forEach(e ->{
 
-            JSONObject elemento = (JSONObject)e;
+        rutas.forEach(e -> {
+
+            JSONObject elemento = (JSONObject) e;
 
             String aeropuerto_a = (String) elemento.get("x");
             String aeropuerto_b = (String) elemento.get("y");
             String etiqueta = (String) elemento.get("hora");
 
-            if(!mapa_aeroportuario.insertar_arco(aeropuerto_a, aeropuerto_b, etiqueta)){
-                System.out.println("Error en la carga Ruta "+aeropuerto_a +"-"+aeropuerto_b+"-"+etiqueta);
+            if (!mapa_aeroportuario.insertar_arco(aeropuerto_a, aeropuerto_b, etiqueta)) {
+                System.out.println("Error en la carga Ruta " + aeropuerto_a + "-" + aeropuerto_b + "-" + etiqueta);
             }
-        }); 
+        });
 
         return mapa_aeroportuario;
-        
-    }
-    public static Map<Integer,Lista> get_pasajes(){
-        verifica_carga();
-        ArbolAVL clientes=get_clientes();
-         Cliente cliente=null;
-        Map <Integer,Lista> map = new HashMap();
-        JSONObject elemento=null;
-        Lista lista = new Lista();
-        String fecha="";
-        String estado="";
-        String vuelo="";
-        String asiento_nro="";
-        String tipo_documento="";
-        String numero_documento="";
-        for (int i = 0; i < pasajes.size(); i++) {
-             elemento = (JSONObject) pasajes.get(i);
-             lista = new Lista();
-            
-             fecha= (String)elemento.get("fecha");
-             estado=(String) elemento.get("estado");
-             vuelo=(String) elemento.get("vuelo");
-             asiento_nro=(String) elemento.get("asiento_nro");
-             tipo_documento=(String) elemento.get("tipo_documento");
-             numero_documento=(String)  elemento.get("numero_dni");
 
-            String key=tipo_documento+numero_documento;
+    }
+
+    public static Map<Integer, Lista> get_pasajes() {
+        verifica_carga();
+        ArbolAVL clientes = get_clientes();
+        Cliente cliente = null;
+        Map<Integer, Lista> map = new HashMap();
+        JSONObject elemento = null;
+        Lista lista = new Lista();
+        String fecha = "";
+        String estado = "";
+        String vuelo = "";
+        String asiento_nro = "";
+        String tipo_documento = "";
+        String numero_documento = "";
+        for (int i = 0; i < pasajes.size(); i++) {
+            elemento = (JSONObject) pasajes.get(i);
+            lista = new Lista();
+
+            fecha = (String) elemento.get("fecha");
+            estado = (String) elemento.get("estado");
+            vuelo = (String) elemento.get("vuelo");
+            asiento_nro = (String) elemento.get("asiento_nro");
+            tipo_documento = (String) elemento.get("tipo_documento");
+            numero_documento = (String) elemento.get("numero_dni");
+
+            String key = tipo_documento + numero_documento;
             Pasaje p = new Pasaje(vuelo, fecha, asiento_nro, estado);
-            cliente=(Cliente)clientes.extraer_elemento(key);
-            if(map.get(cliente.hashCode())!=null){
-                lista=map.get(cliente.hashCode());
+            cliente = (Cliente) clientes.extraer_elemento(key);
+            if (map.get(cliente.hashCode()) != null) {
+                lista = map.get(cliente.hashCode());
                 lista.insertar(p, 1);
                 map.put(cliente.hashCode(), lista);
-            }else{
+            } else {
                 lista.insertar(p, 1);
-                if(cliente!=null){
-                    map.put(cliente.hashCode(),lista);
+                if (cliente != null) {
+                    map.put(cliente.hashCode(), lista);
                 }
+            }
+
         }
-      
+
+        return map;
     }
 
-    return  map;
-}
-}
+    public static ArbolAVL get_vuelos() {
+        verifica_carga();
+        ArbolAVL vuelos = new ArbolAVL();
+        Lista registro_vuelos = null;
+        Viaje viaje = null;
+        Vuelo vuelo=null;
 
+        JSONArray lista = null;
+        JSONObject objeto = null;
+        JSONObject ls = null;
+        String hora_llegada = "";
+        String codigo = "";
+        String hora_salida = "";
+        String fecha = "";
+        String cantidad_asientos_vendidos = "";
+        String cantidad_asientos_totales = "";
+        String aeropuerto_origen = "";
+        String aeropuerto_destino = "";
+
+        for (int i = 0; i < ORM.vuelos.size(); i++) {
+            registro_vuelos = new Lista();
+            objeto = (JSONObject) ORM.vuelos.get(i);
+            codigo = (String) objeto.get("codigo");
+            hora_salida = (String) objeto.get("hora_salida");
+            aeropuerto_destino = (String) objeto.get("aeropuerto_destino");
+            hora_llegada = (String) objeto.get("hora_llegada");
+            aeropuerto_origen = (String) objeto.get("aeropuerto_origen");
+            lista = (JSONArray) objeto.get("registro_vuelos");
+
+            if (lista != null) {
+                for (int j = 0; j < lista.size(); j++) {
+                    ls = (JSONObject) lista.get(j);
+                    fecha = (String) ls.get("fecha");
+                    cantidad_asientos_vendidos = (String) ls.get("cantidad_asientos_vendidos");
+                    cantidad_asientos_totales = (String) ls.get("cantidad_asientos_totales");
+                    viaje = new Viaje(fecha, cantidad_asientos_totales, cantidad_asientos_vendidos);
+                    registro_vuelos.insertar(viaje, i);
+                }
+            }
+            vuelo= new Vuelo(hora_llegada, codigo, aeropuerto_destino, hora_salida, aeropuerto_origen, registro_vuelos);
+            vuelos.insertar(vuelo);
+        }
+
+        return vuelos;
+    }
+
+}

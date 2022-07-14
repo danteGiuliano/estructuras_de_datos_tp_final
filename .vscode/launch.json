@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch VueloABM",
+            "request": "launch",
+            "mainClass": "ABM.VueloABM",
+            "projectName": "EDAT_5436b262"
+        },
+        {
+            "type": "java",
             "name": "Launch PasajeABM",
             "request": "launch",
             "mainClass": "ABM.PasajeABM",

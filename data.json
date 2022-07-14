@@ -8,11 +8,11 @@
             "registro_vuelos": [
                 {
                     "fecha": "17\/08\/03",
-                    "cantidad_asientos_vendidos": 50,
-                    "cantidad_asientos_totales": 80
+                    "cantidad_asientos_vendidos": "50",
+                    "cantidad_asientos_totales": "80"
                 }
             ],
-            "Aeropuerto_origen": "NQN"
+            "aeropuerto_origen": "NQN"
         }
     ],
     "Pasajes": [
