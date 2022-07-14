@@ -21,6 +21,20 @@ public class Cliente implements Comparable{
         return numero_dni;
     }
 
+    @Override
+    public int hashCode() {
+        int x = tipo_dni.charAt(0);
+        int y = tipo_dni.charAt(1);
+        int z = tipo_dni.charAt(2);
+
+        int constante=Integer.parseInt(numero_dni);
+        return ((x*constante)/y)+z*y;
+    }
+    public int hash(){
+        return this.hashCode();
+
+    }
+
     public void set_numero_dni(String numero_dni) {
         this.numero_dni = numero_dni;
     }

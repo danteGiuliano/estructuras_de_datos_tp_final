@@ -229,36 +229,47 @@ public class ORM {
         return mapa_aeroportuario;
         
     }
-    public static Map<String,Lista> get_pasajes(){
+    public static Map<Integer,Lista> get_pasajes(){
         verifica_carga();
-         
-        Map <String,Lista> map = new HashMap();
-
-        pasajes.forEach(e->{
-            JSONObject elemento = (JSONObject)e;
-            Lista lista = new Lista();
-            String fecha= (String)elemento.get("fecha");
-            String estado=(String) elemento.get("estado");
-            String vuelo=(String) elemento.get("vuelo");
-            String asiento_nro=(String) elemento.get("asiento_nro");
-            String tipo_documento=(String) elemento.get("tipo_documento");
-            String numero_documento=(String)  elemento.get("numero_dni");
+        ArbolAVL clientes=get_clientes();
+         Cliente cliente=null;
+        Map <Integer,Lista> map = new HashMap();
+        JSONObject elemento=null;
+        Lista lista = new Lista();
+        String fecha="";
+        String estado="";
+        String vuelo="";
+        String asiento_nro="";
+        String tipo_documento="";
+        String numero_documento="";
+        for (int i = 0; i < pasajes.size(); i++) {
+             elemento = (JSONObject) pasajes.get(i);
+             lista = new Lista();
+            
+             fecha= (String)elemento.get("fecha");
+             estado=(String) elemento.get("estado");
+             vuelo=(String) elemento.get("vuelo");
+             asiento_nro=(String) elemento.get("asiento_nro");
+             tipo_documento=(String) elemento.get("tipo_documento");
+             numero_documento=(String)  elemento.get("numero_dni");
 
             String key=tipo_documento+numero_documento;
             Pasaje p = new Pasaje(vuelo, fecha, asiento_nro, estado);
-
-            if(map.get(key)!=null){
-                lista=map.get(tipo_documento+numero_documento);
+            cliente=(Cliente)clientes.extraer_elemento(key);
+            if(map.get(cliente.hashCode())!=null){
+                lista=map.get(cliente.hashCode());
                 lista.insertar(p, 1);
-                map.put(key, lista);
+                map.put(cliente.hashCode(), lista);
             }else{
                 lista.insertar(p, 1);
-                map.put(key,lista);
-            }
-        });
-
-        return  map;
+                if(cliente!=null){
+                    map.put(cliente.hashCode(),lista);
+                }
+        }
+      
     }
 
+    return  map;
+}
 }
 
