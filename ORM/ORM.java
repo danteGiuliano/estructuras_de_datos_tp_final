@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -13,8 +15,10 @@ import org.json.simple.parser.JSONParser;
 
 import Dominio.Aeropuerto;
 import Dominio.Cliente;
+import Dominio.Pasaje;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
+import Estructuras.Lista.Lista;
 
 public class ORM {
     /**
@@ -162,7 +166,7 @@ public class ORM {
 
             nombre=(String) elemento.get("nombre");
             apellido=(String)elemento.get("apellido");
-            tipo_dni=(String)elemento.get("tipo_dni");
+            tipo_dni=(String)elemento.get("tipo_documento");
             numero_dni=(String)elemento.get("numero_dni");
             domicilio=(String)elemento.get("domicilio");
             telefono=(String)elemento.get("numero_telefono");
@@ -224,6 +228,36 @@ public class ORM {
 
         return mapa_aeroportuario;
         
+    }
+    public static Map<String,Lista> get_pasajes(){
+        verifica_carga();
+         
+        Map <String,Lista> map = new HashMap();
+
+        pasajes.forEach(e->{
+            JSONObject elemento = (JSONObject)e;
+            Lista lista = new Lista();
+            String fecha= (String)elemento.get("fecha");
+            String estado=(String) elemento.get("estado");
+            String vuelo=(String) elemento.get("vuelo");
+            String asiento_nro=(String) elemento.get("asiento_nro");
+            String tipo_documento=(String) elemento.get("tipo_documento");
+            String numero_documento=(String)  elemento.get("numero_dni");
+
+            String key=tipo_documento+numero_documento;
+            Pasaje p = new Pasaje(vuelo, fecha, asiento_nro, estado);
+
+            if(map.get(key)!=null){
+                lista=map.get(tipo_documento+numero_documento);
+                lista.insertar(p, 1);
+                map.put(key, lista);
+            }else{
+                lista.insertar(p, 1);
+                map.put(key,lista);
+            }
+        });
+
+        return  map;
     }
 
 }

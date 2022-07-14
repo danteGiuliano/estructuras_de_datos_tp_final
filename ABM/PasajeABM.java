@@ -1,6 +1,10 @@
 package ABM;
 
+import java.util.Map;
 import java.util.Scanner;
+
+import Estructuras.Lista.Lista;
+import ORM.ORM;
 
 public class PasajeABM {
     //"El hash map se define para los pasajes la clave son los clientes cada"
@@ -8,7 +12,10 @@ public class PasajeABM {
     //HashMap claveCliente , Lista pasajes
     static Scanner edat = new Scanner(System.in);
     static String formato_menu = "%20s %60s";
+
+    static Map<String,Lista> map = ORM.get_pasajes();
     public static void main(String[] args) {
+        System.out.println(map.get("DNI40807582").toString());
         menu();
     }
 
@@ -62,6 +69,9 @@ public class PasajeABM {
             System.out.println("");
         }
         return sesion;
+    }
+    public static void comprar_pasaje(){
+        
     }
 
 }

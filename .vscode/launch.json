@@ -9,6 +9,13 @@
             "name": "Launch PasajeABM",
             "request": "launch",
             "mainClass": "ABM.PasajeABM",
+            "projectName": "estructuras_de_datos_tp_final_28e57d87"
+        },
+        {
+            "type": "java",
+            "name": "Launch PasajeABM",
+            "request": "launch",
+            "mainClass": "ABM.PasajeABM",
             "projectName": "EDAT_5436b262"
         },
         {

@@ -39,6 +39,9 @@ public class Pasaje {
     public void set_asiento_nro(String asiento_nro){
         this.asiento_nro=asiento_nro;
     }
+    public String toString(){
+        return this.vuelo;
+    }
     
 
 }

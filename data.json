@@ -1,12 +1,26 @@
 {
     "Pasajes": [
         {
-            "fecha": "17\/08\/03",
+            "fecha": "17\/08\/2020",
             "estado": "pendiente",
             "vuelo": "AA2279",
-            "asiendo_nro": "AA2279-1",
+            "asiento_nro": "AA2279-1",
             "tipo_documento":"DNI",
             "numero_dni": "40807582"
+        },{
+            "fecha": "20\/10\/2019",
+            "estado": "cancelado",
+            "vuelo": "AA2279",
+            "asiento_nro": "AA2279-1",
+            "tipo_documento":"DNI",
+            "numero_dni": "40807582"
+        },{
+            "fecha": "20\/10\/2019",
+            "estado": "pendiente",
+            "vuelo": "AA2279",
+            "asiento_nro": "AA2279-3",
+            "tipo_documento":"DNI",
+            "numero_dni": "12807582"
         }
     ],
     "Clientes": [
