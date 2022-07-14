@@ -6,6 +6,7 @@ import Dominio.Cliente;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Lista.Lista;
 import ORM.ORM;
+import Validadores.Validador;
 
 public class ClienteABM {
     static Scanner edat = new Scanner(System.in);
@@ -14,12 +15,7 @@ public class ClienteABM {
     static String formato_cliente = "%15s %20s %15s %15s %20s %15s %15s";
     static String formato_menu = "%20s %60s";
 
-    static String nombre_valido = "^([a-zA-Z]+[ ]*){2}$"; // Formato de nombres
-    static String dni_valido = "^[A-Z]{3}$"; // Formato XXX
-    static String numero_dni_valido = "^[0-9]{8}$"; // Formato xxxxxxxx 8
-    static String telefono_valido = "^[0-9]{3}+[-]+[0-9]{7}$";// Formato xxx-xxxxxxx
-    static String fecha_valida = "^([1-9]|1[0-9]|2[0-9]|3[0-1])/([1-9]|1[0-2])/([1-9][1-9][1-9][1-9])$";
-
+   
     public static void main(String[] args) {
         menu();
     }
@@ -113,7 +109,7 @@ public class ClienteABM {
 
     private static void modificar_cliente() {
 
-        Cliente cliente = validar_cliente();
+        Cliente cliente = Validador.validar_cliente();
 
         do {
             System.out.println("_____________________________________________________________________________________");
@@ -144,12 +140,12 @@ public class ClienteABM {
             opcion_numerica = Integer.parseInt(opcion);
             switch (opcion_numerica) {
                 case 1:
-                    String domicilio = validar_nombre('D');
+                    String domicilio = Validador.validar_nombre_cliente('D');
                     cliente.set_domicilio(domicilio);
                     System.out.println("DOMICILIO CAMBIADO CON EXITO!");
                     break;
                 case 2:
-                    String telefono = validar_telefono();
+                    String telefono = Validador.validar_telefono();
                     cliente.set_domicilio(telefono);
                     System.out.println("TELEFONO CAMBIADO CON EXITO!");
                     break;
@@ -171,13 +167,13 @@ public class ClienteABM {
     }
 
     private static void cargar_cliente() {
-        String nombre = validar_nombre('N');
-        String apellido = validar_nombre('A');
-        String domicilio = validar_nombre('D');
-        String tipo_documento = validar_tipo_dni();
-        String documento = validar_documento();
-        String numero_telefono = validar_telefono();
-        String fecha_nacimiento = validar_fecha_nacimiento();
+        String nombre = Validador.validar_nombre_cliente('N');
+        String apellido = Validador.validar_nombre_cliente('A');
+        String domicilio = Validador.validar_nombre_cliente('D');
+        String tipo_documento = Validador.validar_tipo_dni_cliente();
+        String documento = Validador.validar_documento_cliente();
+        String numero_telefono = Validador.validar_telefono();
+        String fecha_nacimiento = Validador.validar_fecha();
 
         clientes.insertar(
                 new Cliente(documento, nombre, apellido, tipo_documento, numero_telefono, domicilio, fecha_nacimiento));
@@ -191,13 +187,13 @@ public class ClienteABM {
 
         boolean lectura = false;
         while (sesion) {
-            String tipo_documento = validar_tipo_dni();
-            String numero_documento = validar_documento();
+            String tipo_documento = Validador.validar_tipo_dni_cliente();
+            String numero_documento = Validador.validar_documento_cliente();
             cliente = (Cliente) clientes.extraer_elemento(tipo_documento + numero_documento);
             if (cliente != null) {
                 System.out.println("Esta seguro que quiere borrar el cliente ");
                 mostrar_cliente(cliente);
-                lectura = validar_opcion();
+                lectura = Validador.validar_opcion();
 
                 if (lectura) {
                     boolean borrado = clientes.eliminar(cliente);
@@ -208,145 +204,11 @@ public class ClienteABM {
                 sesion = false;
             } else {
                 System.out.println("Usuario invalido, desea continuar");
-                sesion = validar_opcion();
+                sesion = Validador.validar_opcion();
             }
 
         }
 
     }
 
-    /**
-     * Validadores
-     * 
-     */
-
-    private static String validar_nombre(char tipo) {
-        String nombre_aeropuerto = "";
-        boolean aceptado = false;
-
-        while (!aceptado) {
-            tipo_lectura(tipo);
-            nombre_aeropuerto = edat.nextLine();
-            if (!nombre_aeropuerto.matches(nombre_valido)) {
-                System.out.println("Su nombre no tiene un formato valido ingrese un nombre valido");
-            } else {
-                aceptado = true;
-            }
-        }
-        return nombre_aeropuerto;
-    }
-
-    private static void tipo_lectura(char tipo) {
-        switch (tipo) {
-            case 'N':
-                System.out.println("Ingrese un nombre valido");
-                break;
-            case 'A':
-                System.out.println("Ingrese un Apellido valido");
-                break;
-            case 'D':
-                System.out.println("Ingrese un Domicilio valido");
-                break;
-        }
-    }
-
-    private static String validar_tipo_dni() {
-        String codigo_aeropuerto = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese su tipo de docuemento 3 letras ej : DNI");
-            codigo_aeropuerto = edat.nextLine();
-            if (!codigo_aeropuerto.matches(dni_valido)) {
-                System.out.println("Formato invalido");
-            } else {
-                aceptado = true;
-            }
-        }
-        return codigo_aeropuerto;
-    }
-
-    private static String validar_telefono() {
-        String numero_telefono = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese su numero de telefono");
-            numero_telefono = edat.nextLine();
-            if (!numero_telefono.matches(telefono_valido)) {
-                System.out.println("Formato de telefono invalido debe ser xxx-xxxxxxx");
-            } else {
-                aceptado = true;
-            }
-        }
-        return numero_telefono;
-    }
-
-    private static String validar_documento() {
-        String numero_telefono = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese su numero de documento");
-            numero_telefono = edat.nextLine();
-            if (!numero_telefono.matches(numero_dni_valido)) {
-                System.out.println("Formato de documento invalido debe ser xxxxxxxx");
-            } else {
-                aceptado = true;
-            }
-        }
-        return numero_telefono;
-    }
-
-    private static String validar_fecha_nacimiento() {
-        String numero_telefono = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese una fecha de nacimiento");
-            numero_telefono = edat.nextLine();
-            if (!numero_telefono.matches(fecha_valida)) {
-                System.out.println("Formato de fecha invalida debe ser dd/mm/aaaa");
-            } else {
-                aceptado = true;
-            }
-        }
-        return numero_telefono;
-    }
-
-    private static boolean validar_opcion() {
-        String opcion = "^S|N$";
-        String lectura = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("S/N ?");
-            lectura = edat.nextLine().toUpperCase();
-            if (!lectura.matches(opcion)) {
-                System.out.println("Formato invalido ingrese S para Si N para No");
-            } else {
-                aceptado = true;
-            }
-        }
-        if (lectura.charAt(0) == 'S') {
-            aceptado = true;
-        } else {
-            aceptado = false;
-        }
-        return aceptado;
-    }
-
-    private static Cliente validar_cliente() {
-        boolean existe = false;
-        System.out.println("Busqueda de cliente");
-        String tipo_dni = "";
-        String numero_documento = "";
-        Cliente cliente = null;
-        while (!existe) {
-            tipo_dni = validar_tipo_dni();
-            numero_documento = validar_documento();
-            cliente = (Cliente) clientes.extraer_elemento(tipo_dni + numero_documento);
-            if (cliente == null) {
-                System.out.println("El cliente no existe en el registro");
-            } else {
-                existe = true;
-            }
-        }
-        return cliente;
-    }
 }

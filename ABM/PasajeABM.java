@@ -8,6 +8,7 @@ import Dominio.Pasaje;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Lista.Lista;
 import ORM.ORM;
+import Validadores.Validador;
 
 public class PasajeABM {
     // "El hash map se define para los pasajes la clave son los clientes cada"
@@ -18,9 +19,7 @@ public class PasajeABM {
     static String formato_pasaje_opcion = "%10s %20s %20s %20s %20s";
     static String formato_menu = "%20s %60s";
 
-    static String dni_valido = "^[A-Z]{3}$"; // Formato XXX
-    static String numero_dni_valido = "^[0-9]{8}$"; // Formato xxxxxxxx 8
-    static String fecha_valida = "^([1-9]|1[0-9]|2[0-9]|3[0-1])/([1-9]|1[0-2])/([1-9][1-9][1-9][1-9])$";
+    
 
     static Map<Integer, Lista> map = ORM.get_pasajes();
     static ArbolAVL clientes = ORM.get_clientes();
@@ -81,15 +80,15 @@ public class PasajeABM {
     }
 
     public static void comprar_pasaje() {
-        Cliente cliente = validar_cliente();
-        String fecha = validar_fecha();
+        Cliente cliente = Validador.validar_cliente();;
+        String fecha =Validador.validar_fecha();
         String estado = "pendiente";
         // String vuelo = validar_vuelo();
 
     }
 
     public static void ver_pasajes_cliente() {
-        Cliente cliente = validar_cliente();
+        Cliente cliente = Validador.validar_cliente();
         Lista pasajes = map.get(cliente.hashCode());
         if (pasajes != null) {
             System.out.println(
@@ -115,7 +114,7 @@ public class PasajeABM {
     }
 
     public static void modificar_pasaje() {
-        Cliente cliente = validar_cliente();
+        Cliente cliente = Validador.validar_cliente();
         int opcion = 0;
         boolean sesion=true;
         while (sesion) {
@@ -186,7 +185,7 @@ public class PasajeABM {
             opcion_numerica = Integer.parseInt(opcion);
             switch (opcion_numerica) {
                 case 1:
-                    pasaje.set_estado(validar_estado_pasaje());
+                    pasaje.set_estado(Validador.validar_estado_pasaje());
                     System.out.println("Pasaje modificado cone exito");
                     break;
                 case 2:
@@ -211,91 +210,6 @@ public class PasajeABM {
 
     }
 
-    /**
-     * 
-     * Validadores
-     * 
-     * 
-     */
-
-    private static Cliente validar_cliente() {
-        boolean existe = false;
-        System.out.println("Busqueda de cliente");
-        String tipo_dni = "";
-        String numero_documento = "";
-        Cliente cliente = null;
-        while (!existe) {
-            tipo_dni = validar_tipo_dni();
-            numero_documento = validar_documento();
-            cliente = (Cliente) clientes.extraer_elemento(tipo_dni + numero_documento);
-            if (cliente == null) {
-                System.out.println("El cliente no existe en el registro");
-            } else {
-                existe = true;
-            }
-        }
-        return cliente;
-    }
-
-    private static String validar_documento() {
-        String numero_telefono = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese su numero de documento");
-            numero_telefono = edat.nextLine();
-            if (!numero_telefono.matches(numero_dni_valido)) {
-                System.out.println("Formato de documento invalido debe ser xxxxxxxx");
-            } else {
-                aceptado = true;
-            }
-        }
-        return numero_telefono;
-    }
-
-    private static String validar_tipo_dni() {
-        String codigo_aeropuerto = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese su tipo de docuemento 3 letras ej : DNI");
-            codigo_aeropuerto = edat.nextLine();
-            if (!codigo_aeropuerto.matches(dni_valido)) {
-                System.out.println("Formato invalido");
-            } else {
-                aceptado = true;
-            }
-        }
-        return codigo_aeropuerto;
-    }
-
-    private static String validar_fecha() {
-        String numero_telefono = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese una fecha de nacimiento");
-            numero_telefono = edat.nextLine();
-            if (!numero_telefono.matches(fecha_valida)) {
-                System.out.println("Formato de fecha invalida debe ser dd/mm/aaaa");
-            } else {
-                aceptado = true;
-            }
-        }
-        return numero_telefono;
-    }
-
-    private static String validar_estado_pasaje() {
-        String validacion = "^pendiente|candelado|expirado$";
-        String estado = "";
-        boolean aceptado = false;
-        while (!aceptado) {
-            System.out.println("Ingrese un estado de pasaje ");
-            estado = edat.nextLine().toLowerCase();
-            if (!estado.matches(validacion)) {
-                System.out.println("Formato de estado invalido, debe ser Pendiente Cancelado o Expirado");
-            } else {
-                aceptado = true;
-            }
-        }
-        return estado;
-    }
+  
 
 }

@@ -2,7 +2,7 @@ package Dominio;
 
 import Estructuras.Lista.Lista;
 
-public class Vuelos {
+public class Vuelo {
 
     private String hora_llegada;
     private String codigo;
@@ -10,7 +10,7 @@ public class Vuelos {
     private String hora_salida;
     private Lista registro_vuelos;
 
-    public Vuelos(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida) {
+    public Vuelo(String hora_llegada, String codigo, String aeropuerto_destino, String hora_salida) {
             this.hora_llegada            =   hora_llegada;
             this.codigo                  =   codigo;
             this.aeropuerto_destino      =   aeropuerto_destino;
