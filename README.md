@@ -14,5 +14,5 @@ Estructuras : Estructuras para usar en los ABM
 
 Validadores : Validan las entradas por consola
 
-MAIN        : Control principal (No programado)
+MAIN        : Control principal 
 
