@@ -17,8 +17,6 @@ public class VueloABM {
     static ArbolAVL vuelos = ORM.get_vuelos();
 
     public static void main(String[] args) {
-        Vuelo v = (Vuelo) vuelos.extraer_elemento("AA2279");
-        System.out.println(v.get_hora_llegada());
         menu();
     }
 

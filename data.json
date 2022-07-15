@@ -5,14 +5,27 @@
             "codigo": "AA2279",
             "aeropuerto_destino": "AEP",
             "hora_salida": "18:00",
+            "aeropuerto_origen": "NQN",
             "registro_vuelos": [
                 {
-                    "fecha": "17\/08\/03",
+                    "fecha": "17\/11\/1997",
+                    "cantidad_asientos_vendidos": "42",
+                    "cantidad_asientos_totales": "120"
+                },
+                {
+                    "fecha": "20\/10\/2019",
+                    "cantidad_asientos_vendidos": "20",
+                    "cantidad_asientos_totales": "80"
+                },{
+                    "fecha": "15\/10\/2003",
+                    "cantidad_asientos_vendidos": "50",
+                    "cantidad_asientos_totales": "80"
+                },{
+                    "fecha": "9\/08\/2012",
                     "cantidad_asientos_vendidos": "50",
                     "cantidad_asientos_totales": "80"
                 }
-            ],
-            "aeropuerto_origen": "NQN"
+            ]   
         }
     ],
     "Pasajes": [
@@ -25,9 +38,9 @@
             "numero_dni": "40807582"
         },{
             "fecha": "20\/10\/2019",
-            "estado": "cancelado",
+            "estado": "expirado",
             "vuelo": "AA2279",
-            "asiento_nro": "AA2279-1",
+            "asiento_nro": "AA2279-34",
             "tipo_documento":"DNI",
             "numero_dni": "40807582"
         },{

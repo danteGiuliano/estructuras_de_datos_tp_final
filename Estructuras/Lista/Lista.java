@@ -12,7 +12,6 @@ public class Lista {
 
     public boolean insertar(Object elemen, int ind) {
         boolean flag = true;
-        int r = 1;
         if (ind < 1 || ind > this.longitud + 1) {
             flag = false;
         } else {
@@ -91,14 +90,16 @@ public class Lista {
     }
 
     public int localizar(Object elem) {
-        int pos = 1;// Supongo que la lista tiene 1 elemento.
+        int pos = -1;
+        int indice = 1;
         Nodo aux = this.cabecera;
         while (aux != null) {
             if (aux.get_elemento().equals(elem)) {
+                pos = indice;
                 aux = null;
             } else {
                 aux = aux.get_enlace();
-                pos++;
+                indice++;
             }
         }
         return pos;

@@ -298,7 +298,7 @@ public class ORM {
         String aeropuerto_destino = "";
 
         for (int i = 0; i < ORM.vuelos.size(); i++) {
-            registro_vuelos = new Lista();
+            
             objeto = (JSONObject) ORM.vuelos.get(i);
             codigo = (String) objeto.get("codigo");
             hora_salida = (String) objeto.get("hora_salida");
@@ -308,13 +308,14 @@ public class ORM {
             lista = (JSONArray) objeto.get("registro_vuelos");
 
             if (lista != null) {
+                registro_vuelos = new Lista();
                 for (int j = 0; j < lista.size(); j++) {
                     ls = (JSONObject) lista.get(j);
                     fecha = (String) ls.get("fecha");
                     cantidad_asientos_vendidos = (String) ls.get("cantidad_asientos_vendidos");
                     cantidad_asientos_totales = (String) ls.get("cantidad_asientos_totales");
                     viaje = new Viaje(fecha, cantidad_asientos_totales, cantidad_asientos_vendidos);
-                    registro_vuelos.insertar(viaje, i);
+                    registro_vuelos.insertar(viaje, 1);
                 }
             }
             vuelo= new Vuelo(hora_llegada, codigo, aeropuerto_destino, hora_salida, aeropuerto_origen, registro_vuelos);
