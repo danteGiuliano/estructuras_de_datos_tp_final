@@ -1,6 +1,10 @@
 package Estructuras.Grafo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import Dominio.Aeropuerto;
+import Estructuras.AVL.NodoAVL;
 import Estructuras.Lista.Lista;
 
 public class Grafo {
@@ -224,7 +228,8 @@ public class Grafo {
         }
         return lista;
     }
-    public Object extraer_arco(Object elemento_x, Object elemento_y,Object etiqueta) {
+
+    public Object extraer_arco(Object elemento_x, Object elemento_y, Object etiqueta) {
         Object arco = null;
         NodoVertice recorrido = this.inicio;
         NodoAdyacente candidado = null;
@@ -250,10 +255,10 @@ public class Grafo {
             while (candidado != null && !existe) {
 
                 if (candidado.get_vertice().equals(busqueda)) {
-                   if(candidado.get_etiqueta().equals(etiqueta)){
-                    arco=candidado.get_etiqueta();
-                    existe=true;
-                   }
+                    if (candidado.get_etiqueta().equals(etiqueta)) {
+                        arco = candidado.get_etiqueta();
+                        existe = true;
+                    }
                 } else {
                     candidado = candidado.get_nodo_adyacente();
                 }
@@ -263,11 +268,57 @@ public class Grafo {
         return arco;
     }
 
-    public Object extraer_vertice(Object tipo){
+    public Object extraer_vertice(Object tipo) {
         return buscar_nodo(tipo).get_elememento();
     }
 
+    public Lista camino_mas_corto(Object referencia_a, Object referencia_b) {
+        Lista lista = new Lista();
+        NodoVertice origen = buscar_nodo(referencia_a);
+        if (origen != null) {
+                // Genero mi mapa para no perderme C:
+                Map<NodoVertice, NodoAdyacente> mapa = new HashMap<>();// Metodo recursivo
+                camino_mas_corto_aux(lista, mapa, origen,referencia_b);
+        }
 
+        return lista;
+    }
+
+    private void camino_mas_corto_aux(Lista lista,Map mapa_camino,NodoVertice origen,Object tesoro){
+        if(origen.get_elememento().equals(tesoro)){
+            lista.insertar(origen, 1);
+        }else{
+            NodoAdyacente camino = origen.get_primer_nodo();
+            while(camino!=null){ //mientras halla caminos
+                    NodoAdyacente camino_visitado=(NodoAdyacente) mapa_camino.get(origen);
+                    if(camino_visitado!=null && camino_visitado.equals(camino) ){ //No pase por este nivel
+                       NodoVertice nuevo_nivel = camino.get_vertice();
+                        if(nuevo_nivel.get_elememento()!=tesoro){ //Si no esta mi tesoro busco en otro posible camino
+                            Map<NodoVertice,NodoAdyacente> mapa_nivel= new HashMap<>(); //un nuevo mapa para buscar posibles caminos en mi nivel
+                            mapa_nivel.putAll(mapa_camino);
+                            mapa_nivel.put(nuevo_nivel, camino); //Ya pase por aqui
+                            camino_mas_corto_aux(lista, mapa_nivel,nuevo_nivel, tesoro);
+                            // Aqui la lista deberia el posible camino
+                            if(!lista.esVacia()){ //Comparo lo que tengo...
+                                if(lista.localizar(nuevo_nivel)!=-1){
+                                    lista.insertar(nuevo_nivel, 1);
+                                }else{
+                                    //Comparo el largo de los caminos
+
+                                }
+
+                            }
+    
+                        }
+                    } 
+                camino= camino.get_nodo_adyacente();
+            }
+        }
+            
+      
+        
+
+    }
 
     /**
      * Metodo de debug
@@ -300,6 +351,5 @@ public class Grafo {
 
         return salida;
     }
-
 
 }
