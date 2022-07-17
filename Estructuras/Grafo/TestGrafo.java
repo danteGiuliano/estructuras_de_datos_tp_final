@@ -1,18 +1,20 @@
 package Estructuras.Grafo;
 
+import java.util.Map;
+
+import Estructuras.Lista.Lista;
+import ORM.ORM;
+
 public class TestGrafo {
 
     public static void main(String[] args) {
 
-        System.out.println("Llenado de grafo");
-        Grafo grafo = new Grafo();
+        Grafo grafo =ORM.get_aeropuertos();
 
-        grafo.insertar_vertice("A");
-        grafo.insertar_vertice("B");
-
-        grafo.insertar_arco("A", "B", 25);
-
-        System.out.println(grafo.toString());
+        Lista  l = grafo .caminoMasCorto("NQN", "AMB");
+        if(!l.esVacia()){
+            System.out.println(l.toString());
+        }
 
     }
     

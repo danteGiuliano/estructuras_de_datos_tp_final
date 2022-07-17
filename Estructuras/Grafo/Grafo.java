@@ -272,52 +272,42 @@ public class Grafo {
         return buscar_nodo(tipo).get_elememento();
     }
 
-    public Lista camino_mas_corto(Object referencia_a, Object referencia_b) {
-        Lista lista = new Lista();
-        NodoVertice origen = buscar_nodo(referencia_a);
-        if (origen != null) {
-                // Genero mi mapa para no perderme C:
-                Map<NodoVertice, NodoAdyacente> mapa = new HashMap<>();// Metodo recursivo
-                camino_mas_corto_aux(lista, mapa, origen,referencia_b);
+    public Lista caminoMasCorto(Object origen, Object destino) {
+        Lista masLargo = new Lista();
+        NodoVertice verticeOr = buscar_nodo(origen);
+        if (verticeOr != null) {
+            Lista masLargoActual = new Lista();
+            masLargo = caminoMasCortoAux(verticeOr, destino, masLargo, masLargoActual);
         }
-
-        return lista;
+        return masLargo;
     }
 
-    private void camino_mas_corto_aux(Lista lista,Map mapa_camino,NodoVertice origen,Object tesoro){
-        if(origen.get_elememento().equals(tesoro)){
-            lista.insertar(origen, 1);
-        }else{
-            NodoAdyacente camino = origen.get_primer_nodo();
-            while(camino!=null){ //mientras halla caminos
-                    NodoAdyacente camino_visitado=(NodoAdyacente) mapa_camino.get(origen);
-                    if(camino_visitado!=null && camino_visitado.equals(camino) ){ //No pase por este nivel
-                       NodoVertice nuevo_nivel = camino.get_vertice();
-                        if(nuevo_nivel.get_elememento()!=tesoro){ //Si no esta mi tesoro busco en otro posible camino
-                            Map<NodoVertice,NodoAdyacente> mapa_nivel= new HashMap<>(); //un nuevo mapa para buscar posibles caminos en mi nivel
-                            mapa_nivel.putAll(mapa_camino);
-                            mapa_nivel.put(nuevo_nivel, camino); //Ya pase por aqui
-                            camino_mas_corto_aux(lista, mapa_nivel,nuevo_nivel, tesoro);
-                            // Aqui la lista deberia el posible camino
-                            if(!lista.esVacia()){ //Comparo lo que tengo...
-                                if(lista.localizar(nuevo_nivel)!=-1){
-                                    lista.insertar(nuevo_nivel, 1);
-                                }else{
-                                    //Comparo el largo de los caminos
+    private Lista caminoMasCortoAux(NodoVertice n, Object destino, Lista masLargo, Lista masLargoActual) {
+        if (n != null) {
 
-                                }
-
-                            }
-    
-                        }
-                    } 
-                camino= camino.get_nodo_adyacente();
+            masLargoActual.insertar(n.get_elememento(), masLargoActual.longitud() + 1);
+            if (n.get_elememento().equals(destino)) {
+                if (masLargo.esVacia()) {
+                    masLargo = masLargoActual.clone();
+                } else {
+                    if (masLargo.longitud() > masLargoActual.longitud()) {
+                        masLargo.vaciar();
+                        masLargo = masLargoActual.clone();
+                    }
+                }
+            } else {
+                NodoAdyacente ady = n.get_primer_nodo();
+                while (ady != null && (masLargoActual.longitud() < masLargo.longitud() || masLargo.esVacia())) {
+                    if (masLargoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
+                        masLargo = caminoMasCortoAux(ady.get_vertice(), destino, masLargo, masLargoActual);
+                    }
+                    ady = ady.get_nodo_adyacente();
+                }
             }
-        }
-            
-      
-        
+            masLargoActual.eliminar(masLargoActual.longitud());
 
+        }
+        return masLargo;
     }
 
     /**
