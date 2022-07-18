@@ -42,6 +42,9 @@ public class Pasaje {
     public String toString(){
         return this.vuelo;
     }
+    public String log(){
+        return "Pasaje :"+this.vuelo+" "+this.asiento_nro+" "+this.fecha+" "+fecha;
+    }
     
 
 }

@@ -100,4 +100,8 @@ public class Vuelo implements Comparable {
         return codigo.compareTo(vuelo.toString());
     }
 
+    public String log(){
+        return "Vuelo :"+this.codigo+" "+this.aeropuerto_origen+" "+this.aeropuerto_destino+" "+this.hora_salida+" "+this.hora_llegada;
+    }
+
 }

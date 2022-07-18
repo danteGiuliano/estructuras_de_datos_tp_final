@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
+import LOG.Logger;
 import ORM.ORM;
 import Validadores.Validador;
 
@@ -105,6 +106,7 @@ public class VueloABM {
                     if (Validador.validar_opcion()) {
                         vuelos.eliminar(vuelo);
                         System.out.println("VUELO BORRADO CON EXITO");
+                        Logger.Vuelo_baja(vuelo);
                         sesion = false;
                     }
                     break;
@@ -112,6 +114,7 @@ public class VueloABM {
                     String hora = Validador.validar_hora();
                     vuelo.set_hora_llegada(hora);
                     System.out.println("HORA DE INICIO MODIFICADA");
+                    Logger.Vuelo_modificacion(vuelo);
                     break;
                 case 4:
                     sesion = false;
@@ -158,6 +161,7 @@ public class VueloABM {
 
         if (vuelos.insertar(vuelo)) {
             System.out.println("VUELO AÑADIDO CON EXITO!");
+            Logger.Vuelo_alta(vuelo);
         }
 
     }

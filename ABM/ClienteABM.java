@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Dominio.Cliente;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Lista.Lista;
+import LOG.Logger;
 import ORM.ORM;
 import Validadores.Validador;
 
@@ -143,11 +144,13 @@ public class ClienteABM {
                     String domicilio = Validador.validar_nombre_cliente('D');
                     cliente.set_domicilio(domicilio);
                     System.out.println("DOMICILIO CAMBIADO CON EXITO!");
+                    Logger.cliente_modificacion(cliente);
                     break;
                 case 2:
                     String telefono = Validador.validar_telefono();
                     cliente.set_domicilio(telefono);
                     System.out.println("TELEFONO CAMBIADO CON EXITO!");
+                    Logger.cliente_modificacion(cliente);
                     break;
                 case 3:
                     mostrar_cliente(cliente);
@@ -175,9 +178,11 @@ public class ClienteABM {
         String numero_telefono = Validador.validar_telefono();
         String fecha_nacimiento = Validador.validar_fecha();
 
+        Cliente nuevo_cliente=  new Cliente(documento, nombre, apellido, tipo_documento, numero_telefono, domicilio, fecha_nacimiento);
         clientes.insertar(
-                new Cliente(documento, nombre, apellido, tipo_documento, numero_telefono, domicilio, fecha_nacimiento));
+                                nuevo_cliente  );
         System.out.println("CLIENTE CARGADO CON EXITO!");
+        Logger.cliente_alta(nuevo_cliente);
 
     }
 
@@ -199,6 +204,7 @@ public class ClienteABM {
                     boolean borrado = clientes.eliminar(cliente);
                     if (borrado) {
                         System.out.println("Cliente Borrado con exito");
+                        Logger.cliente_baja(cliente);
                     }
                 }
                 sesion = false;

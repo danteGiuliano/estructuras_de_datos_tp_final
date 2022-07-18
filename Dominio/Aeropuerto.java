@@ -42,4 +42,7 @@ public class Aeropuerto {
                 "|Telefono :"+this.telefono;
 
     }
+    public String log(){
+        return "Aeropuerto :"+this.codigo+" Nombre :"+this.nombre+" Telefono"+telefono;
+    }
 }

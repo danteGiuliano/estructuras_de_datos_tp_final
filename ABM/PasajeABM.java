@@ -7,6 +7,7 @@ import Dominio.Cliente;
 import Dominio.Pasaje;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Lista.Lista;
+import LOG.Logger;
 import ORM.ORM;
 import Validadores.Validador;
 
@@ -91,6 +92,8 @@ public class PasajeABM {
         Lista l1 = (Lista) pasajes.get(cliente.hashCode());
         l1.insertar(pasaje, 1);
         pasajes.put(cliente.hashCode(), l1);
+        System.out.println("PASAJE COMPRADO CON EXITO!");
+        Logger.Pasaje_alta(pasaje);
 
     }
 
@@ -194,6 +197,7 @@ public class PasajeABM {
                 case 1:
                     pasaje.set_estado(Validador.validar_estado_pasaje());
                     System.out.println("Pasaje modificado cone exito");
+                    Logger.Pasaje_modificacion(pasaje);
                     break;
                 case 2:
                     mostrar_pasaje(pasaje);
@@ -201,6 +205,7 @@ public class PasajeABM {
                 case 3:
                     pasajes.eliminar(pasajes.localizar(pasaje));
                     System.out.println("PASAJE BORRADO CON EXITO");
+                    Logger.Pasaje_baja(pasaje);
                     sesion = false;
                     break;
                 case 4:

@@ -26,6 +26,32 @@
                     "cantidad_asientos_totales": "80"
                 }
             ]   
+        }, {
+            "hora_llegada": "17:00",
+            "codigo": "BB2250",
+            "aeropuerto_destino": "AMB",
+            "hora_salida": "14:00",
+            "aeropuerto_origen": "APV",
+            "registro_vuelos": [
+                {
+                    "fecha": "19\/12\/1993",
+                    "cantidad_asientos_vendidos": "42",
+                    "cantidad_asientos_totales": "60"
+                },
+                {
+                    "fecha": "20\/10\/2015",
+                    "cantidad_asientos_vendidos": "20",
+                    "cantidad_asientos_totales": "80"
+                },{
+                    "fecha": "9\/07\/2003",
+                    "cantidad_asientos_vendidos": "10",
+                    "cantidad_asientos_totales": "30"
+                },{
+                    "fecha": "9\/08\/2016",
+                    "cantidad_asientos_vendidos": "80",
+                    "cantidad_asientos_totales": "80"
+                }
+            ]   
         }
     ],
     "Pasajes": [
@@ -48,6 +74,13 @@
             "estado": "pendiente",
             "vuelo": "AA2279",
             "asiento_nro": "AA2279-3",
+            "tipo_documento":"DNI",
+            "numero_dni": "12807582"
+        },{
+            "fecha": "19\/12\/1993",
+            "estado": "pendiente",
+            "vuelo": "BB2250",
+            "asiento_nro": "BB2250-6",
             "tipo_documento":"DNI",
             "numero_dni": "12807582"
         }

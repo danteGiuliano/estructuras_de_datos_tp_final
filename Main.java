@@ -16,6 +16,7 @@ import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Heap.Heap;
 import Estructuras.Lista.Lista;
+import LOG.Logger;
 import ORM.ORM;
 import Validadores.Validador;
 
@@ -29,9 +30,13 @@ public class Main {
     static Map<Integer, Lista> pasajes = ORM.get_pasajes();
     static Grafo aeropuerto = ORM.get_aeropuertos();
     static ArbolAVL vuelos = ORM.get_vuelos();
+    
 
     public static void main(String[] args) {
+        Logger.iniciar_log();
+        Logger.mostrar_estructuras();
         menu_principal();
+        Logger.mostrar_estructuras();
     }
 
     public static void menu_principal() {
@@ -256,21 +261,24 @@ public class Main {
     }
 
     public static void menor_camino_por() {
+        System.out.println("Ingrese el aeropuerto origen");
         String origen = Validador.validar_codigo_aeroportuario();
+        System.out.println("Ingrese el aeropuerto destino");
         String destino = Validador.validar_codigo_aeroportuario();
+        System.out.println("Ingrese el aeropuerto intermedio");
         String medio = Validador.validar_codigo_aeroportuario();
 
         Lista primera_parte = aeropuerto.camino_mas_corto(origen, medio);
         Lista segunda_parte = aeropuerto.camino_mas_corto(medio, destino);
 
         if (!primera_parte.esVacia() && !segunda_parte.esVacia()) {
-
+            segunda_parte.eliminar(1);
             String cadena_1 = primera_parte.toString();
             cadena_1 = cadena_1.substring(0, cadena_1.length() - 1);
             String cadena_2 = segunda_parte.toString();
-            cadena_2 = cadena_1.substring(1);
+            cadena_2 = cadena_2.substring(1);
 
-            System.out.println(cadena_1 + cadena_2);
+            System.out.println(cadena_1 +","+ cadena_2);
         } else {
             System.out.println("No existe menor camino que cumpla con esos requisitos");
         }
@@ -306,7 +314,6 @@ public class Main {
     }
 
     public static void camino_en_vuelos() {
-
         String origen = Validador.validar_codigo_aeroportuario();
         String destino = Validador.validar_codigo_aeroportuario();
         int cantidad = Validador.validar_numero();
@@ -317,7 +324,6 @@ public class Main {
         } else {
             System.out.println("No es posible realizar ese camino en esa cantidad de vuelos");
         }
-
     }
 
 }

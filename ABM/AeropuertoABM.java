@@ -2,10 +2,10 @@ package ABM;
 
 import java.util.Scanner;
 
-
 import Dominio.Aeropuerto;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Lista.Lista;
+import LOG.Logger;
 import ORM.ORM;
 import Validadores.Validador;
 
@@ -99,8 +99,10 @@ public class AeropuertoABM {
         nombre_aeropuerto = Validador.validar_nombre_aeroportuario();
         codigo_aeropuerto =Validador.validar_codigo_aeroportuario();
         numero_telefono = Validador.validar_telefono();
-
-        mapa_aeroportuario.insertar_vertice(new Aeropuerto(codigo_aeropuerto, nombre_aeropuerto, numero_telefono));
+        Aeropuerto nuevo_aeropuerto=new Aeropuerto(codigo_aeropuerto, nombre_aeropuerto, numero_telefono);
+        mapa_aeroportuario.insertar_vertice(nuevo_aeropuerto);
+        System.out.println("AEROPUERTO CARGADO CON EXITO!");
+        Logger.aeropuerto_alta(nuevo_aeropuerto);
     }
 
     /**
@@ -147,16 +149,19 @@ public class AeropuertoABM {
                     String codigo =Validador.validar_codigo_aeroportuario();
                     aeropuerto.set_codigo(codigo);
                     System.out.println("CODIGO MODIFICADO CON EXITO!");
+                    Logger.aeropuerto_modificacion(aeropuerto);
                     break;
                 case 2:
                     String nombre = Validador.validar_nombre_aeroportuario();
                     aeropuerto.set_nombre(nombre);
                     System.out.println("NOMBRE MODIFICADO CON EXITO!");
+                    Logger.aeropuerto_modificacion(aeropuerto);
                     break;
                 case 3:
                     String telefono = Validador.validar_telefono();
                     aeropuerto.set_telefono(telefono);
                     System.out.println("TELEFONO MODIFICADO CON EXITO!");
+                    Logger.aeropuerto_modificacion(aeropuerto);
                     break;
                 case 4:
                     sesion = false;
@@ -187,8 +192,10 @@ public class AeropuertoABM {
             Aeropuerto aeropuerto = (Aeropuerto) mapa_aeroportuario.extraer_vertice(codigo);
             if (aeropuerto != null) {
                 System.out.println("Esta seguro de que quiere borrar \n" + aeropuerto.info_aeropuerto());
-                if (edat.nextBoolean()) {
+                if (Validador.validar_opcion()) {
                     mapa_aeroportuario.eliminar_vertice(codigo);
+                    System.out.println("AEROPUERTO BORRADO CON EXCITO");
+                    Logger.aeropuerto_baja(aeropuerto);
                 }
             }
         } catch (Exception e) {
@@ -305,6 +312,8 @@ public class AeropuertoABM {
                 mapa_aeroportuario.eliminar_arco(aeropuerto_a, aeropuerto_b, ruta);
                 mapa_aeroportuario.insertar_arco(aeropuerto_a, aeropuerto_b, String.valueOf(distancia));
                 System.out.println("RUTA MODIFICADA CON EXITO");
+                
+
             }
 
         }else{

@@ -1,20 +1,18 @@
 package Dominio;
 
+public class Cliente implements Comparable {
+    String numero_dni, nombre, apellido, tipo_dni, numero_telefono, domicilio, fecha_nacimiento;
 
-public class Cliente implements Comparable{
-    String numero_dni,nombre, apellido, tipo_dni, numero_telefono, domicilio, fecha_nacimiento;
-    
-    
     public Cliente(String numero_dni, String nombre, String apellido, String tipo_dni, String numero_telefono,
-                String domicilio, String fecha_nacimiento) {
-                
-        this.numero_dni          =   numero_dni;
-        this.nombre              =   nombre;
-        this.apellido            =   apellido;
-        this.tipo_dni            =   tipo_dni;
-        this.numero_telefono     =   numero_telefono;
-        this.domicilio           =   domicilio;
-        this.fecha_nacimiento    =   fecha_nacimiento;
+            String domicilio, String fecha_nacimiento) {
+
+        this.numero_dni = numero_dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.tipo_dni = tipo_dni;
+        this.numero_telefono = numero_telefono;
+        this.domicilio = domicilio;
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
     public String get_numero_dni() {
@@ -27,10 +25,11 @@ public class Cliente implements Comparable{
         int y = tipo_dni.charAt(1);
         int z = tipo_dni.charAt(2);
 
-        int constante=Integer.parseInt(numero_dni);
-        return ((x*constante)/y)+z*y;
+        int constante = Integer.parseInt(numero_dni);
+        return ((x * constante) / y) + z * y;
     }
-    public int hash(){
+
+    public int hash() {
         return this.hashCode();
 
     }
@@ -87,15 +86,17 @@ public class Cliente implements Comparable{
         this.fecha_nacimiento = fecha_nacimiento;
     }
 
-    public String  toString(){
-        return this.tipo_dni+this.numero_dni;
+    public String toString() {
+        return this.tipo_dni + this.numero_dni;
     }
-    
-  
 
     @Override
     public int compareTo(Object o) {
         return this.toString().compareTo(o.toString());
     }
 
+    public String log() {
+        return "Cliente :" + this.tipo_dni + " " + this.numero_dni + " " + this.nombre + " " + this.apellido + " "
+                + this.domicilio + " " + this.fecha_nacimiento + " " + this.numero_telefono;
+    }
 }
