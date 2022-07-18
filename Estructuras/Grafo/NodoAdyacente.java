@@ -80,6 +80,9 @@ class NodoAdyacente {
             return false;
         return true;
     }
+    public int peso_etiqueta(){
+        return (int) etiqueta;
+    }
 
     
 }

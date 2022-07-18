@@ -2,7 +2,7 @@ package Estructuras.Heap;
 
 public class Heap {
 
-    // Esta implementacion corresponde al Heap minimo.
+    // Esta implementacion corresponde al Heap maximo.
 
     private static final int TAM = 20;
     private Comparable[] heap;
@@ -39,7 +39,7 @@ public class Heap {
         while (flag) {
             posP = posHijo / 2;
             if (posP >= 1) {
-                if (this.heap[posP].compareTo(temp) > 0) {
+                if (this.heap[posP].compareTo(temp) < 0) {
                     // intercambio
                     this.heap[posHijo] = this.heap[posP];
                     this.heap[posP] = temp;

@@ -310,45 +310,46 @@ public class Grafo {
         return masLargo;
     }
 
-    public boolean caminoEnXVuelos(Object o, Object d, int cant) {
-        NodoVertice origen = buscar_nodo(o);
-        boolean res = false;
+    public boolean camino_cantidad_vuelos(Object referencia_origen, Object referencia_destino, int cantidad) {
+        NodoVertice origen = buscar_nodo(referencia_origen);
+        boolean es_posible = false;
         if (origen != null) {
             Lista actual = new Lista();
-            res = caminoEnXAux(origen, d, cant, actual, new Lista(), res);
+            es_posible = camino_cantidad_vuelos_aux(origen, referencia_destino, cantidad, actual, new Lista(), es_posible);
         }
-        return res;
+        return es_posible;
     }
 
-    private boolean caminoEnXAux(NodoVertice n, Object destino, int cant, Lista actual, Lista res, boolean b) {
-        if (n != null) {
+    private boolean camino_cantidad_vuelos_aux(NodoVertice origen, Object destino, int cantidad, Lista camino, Lista camino_aux,
+            boolean es_posible) {
+        if (origen != null) {
 
-            actual.insertar(n.get_elememento(), actual.longitud() + 1);
-            if (n.get_elememento().equals(destino)) {
-                if (res.esVacia()) {
-                    res = actual.clone();
+            camino.insertar(origen.get_elememento(), camino.longitud() + 1);
+            if (origen.get_elememento().equals(destino)) {
+                if (camino_aux.esVacia()) {
+                    camino_aux = camino.clone();
                 } else {
-                    if (res.longitud() < actual.longitud()) {
+                    if (camino_aux.longitud() < camino.longitud()) {
                         // masLargo.vaciar();
-                        res = actual.clone();
+                        camino_aux = camino.clone();
                     }
                 }
-                if (res.longitud() - 1 <= cant) {
-                    b = true;
+                if (camino_aux.longitud() - 1 <= cantidad) {
+                    es_posible = true;
                 }
             } else {
-                NodoAdyacente ady = n.get_primer_nodo();
-                while (!b && ady != null && (actual.longitud() - 1 <= cant || res.esVacia())) {
-                    if (actual.localizar(ady.get_vertice().get_elememento()) < 0) {
-                        b = caminoEnXAux(ady.get_vertice(), destino, cant, actual, res, b);
+                NodoAdyacente ady = origen.get_primer_nodo();
+                while (!es_posible && ady != null && (camino.longitud() - 1 <= cantidad || camino_aux.esVacia())) {
+                    if (camino.localizar(ady.get_vertice().get_elememento()) < 0) {
+                        es_posible = camino_cantidad_vuelos_aux(ady.get_vertice(), destino, cantidad, camino, camino_aux, es_posible);
                     }
                     ady = ady.get_nodo_adyacente();
                 }
             }
-            actual.eliminar(actual.longitud());
+            camino.eliminar(camino.longitud());
 
         }
-        return b;
+        return es_posible;
     }
 
     /**
@@ -383,58 +384,55 @@ public class Grafo {
         return salida;
     }
 
-    public Lista distancia_mas_corta(Object a, Object b) {
-        Lista lis = new Lista();
-        NodoVertice origen = buscar_nodo(a);
-        if (origen != null) {
-            Map<NodoAdyacente, NodoAdyacente> mapa = new HashMap<>();
-            Map<NodoVertice, NodoAdyacente> camino = new HashMap<>();
-            camino.put(origen, origen.get_primer_nodo());
-            distancia_mas_corta_aux(lis, origen, b, mapa, camino);
+    public Lista camino_mas_rapido(Object origen, Object destino) {
+        Lista masLargo = new Lista();
+        NodoVertice verticeOr = buscar_nodo(origen);
+        if (verticeOr != null) {
+            Lista masLargoActual = new Lista();
+            masLargo = camino_mas_rapido_aux(verticeOr, destino, masLargo, masLargoActual);
         }
-
-        return lis;
+        return masLargo;
     }
 
-    public void distancia_mas_corta_aux(Lista lista, NodoVertice origen, Object referencia, Map repetido, Map mapa) {
+    private Lista camino_mas_rapido_aux(NodoVertice n, Object destino, Lista masLargo, Lista masLargoActual) {
+        if (n != null) {
 
-        if (origen.get_elememento().equals(referencia)) {
-            mapa.put(origen, null);
-            lista.insertar(mapa, 1);
-        } else {
-            NodoAdyacente camino = origen.get_primer_nodo();
-            while (camino != null) {
-                if (!bucle(repetido, camino)) {
-                    repetido.put(camino, camino);
-                    Map<NodoVertice, NodoAdyacente> nuevo_camino = new HashMap<>();
-                    nuevo_camino.putAll(mapa);
-                    nuevo_camino.put(origen, camino);
-                    distancia_mas_corta_aux(lista, camino.get_vertice(), referencia, repetido, nuevo_camino);
-                    if (!lista.esVacia()) {
-                        intercambio_camino(lista, camino, origen);
+            masLargoActual.insertar(n.get_elememento(), masLargoActual.longitud() + 1);
+            if (n.get_elememento().equals(destino)) {
+                if (masLargo.esVacia()) {
+                    masLargo = masLargoActual.clone();
+                } else {
+                    if (masPeso(masLargo, masLargoActual)) {
+                        masLargo.vaciar();
+                        masLargo = masLargoActual.clone();
                     }
                 }
-                camino = camino.get_nodo_adyacente();
+            } else {
+                NodoAdyacente ady = n.get_primer_nodo();
+                while (ady != null && (masLargoActual.longitud() < masLargo.longitud() || masLargo.esVacia())) {
+                    if (masLargoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
+                        masLargo = camino_mas_corto_aux(ady.get_vertice(), destino, masLargo, masLargoActual);
+                    }
+                    ady = ady.get_nodo_adyacente();
+                }
             }
+            masLargoActual.eliminar(masLargoActual.longitud());
+
         }
+        return masLargo;
     }
 
-    public void intercambio_camino(Lista lista, NodoAdyacente camino, NodoVertice origen) {
-        Map mapa = (Map) lista.recuperar(1);
-        NodoAdyacente ruta = (NodoAdyacente) mapa.get(origen);
-        if (ruta != null) {
-            System.out.println(ruta.get_etiqueta().toString());
-            if (ruta.get_etiqueta().compareTo(camino.get_etiqueta()) < 0) {
-                mapa.put(origen, ruta);
-                lista.eliminar(1);
-                lista.insertar(mapa, 1);
-            }
-        }
+    private boolean masPeso(Lista l1, Lista l2) {
+        return obtener_peso(l1) > obtener_peso(l2);
     }
 
-    private boolean bucle(Map mapa,NodoAdyacente referencia) {
-       return mapa.containsKey(referencia);
+    private int obtener_peso(Lista l1) {
+        int suma = 0;
+        for (int i = 0; i < l1.longitud(); i++) {
+            NodoAdyacente nodo = (NodoAdyacente) l1.recuperar(i);
+            suma = nodo.peso_etiqueta();
+        }
+        return suma;
+    }
 
 }
-}
-

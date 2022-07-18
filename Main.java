@@ -8,11 +8,13 @@ import ABM.PasajeABM;
 import ABM.VueloABM;
 import Dominio.Aeropuerto;
 import Dominio.Cliente;
+import Dominio.ClientePromocion;
 import Dominio.Pasaje;
 import Dominio.Viaje;
 import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
+import Estructuras.Heap.Heap;
 import Estructuras.Lista.Lista;
 import ORM.ORM;
 import Validadores.Validador;
@@ -61,6 +63,14 @@ public class Main {
             System.out.println("");
             System.out.format(formato_menu, "10 |", "Camino mas corto que pase por un aeropuerto ");
             System.out.println("");
+            System.out.format(formato_menu, "11 |", "Camino mas rapido hacia un aeropuerto ");
+            System.out.println("");
+            System.out.format(formato_menu, "12 |", "Clientes en promocion");
+            System.out.println("");
+            System.out.format(formato_menu, "13 |", "Camino en X vuelos ");
+            System.out.println("");
+            System.out.format(formato_menu, "14 |", "Finalizar programa ");
+            System.out.println("");
             System.out.println("____________________________________________________________________________________");
             System.out.print("Opcion ->");
         } while (opcion(edat.nextLine()));
@@ -99,8 +109,20 @@ public class Main {
                 case 9:
                     menor_camino();
                     break;
-                    case 10:
+                case 10:
                     menor_camino_por();
+                    break;
+                case 11:
+                    camino_mas_rapido();
+                    break;
+                case 12:
+                    clientes_promocion();
+                    break;
+                case 13:
+                    camino_en_vuelos();
+                    break;
+                case 14:
+                    sesion = false;
                     break;
                 default:
                     System.out.println("Error de opcion ingrese una opcion valida");
@@ -228,18 +250,73 @@ public class Main {
         String destino = Validador.validar_codigo_aeroportuario();
 
         Lista l = aeropuerto.camino_mas_corto(origen, destino);
+        System.out.println("El camino mas corto es");
         System.out.println(l.toString());
 
     }
-    public static void menor_camino_por(){
+
+    public static void menor_camino_por() {
         String origen = Validador.validar_codigo_aeroportuario();
         String destino = Validador.validar_codigo_aeroportuario();
         String medio = Validador.validar_codigo_aeroportuario();
 
-        Lista l = aeropuerto.camino_mas_corto(origen, medio);
-        Lista u = aeropuerto.camino_mas_corto(medio, destino);
+        Lista primera_parte = aeropuerto.camino_mas_corto(origen, medio);
+        Lista segunda_parte = aeropuerto.camino_mas_corto(medio, destino);
 
-        //Concatenarlas con un metodo de lista
+        if (!primera_parte.esVacia() && !segunda_parte.esVacia()) {
+
+            String cadena_1 = primera_parte.toString();
+            cadena_1 = cadena_1.substring(0, cadena_1.length() - 1);
+            String cadena_2 = segunda_parte.toString();
+            cadena_2 = cadena_1.substring(1);
+
+            System.out.println(cadena_1 + cadena_2);
+        } else {
+            System.out.println("No existe menor camino que cumpla con esos requisitos");
+        }
+
+    }
+
+    public static void camino_mas_rapido() {
+        String origen = Validador.validar_codigo_aeroportuario();
+        String destino = Validador.validar_codigo_aeroportuario();
+
+        Lista lista = aeropuerto.camino_mas_rapido(origen, destino);
+        System.out.println(lista.toString());
+
+    }
+
+    public static void clientes_promocion() {
+        Heap promocion = new Heap();
+        Lista l = clientes.listar();
+        if (!l.esVacia()) {
+            while (!l.esVacia()) {
+                Cliente cliente_promo = (Cliente) l.recuperar(1);
+
+                Lista Lista_pasajes = pasajes.get(cliente_promo.hashCode());
+                if (Lista_pasajes != null) {
+                    String cantidad = "" + Lista_pasajes.longitud();
+                    promocion.insertar(new ClientePromocion(cliente_promo, cantidad));
+                }
+                l.eliminar(1);
+            }
+        }
+        System.out.println(promocion.toString());
+
+    }
+
+    public static void camino_en_vuelos() {
+
+        String origen = Validador.validar_codigo_aeroportuario();
+        String destino = Validador.validar_codigo_aeroportuario();
+        int cantidad = Validador.validar_numero();
+
+        boolean camino = aeropuerto.camino_cantidad_vuelos(origen, destino, cantidad);
+        if (camino) {
+            System.out.println("Si es posible realizar ese camino en menos de " + cantidad + " Vuelos");
+        } else {
+            System.out.println("No es posible realizar ese camino en esa cantidad de vuelos");
+        }
 
     }
 

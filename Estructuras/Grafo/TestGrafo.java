@@ -11,14 +11,14 @@ public class TestGrafo {
         Grafo grafo = ORM.get_aeropuertos();
         System.out.println(grafo.toString());
         //System.out.println(grafo.toString());
-        Lista l = grafo.distancia_mas_corta("APV", "CBA");
+        Lista l = grafo.camino_mas_rapido("NQN", "CBA");
         mostrar(l);
         
 
     }
     public static void mostrar(Lista l){
         if(!l.esVacia()){
-            System.out.println(l.recuperar(1).toString());
+            System.out.println(l.toString());
         }
     }
 }
