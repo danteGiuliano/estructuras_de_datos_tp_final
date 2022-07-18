@@ -128,19 +128,9 @@ public class Logger {
 
     public  static void mostrar_estructuras() {
         try {
-            escribir_log("Aeropuertos ");
-            escribir_log(aeropuerto.toString());
-
-            escribir_log("Clientes ");
-
-            escribir_log(clientes.toString());
-
-            escribir_log("Pasajes ");
-            escribir_log(pasajes.toString());
-
-            escribir_log("Vuelos ");
-
-            escribir_log(vuelos.toString());
+            escribir_log("Aeropuertos "+aeropuerto.toString()+" \n Clientes "+clientes.toString()+"\n Pasajes "+
+            pasajes.toString()+"\n Vuelos "+vuelos.toString()+"\n"
+            );
 
         } catch (Exception e) {
           

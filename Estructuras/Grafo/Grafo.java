@@ -374,9 +374,7 @@ public class Grafo {
                 salida += "\n";
                 nodo_vertice = nodo_vertice.get_siguiente_vertice();
             }
-
         }
-
         return salida;
     }
 
@@ -390,33 +388,33 @@ public class Grafo {
         return masLargo;
     }
 
-    private Lista camino_mas_rapido_aux(NodoVertice n, Object destino, Lista masLargo, Lista masLargoActual) {
+    private Lista camino_mas_rapido_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largo_aux) {
 
-        masLargoActual.insertar(n.get_elememento(), masLargoActual.longitud() + 1);
+        mas_largo_aux.insertar(n.get_elememento(), mas_largo_aux.longitud() + 1);
         if (n.get_elememento().equals(destino)) {
-            if (masLargo.esVacia()) {
-                masLargo = masLargoActual.clone();
+            if (mas_largo.esVacia()) {
+                mas_largo = mas_largo_aux.clone();
             } else {
-                if (masPeso(masLargo, masLargoActual)) {
-                    masLargo.vaciar();
-                    masLargo = masLargoActual.clone();
+                if (mas_peso(mas_largo, mas_largo_aux)) {
+                    mas_largo.vaciar();
+                    mas_largo = mas_largo_aux.clone();
                 }
             }
         } else {
-            NodoAdyacente ady = n.get_primer_nodo();
-            while (ady != null && (masLargoActual.longitud() < masLargo.longitud() || masLargo.esVacia())) {
-                if (masLargoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
-                    masLargo = camino_mas_corto_aux(ady.get_vertice(), destino, masLargo, masLargoActual);
+            NodoAdyacente camino = n.get_primer_nodo();
+            while (camino != null && (mas_largo_aux.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
+                if (mas_largo_aux.localizar(camino.get_vertice().get_elememento()) < 0) {
+                    mas_largo = camino_mas_corto_aux(camino.get_vertice(), destino, mas_largo, mas_largo_aux);
                 }
-                ady = ady.get_nodo_adyacente();
+                camino = camino.get_nodo_adyacente();
             }
         }
-        masLargoActual.eliminar(masLargoActual.longitud());
+        mas_largo_aux.eliminar(mas_largo_aux.longitud());
 
-        return masLargo;
+        return mas_largo;
     }
 
-    private boolean masPeso(Lista l1, Lista l2) {
+    private boolean mas_peso(Lista l1, Lista l2) {
         return obtener_peso(l1) > obtener_peso(l2);
     }
 
