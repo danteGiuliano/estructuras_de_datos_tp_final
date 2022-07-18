@@ -3,7 +3,7 @@ package Estructuras.Grafo;
 
 class NodoAdyacente {
     
-    private Object etiqueta;
+    private Comparable etiqueta;
     private NodoVertice vertice;
     private NodoAdyacente nodoAdyacente;
     
@@ -12,27 +12,27 @@ class NodoAdyacente {
         this.nodoAdyacente=null;
     }
     
-     public NodoAdyacente(NodoVertice vertice,Object etiqueta) {
+     public NodoAdyacente(NodoVertice vertice,Comparable etiqueta) {
         this.vertice = vertice;
         this.etiqueta=etiqueta;
         this.nodoAdyacente=null;
     }
     public NodoAdyacente(NodoVertice vertice,NodoAdyacente etiqueta) {
         this.vertice = vertice;
-        this.etiqueta=etiqueta;
-        this.nodoAdyacente=null;
+        this.etiqueta=null;
+        this.nodoAdyacente=etiqueta;
     }
-    public NodoAdyacente(Object etiqueta, NodoVertice vertice, NodoAdyacente nodoAdyacente) {
+    public NodoAdyacente(Comparable etiqueta, NodoVertice vertice, NodoAdyacente nodoAdyacente) {
         this.etiqueta = etiqueta;
         this.vertice = vertice;
         this.nodoAdyacente = nodoAdyacente;
     }
     
-    public Object get_etiqueta() {
+    public Comparable get_etiqueta() {
         return etiqueta;
     }
 
-    public void set_etiqueta(Object etiqueta) {
+    public void set_etiqueta(Comparable etiqueta) {
         this.etiqueta = etiqueta;
     }
     public NodoVertice get_vertice() {
@@ -50,13 +50,17 @@ class NodoAdyacente {
     public void set_nodo_adyacente(NodoAdyacente nodoAdyacente) {
         this.nodoAdyacente = nodoAdyacente;
     }
+    public int compararArco(Comparable objeto){
+        return etiqueta.compareTo(objeto);
+    }
+
+    
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((etiqueta == null) ? 0 : etiqueta.hashCode());
-        result = prime * result + ((nodoAdyacente == null) ? 0 : nodoAdyacente.hashCode());
         return result;
     }
 
@@ -73,11 +77,6 @@ class NodoAdyacente {
             if (other.etiqueta != null)
                 return false;
         } else if (!etiqueta.equals(other.etiqueta))
-            return false;
-        if (nodoAdyacente == null) {
-            if (other.nodoAdyacente != null)
-                return false;
-        } else if (!nodoAdyacente.equals(other.nodoAdyacente))
             return false;
         return true;
     }

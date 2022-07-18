@@ -30,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) {
         menu_principal();
-   }
+    }
 
     public static void menu_principal() {
         do {
@@ -56,6 +56,10 @@ public class Main {
             System.out.format(formato_menu, "7 |", "Mostrar informacion de vuelo");
             System.out.println("");
             System.out.format(formato_menu, "8 |", "Listar rango de codigos de vuelo entre menor y mayor");
+            System.out.println("");
+            System.out.format(formato_menu, "9 |", "Minima cantidad aeropuertos ");
+            System.out.println("");
+            System.out.format(formato_menu, "10 |", "Camino mas corto que pase por un aeropuerto ");
             System.out.println("");
             System.out.println("____________________________________________________________________________________");
             System.out.print("Opcion ->");
@@ -89,8 +93,14 @@ public class Main {
                 case 7:
                     mostrar_informacion_de_vuelo();
                     break;
-                    case 8:
+                case 8:
                     listar_rango_menor_mayor();
+                    break;
+                case 9:
+                    menor_camino();
+                    break;
+                    case 10:
+                    menor_camino_por();
                     break;
                 default:
                     System.out.println("Error de opcion ingrese una opcion valida");
@@ -171,20 +181,23 @@ public class Main {
         String codigo_vuelo = Validador.validar_vuelo();
         Vuelo vuelo = (Vuelo) vuelos.extraer_elemento(codigo_vuelo);
         Lista lista_vuelos = vuelo.get_registro_vuelos();
-        boolean intento=true;
+        boolean intento = true;
 
-        while(intento){
+        while (intento) {
             String fecha = Validador.validar_fecha();
             int indice = lista_vuelos.localizar(fecha);
             if (indice == -1) {
                 System.out.println("No existe Vuelo con esa fecha desea probar con otra?");
-                intento=Validador.validar_opcion();
-    
+                intento = Validador.validar_opcion();
+
             } else {
                 Viaje viaje = (Viaje) lista_vuelos.recuperar(indice);
-                System.out.println("_____________________________________________________________________________________");
-                System.out.println("|                      Informacion      vuelo                                       |");
-                System.out.println("_____________________________________________________________________________________");
+                System.out.println(
+                        "_____________________________________________________________________________________");
+                System.out.println(
+                        "|                      Informacion      vuelo                                       |");
+                System.out.println(
+                        "_____________________________________________________________________________________");
                 System.out.println("CODIGO : " + vuelo.get_codigo());
                 System.out.println("AEROPUERTO ORIGEN : " + vuelo.get_aeropuerto_origen());
                 System.out.println("AEROPUERTO DESTINO : " + vuelo.get_aeropuerto_destino());
@@ -193,21 +206,41 @@ public class Main {
                 System.out.println("FECHA : " + viaje.get_fecha());
                 System.out.println("CANTIDAD ASIENTOS VENDIDOS : " + viaje.get_cantidad_asientos_vendidos());
                 System.out.println("CANTIDAD ASIENTOS TOTALES : " + viaje.get_cantidad_asientos_totales());
-                intento=false;
+                intento = false;
             }
-    
+
         }
-       
+
     }
 
-    public static void listar_rango_menor_mayor(){
+    public static void listar_rango_menor_mayor() {
 
-        String vuelo_1=Validador.validar_vuelo();
-        String vuelo_2=Validador.validar_vuelo();
+        String vuelo_1 = Validador.validar_vuelo();
+        String vuelo_2 = Validador.validar_vuelo();
 
         System.out.println("Los codigos existentes son");
         System.out.println(vuelos.listarRango(vuelo_1, vuelo_2));
-        
+
+    }
+
+    public static void menor_camino() {
+        String origen = Validador.validar_codigo_aeroportuario();
+        String destino = Validador.validar_codigo_aeroportuario();
+
+        Lista l = aeropuerto.camino_mas_corto(origen, destino);
+        System.out.println(l.toString());
+
+    }
+    public static void menor_camino_por(){
+        String origen = Validador.validar_codigo_aeroportuario();
+        String destino = Validador.validar_codigo_aeroportuario();
+        String medio = Validador.validar_codigo_aeroportuario();
+
+        Lista l = aeropuerto.camino_mas_corto(origen, medio);
+        Lista u = aeropuerto.camino_mas_corto(medio, destino);
+
+        //Concatenarlas con un metodo de lista
+
     }
 
 }
