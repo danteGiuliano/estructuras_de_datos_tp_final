@@ -17,7 +17,6 @@ import Estructuras.Grafo.Grafo;
 import Estructuras.Heap.Heap;
 import Estructuras.Lista.Lista;
 import LOG.Logger;
-import ORM.ORM;
 import Validadores.Validador;
 
 public class Main {
@@ -26,10 +25,10 @@ public class Main {
     static String formato_pasajes = "%20s %30s %30s";
     static Scanner edat = new Scanner(System.in);
 
-    static ArbolAVL clientes = ORM.get_clientes();
-    static Map<Integer, Lista> pasajes = ORM.get_pasajes();
-    static Grafo aeropuerto = ORM.get_aeropuertos();
-    static ArbolAVL vuelos = ORM.get_vuelos();
+    static ArbolAVL clientes = ClienteABM.clientes;
+    static Map<Integer, Lista> pasajes = PasajeABM.pasajes;
+    static Grafo aeropuerto = AeropuertoABM.mapa_aeroportuario;
+    static ArbolAVL vuelos = VueloABM.vuelos;
     
 
     public static void main(String[] args) {

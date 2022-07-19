@@ -20,9 +20,9 @@ public class PasajeABM {
     static String formato_pasaje_opcion = "%10s %20s %20s %20s %20s";
     static String formato_menu = "%20s %60s";
 
-    static Map<Integer, Lista> pasajes = ORM.get_pasajes();
-    static ArbolAVL clientes = ORM.get_clientes();
-    static ArbolAVL vuelos = ORM.get_vuelos();
+    public static Map<Integer, Lista> pasajes = ORM.get_pasajes();
+    static ArbolAVL clientes = ClienteABM.clientes;
+    static ArbolAVL vuelos = VueloABM.vuelos;
 
     public static void main(String[] args) {
         menu();

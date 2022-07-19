@@ -1,10 +1,5 @@
 package Estructuras.Grafo;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import Dominio.Aeropuerto;
-import Estructuras.AVL.NodoAVL;
 import Estructuras.Lista.Lista;
 
 public class Grafo {

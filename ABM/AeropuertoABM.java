@@ -14,7 +14,7 @@ public class AeropuertoABM {
     static String format = "%20s %60s";
     static Scanner edat = new Scanner(System.in);
 
-    static Grafo mapa_aeroportuario = ORM.get_aeropuertos();
+   public static Grafo mapa_aeroportuario = ORM.get_aeropuertos();
 
 
     public static void main(String[] args) {
@@ -99,7 +99,7 @@ public class AeropuertoABM {
         nombre_aeropuerto = Validador.validar_nombre_aeroportuario();
         codigo_aeropuerto =Validador.validar_codigo_aeroportuario();
         numero_telefono = Validador.validar_telefono();
-        Aeropuerto nuevo_aeropuerto=new Aeropuerto(codigo_aeropuerto, nombre_aeropuerto, numero_telefono);
+        Aeropuerto nuevo_aeropuerto=new Aeropuerto(codigo_aeropuerto, numero_telefono, nombre_aeropuerto);
         mapa_aeroportuario.insertar_vertice(nuevo_aeropuerto);
         System.out.println("AEROPUERTO CARGADO CON EXITO!");
         Logger.aeropuerto_alta(nuevo_aeropuerto);

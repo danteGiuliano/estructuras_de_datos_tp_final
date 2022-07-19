@@ -11,7 +11,7 @@ import Validadores.Validador;
 
 public class ClienteABM {
     static Scanner edat = new Scanner(System.in);
-    static ArbolAVL clientes = ORM.get_clientes();
+   public static ArbolAVL clientes = ORM.get_clientes();
 
     static String formato_cliente = "%15s %20s %15s %15s %20s %15s %15s";
     static String formato_menu = "%20s %60s";

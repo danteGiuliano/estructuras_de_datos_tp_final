@@ -14,5 +14,9 @@ Estructuras : Estructuras para usar en los ABM
 
 Validadores : Validan las entradas por consola
 
-MAIN        : Control principal 
+LOG         : Logger inicio y fin de programa
+
+Librerias   : Libreria extra para leer archivos json
+
+Main.java   : Control principal 
 

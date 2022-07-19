@@ -2,26 +2,24 @@ package Validadores;
 
 import java.util.Scanner;
 
+import ABM.AeropuertoABM;
+import ABM.ClienteABM;
+import ABM.VueloABM;
 import Dominio.Cliente;
 import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
-import ORM.ORM;
 
 public class Validador {
 
-    static Grafo mapa_aeroportuario = ORM.get_aeropuertos();
-    static ArbolAVL clientes = ORM.get_clientes();
-    static ArbolAVL vuelos = ORM.get_vuelos();
+    static Grafo mapa_aeroportuario = AeropuertoABM.mapa_aeroportuario;
+    static ArbolAVL clientes =ClienteABM.clientes;
+    static ArbolAVL vuelos = VueloABM.vuelos;
 
     /**
      * Entrada por teclado
      */
     static Scanner edat = new Scanner(System.in);
-
-    /**
-     * Dominio en memoria
-     */
 
     /**
      * Formato Generales
@@ -34,7 +32,7 @@ public class Validador {
     /**
      * Formato Aeropuerto
      */
-    static String nombre_valido_aeropuerto = "^([a-zA-Z]+[ ])*$"; // Formato de nombres
+    static String nombre_valido_aeropuerto = "^([a-zA-Z]+[ ]*)*$"; // Formato de nombres
     static String codigo_valido = "^[A-Z]{3}$"; // Formato XXX
 
     /**

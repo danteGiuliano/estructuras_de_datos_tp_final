@@ -15,7 +15,7 @@ public class VueloABM {
 
     static Scanner edat = new Scanner(System.in);
 
-    static ArbolAVL vuelos = ORM.get_vuelos();
+    public static ArbolAVL vuelos = ORM.get_vuelos();
 
     public static void main(String[] args) {
         menu();

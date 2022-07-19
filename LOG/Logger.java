@@ -6,8 +6,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.Semaphore;
 
+import ABM.AeropuertoABM;
+import ABM.ClienteABM;
+import ABM.PasajeABM;
+import ABM.VueloABM;
 import Dominio.Aeropuerto;
 import Dominio.Cliente;
 import Dominio.Pasaje;
@@ -15,16 +18,15 @@ import Dominio.Vuelo;
 import Estructuras.AVL.ArbolAVL;
 import Estructuras.Grafo.Grafo;
 import Estructuras.Lista.Lista;
-import ORM.ORM;
 
 public class Logger {
     static File log = new File("LOG\\log.txt");
     static String data = "";
 
-    static ArbolAVL clientes = ORM.get_clientes();
-    static Map<Integer, Lista> pasajes = ORM.get_pasajes();
-    static Grafo aeropuerto = ORM.get_aeropuertos();
-    static ArbolAVL vuelos = ORM.get_vuelos();
+    static ArbolAVL clientes = ClienteABM.clientes;
+    static Map<Integer, Lista> pasajes = PasajeABM.pasajes;
+    static Grafo aeropuerto = AeropuertoABM.mapa_aeroportuario;
+    static ArbolAVL vuelos = VueloABM.vuelos;
 
     private static void create_log() {
         try {
@@ -52,25 +54,12 @@ public class Logger {
         }
     }
 
-    private static void actualizar_log() {
-        try {
-            File myObj = new File("LOG\\log.txt");
-            Scanner edat = new Scanner(myObj);
-            while (edat.hasNextLine()) {
-                data = edat.nextLine();
-            }
-            edat.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Error leyendo.");
-            e.printStackTrace();
-        }
-    }
 
-    private synchronized static void escribir_log(String cadena) {
-        actualizar_log();
+    private  static void escribir_log(String cadena) {
+       data+="\n"+cadena+"\n";
         try {
             FileWriter myWriter = new FileWriter("LOG\\log.txt");
-            myWriter.write(data + "\n" + cadena+"\n");
+            myWriter.write(data);
             myWriter.close();
         } catch (IOException e) {
             System.out.println("Error escribiendo.");
@@ -91,7 +80,7 @@ public class Logger {
     }
 
     public static void cliente_alta(Cliente cliente) {
-        escribir_log("alta en " + cliente.log());
+        escribir_log("Alta en " + cliente.log());
     }
 
     public static void cliente_modificacion(Cliente cliente) {
@@ -103,7 +92,7 @@ public class Logger {
     }
 
     public static void Pasaje_alta(Pasaje pasaje) {
-        escribir_log("alta en " + pasaje.log());
+        escribir_log("Alta en " + pasaje.log());
     }
 
     public static void Pasaje_modificacion(Pasaje pasaje) {
@@ -126,14 +115,14 @@ public class Logger {
         escribir_log("Baja en " + vuelo.log());
     }
 
-    public  static void mostrar_estructuras() {
+    public static void mostrar_estructuras() {
         try {
-            escribir_log("Aeropuertos "+aeropuerto.toString()+" \n Clientes "+clientes.toString()+"\n Pasajes "+
-            pasajes.toString()+"\n Vuelos "+vuelos.toString()+"\n"
-            );
+            escribir_log(
+                    "Aeropuertos " + aeropuerto.toString() + " \n Clientes " + clientes.toString() + "\n Pasajes " +
+                            pasajes.toString() + "\n Vuelos " + vuelos.toString() + "\n");
 
         } catch (Exception e) {
-          
+
         }
 
     }

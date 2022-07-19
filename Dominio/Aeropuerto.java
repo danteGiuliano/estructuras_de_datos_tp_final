@@ -43,6 +43,6 @@ public class Aeropuerto {
 
     }
     public String log(){
-        return "Aeropuerto :"+this.codigo+" Nombre :"+this.nombre+" Telefono"+telefono;
+        return "Aeropuerto :"+this.codigo+" Nombre :"+this.nombre+" Telefono "+telefono;
     }
 }
