@@ -126,13 +126,11 @@ public class AeropuertoABM {
             System.out.printf(format, "N°", "OPCION");
             System.out.println();
             System.out.println("-------------------------------------------------------------------------------------");
-            System.out.format(format, "1 |", "Modificar Codigo");
+            System.out.format(format, "1 |", "Modificar Nombre");
             System.out.println("");
-            System.out.format(format, "2 |", "Modificar Nombre");
+            System.out.format(format, "2 |", "Modificar Telefono");
             System.out.println("");
-            System.out.format(format, "3 |", "Modificar Telefono");
-            System.out.println("");
-            System.out.format(format, "4 |", "volver atras");
+            System.out.format(format, "3 |", "volver atras");
             System.out.println("");
             System.out.println("____________________________________________________________________________________");
             System.out.print("Opcion ->");
@@ -146,24 +144,18 @@ public class AeropuertoABM {
             opcion_numerica = Integer.parseInt(opcion);
             switch (opcion_numerica) {
                 case 1:
-                    String codigo =Validador.validar_codigo_aeroportuario();
-                    aeropuerto.set_codigo(codigo);
-                    System.out.println("CODIGO MODIFICADO CON EXITO!");
-                    Logger.aeropuerto_modificacion(aeropuerto);
-                    break;
-                case 2:
                     String nombre = Validador.validar_nombre_aeroportuario();
                     aeropuerto.set_nombre(nombre);
                     System.out.println("NOMBRE MODIFICADO CON EXITO!");
                     Logger.aeropuerto_modificacion(aeropuerto);
                     break;
-                case 3:
+                case 2:
                     String telefono = Validador.validar_telefono();
                     aeropuerto.set_telefono(telefono);
                     System.out.println("TELEFONO MODIFICADO CON EXITO!");
                     Logger.aeropuerto_modificacion(aeropuerto);
                     break;
-                case 4:
+                case 3:
                     sesion = false;
                     break;
                 default:

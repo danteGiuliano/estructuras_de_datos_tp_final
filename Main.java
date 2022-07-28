@@ -29,7 +29,6 @@ public class Main {
     static Map<Integer, Lista> pasajes = PasajeABM.pasajes;
     static Grafo aeropuerto = AeropuertoABM.mapa_aeroportuario;
     static ArbolAVL vuelos = VueloABM.vuelos;
-    
 
     public static void main(String[] args) {
         Logger.iniciar_log();
@@ -277,7 +276,7 @@ public class Main {
             String cadena_2 = segunda_parte.toString();
             cadena_2 = cadena_2.substring(1);
 
-            System.out.println(cadena_1 +","+ cadena_2);
+            System.out.println(cadena_1 + "," + cadena_2);
         } else {
             System.out.println("No existe menor camino que cumpla con esos requisitos");
         }

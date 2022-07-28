@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -81,70 +80,7 @@ public class ORM {
         });
     }
 
-    public static void cargar_vuelo() {
 
-        String empresas[] = { "Aerolineas Argentinas", "Jet Smart", "Fly Bondi", "Air Canada" };
-        String codigoEmpresas[] = { "AA", "JS", "FB", "AC" };
-
-        int opcion_elegida;
-        String codigo_elegido;
-
-        System.out.println("Seleccione una empresa disponible");
-        for (int i = 0; i < empresas.length; i++) {
-            System.out.println(i + "-" + empresas[i]);
-        }
-        opcion_elegida = edat.nextInt();
-        if (opcion_elegida >= 0 && opcion_elegida < empresas.length) {
-            codigo_elegido = codigoEmpresas[opcion_elegida];
-        }
-
-    }
-
-    public static void cargar_cliente(String nombre, String apellido, String tipo_dni, String numero_dni,
-            String domicilio, String fecha_nacimiento, String numero_documento, String telefono) {
-
-        JSONObject cliente = new JSONObject();
-        cliente.put("nombre", nombre);
-        cliente.put("apellido", apellido);
-        cliente.put("tipo_dni", tipo_dni);
-        cliente.put("numero_dni", numero_documento);
-        cliente.put("domicilio", domicilio);
-        cliente.put("numero_telefono", telefono);
-        cliente.put("fecha_nacimiento", fecha_nacimiento);
-
-        clientes.add(cliente);
-        guardar_info();
-    }
-
-    public static void cargar_aeropuerto() {
-        String nombre, codigo, telefono;
-
-        System.out.println("ingrese el nombre de aeropuerto");
-        nombre = edat.nextLine();
-        System.out.println("Ingrese su codigo unico de 3 letras");
-        codigo = edat.nextLine();
-        System.out.println("Ingrese su numero telefonico EJ: 299-473459");
-        telefono = edat.nextLine();
-
-        System.out.println(
-                "Su informacion es: \n Nombre: " + nombre + "\n Codigo: " + codigo + "\n telefono: " + telefono);
-        System.out.println("Desea aceptarla? true/false");
-
-        if (edat.nextBoolean()) {
-            JSONObject aeropuerto = new JSONObject();
-
-            aeropuerto.put("codigo", codigo);
-            aeropuerto.put("nombre", nombre);
-            aeropuerto.put("telefono", telefono);
-
-            aeropuertos.add(aeropuerto);
-            guardar_info();
-
-        } else {
-            System.out.println("Informacion rechazada");
-        }
-
-    }
 
     private static void guardar_info() {
         try {

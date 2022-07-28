@@ -67,25 +67,25 @@ public class ArbolAVL {
     }
 
     /**
-     * Balances 
+     * Balances
      * 
-     *  Padre  2 = Desbalanceado a Izquierda
-     *  Padre -2 = Desbalanceado a Derecha
-     *  __________________________________________________________________
-     *  | Balance padre     | Balance Hijo  | Signo    | Rotacion         |
-     *  |-------------------|---------------|----------|------------------|
-     *  |       2           |     1 o O     |  Igual   | Simple Derecha   |
-     *  |-------------------|---------------|----------|------------------|
-     *  |       2           |       -1      | Distinto |  Doble Izq-Der   |
-     *  |-------------------|---------------|----------|------------------|
-     *  |      -2           |     -1 o 0    |  Igual   | Simple Izquierda |
-     *  |-------------------|---------------|----------|------------------|
-     *  |      -2           |        1      | Distinto |  Doble Der-Izq   |
-     *  |___________________|_______________|__________|__________________|
+     * Padre 2 = Desbalanceado a Izquierda
+     * Padre -2 = Desbalanceado a Derecha
+     * __________________________________________________________________
+     * | Balance padre | Balance Hijo | Signo | Rotacion |
+     * |-------------------|---------------|----------|------------------|
+     * | 2 | 1 o O | Igual | Simple Derecha |
+     * |-------------------|---------------|----------|------------------|
+     * | 2 | -1 | Distinto | Doble Izq-Der |
+     * |-------------------|---------------|----------|------------------|
+     * | -2 | -1 o 0 | Igual | Simple Izquierda |
+     * |-------------------|---------------|----------|------------------|
+     * | -2 | 1 | Distinto | Doble Der-Izq |
+     * |___________________|_______________|__________|__________________|
      * 
      * @param raiz Nodo AVL
      */
-    
+
     private NodoAVL balancear_arbol(NodoAVL raiz) {
         int balance = obtener_balance(raiz);
         if (balance == -2) {
@@ -97,7 +97,10 @@ public class ArbolAVL {
             } else {
                 raiz = rotar_izquierda(raiz);
             }
+        } else {
+
         }
+        // Aplicar un else. /// Me genera rotaciones extra
         if (balance == 2) {
 
             if (obtener_balance(raiz.get_izquierdo()) == -1) {
@@ -169,20 +172,20 @@ public class ArbolAVL {
         boolean borrado = false;
         if (actual != null) {
             int temp = elemento.compareTo(actual.get_elemento());
-            //Esto es para no recorrer todo el arbol O(log n).
+            // Esto es para no recorrer todo el arbol O(log n).
             if (temp < 0) {
                 borrado = auxEliminar(elemento, actual.get_izquierdo(), actual);
             } else if (temp > 0) {
                 borrado = auxEliminar(elemento, actual.get_derecho(), actual);
             } else {
-                //Encontro al nodo.     
+                // Encontro al nodo.
                 if (actual.get_izquierdo() == null && actual.get_derecho() == null) {
                     caso1(elemento, padre);
                 } else {
                     if (actual.get_izquierdo() == null || actual.get_derecho() == null) {
                         caso2(elemento, actual, padre);
                     } else {
-                        caso3(actual);
+                        caso3(actual, actual.get_izquierdo(), actual.get_izquierdo());
                     }
                 }
                 actual.recalcular_altura();
@@ -193,10 +196,10 @@ public class ArbolAVL {
         return borrado;
     }
 
-    //Caso 1 de eliminar.
+    // Caso 1 de eliminar.
     private void caso1(Comparable elemento, NodoAVL padre) {
         if (padre == null) {
-            //Caso especial al intentar eliminar la raiz
+            // Caso especial al intentar eliminar la raiz
             this.raiz = null;
         } else {
             int temp = elemento.compareTo(padre.get_elemento());
@@ -209,21 +212,21 @@ public class ArbolAVL {
 
     }
 
-    //Caso 2 de eliminar.
+    // Caso 2 de eliminar.
     private void caso2(Comparable elem, NodoAVL hijo, NodoAVL padre) {
-        //Busco al candidato para reemplazar al nodo
-        //almenos 1 sera null.
+        // Busco al candidato para reemplazar al nodo
+        // almenos 1 sera null.
         NodoAVL der = hijo.get_derecho();
         NodoAVL izq = hijo.get_izquierdo();
         if (padre == null) {
-            //Caso especial.
+            // Caso especial.
             if (der == null) {
                 this.raiz = izq;
             } else {
                 this.raiz = der;
             }
         } else {
-            //Verifico la rama derecha o izquierda.
+            // Verifico la rama derecha o izquierda.
             int temp = elem.compareTo(padre.get_elemento());
             if (temp < 0) {
                 if (izq == null) {
@@ -248,19 +251,24 @@ public class ArbolAVL {
      *
      * @param actual envia el nodo a eliminar.
      */
-    private void caso3(NodoAVL actual) {
-        NodoAVL nodoA = actual.get_izquierdo(), nodoPadreA = actual;
-        while (nodoA.get_derecho() != null) {
-            nodoPadreA = nodoA;
-            nodoA = nodoA.get_derecho();
-        }
-        actual.set_elemento(nodoA.get_elemento());
-        NodoAVL hijoDer = nodoA.get_derecho();
-        if (actual.get_izquierdo() == nodoA) {
-            actual.set_izquierdo(hijoDer);
+
+    private void caso3(NodoAVL raiz, NodoAVL padre, NodoAVL hijo) {
+        NodoAVL candidato_A = hijo.get_derecho();
+
+        if (candidato_A != null) {
+            caso3(raiz, hijo, candidato_A);
         } else {
-            nodoPadreA.set_izquierdo(hijoDer);
+            raiz.set_elemento(hijo.get_elemento());
+            NodoAVL hijo_derecho = candidato_A;
+            if (raiz.get_izquierdo() == hijo) {
+                raiz.set_izquierdo(hijo_derecho);
+            } else {
+                padre.set_izquierdo(hijo_derecho);
+            }
         }
+        raiz.recalcular_altura();
+        balancear_arbol(raiz);
+
     }
 
     public boolean esVacio() {
@@ -274,10 +282,11 @@ public class ArbolAVL {
             while (aux.get_izquierdo() != null) {
                 aux = aux.get_izquierdo();
             }
-            r=aux.get_elemento();
+            r = aux.get_elemento();
         }
         return r;
     }
+
     public Comparable maximoElemento() {
         Comparable r = null;
         if (this.raiz != null) {
@@ -285,10 +294,11 @@ public class ArbolAVL {
             while (aux.get_derecho() != null) {
                 aux = aux.get_derecho();
             }
-            r=aux.get_elemento();
+            r = aux.get_elemento();
         }
         return r;
     }
+
     public String toString() {
         String cadena;
         cadena = imprimir(this.raiz);
@@ -331,7 +341,7 @@ public class ArbolAVL {
     private NodoAVL clonarAux(NodoAVL aux) {
         NodoAVL hijo = null;
         if (aux != null) {
-            hijo = new NodoAVL(aux.get_elemento(),clonarAux(aux.get_izquierdo()),clonarAux(aux.get_derecho()));
+            hijo = new NodoAVL(aux.get_elemento(), clonarAux(aux.get_izquierdo()), clonarAux(aux.get_derecho()));
         }
         return hijo;
     }
@@ -361,7 +371,7 @@ public class ArbolAVL {
     }
 
     public Comparable extraer_elemento(Object referencia) {
-        Comparable elemento=null;
+        Comparable elemento = null;
         if (this.raiz != null && referencia != null) {
             elemento = extraer_elemento_aux(this.raiz, referencia);
         }
@@ -369,7 +379,7 @@ public class ArbolAVL {
     }
 
     private Comparable extraer_elemento_aux(NodoAVL node, Object referencia) {
-        Comparable elemento =null;
+        Comparable elemento = null;
         if (node != null) {
             if (node.get_elemento().compareTo(referencia) == 0) {
                 elemento = node.get_elemento();
@@ -419,7 +429,7 @@ public class ArbolAVL {
      */
     public Lista listarRango(Comparable min, Comparable max) {
         Lista lista = new Lista();
-        //Caso especial.
+        // Caso especial.
         if (min != null && max != null) {
             listarRangoAux(this.raiz, lista, min, max);
         }
@@ -442,7 +452,5 @@ public class ArbolAVL {
             }
         }
     }
-
-
 
 }

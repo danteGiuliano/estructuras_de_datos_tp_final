@@ -276,30 +276,30 @@ public class Grafo {
         return masLargo;
     }
 
-    private Lista camino_mas_corto_aux(NodoVertice n, Object destino, Lista masLargo, Lista masLargoActual) {
+    private Lista camino_mas_corto_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largoActual) {
 
-        masLargoActual.insertar(n.get_elememento(), masLargoActual.longitud() + 1);
+        mas_largoActual.insertar(n.get_elememento(), mas_largoActual.longitud() + 1);
         if (n.get_elememento().equals(destino)) {
-            if (masLargo.esVacia()) {
-                masLargo = masLargoActual.clone();
+            if (mas_largo.esVacia()) {
+                mas_largo = mas_largoActual.clone();
             } else {
-                if (masLargo.longitud() > masLargoActual.longitud()) {
-                    masLargo.vaciar();
-                    masLargo = masLargoActual.clone();
+                if (mas_largo.longitud() > mas_largoActual.longitud()) {
+                    mas_largo.vaciar();
+                    mas_largo = mas_largoActual.clone();
                 }
             }
         } else {
             NodoAdyacente ady = n.get_primer_nodo();
-            while (ady != null && (masLargoActual.longitud() < masLargo.longitud() || masLargo.esVacia())) {
-                if (masLargoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
-                    masLargo = camino_mas_corto_aux(ady.get_vertice(), destino, masLargo, masLargoActual);
+            while (ady != null && (mas_largo.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
+                if (mas_largoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
+                    mas_largo = camino_mas_corto_aux(ady.get_vertice(), destino, mas_largo, mas_largoActual);
                 }
                 ady = ady.get_nodo_adyacente();
             }
         }
-        masLargoActual.eliminar(masLargoActual.longitud());
+        mas_largoActual.eliminar(mas_largoActual.longitud());
 
-        return masLargo;
+        return mas_largo;
     }
 
     public boolean camino_cantidad_vuelos(Object referencia_origen, Object referencia_destino, int cantidad) {
