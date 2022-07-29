@@ -79,12 +79,12 @@ public class Heap {
         while (flag && posH <= this.ultimo) {
             // Caso 1
             if (posH < this.ultimo) {
-                if (this.heap[posH + 1].compareTo(this.heap[posH]) < 0) {
+                if (this.heap[posH + 1].compareTo(this.heap[posH]) > 0) {
                     posH++;
                 }
             }
             // Caso 2
-            if (this.heap[posH].compareTo(temp) < 0) {
+            if (this.heap[posH].compareTo(temp) > 0) {
                 // el hijo es menor que el padre, los intercambia
                 this.heap[posPadre] = this.heap[posH];
                 this.heap[posH] = temp;

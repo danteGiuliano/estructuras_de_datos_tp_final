@@ -2,59 +2,115 @@ package Estructuras.AVL;
 
 public class Test {
     static ArbolAVL avl = new ArbolAVL();
-    static ArbolAVL avl3 = new ArbolAVL();
-    static ArbolAVL avl2 = new ArbolAVL();
-
+    static String ok="OK!",error="ERROR!";
+  
     public static void main(String[] args) {
-        rotacionesDerechas();
-        borrar();
-    }
+    
+        System.out.println("TEST AVL");
+        System.out.println("INSERTANDO  20 :"+respuesta(avl.insertar(parser("20"))));
+        System.out.println("INSERTANDO  10 :"+respuesta(avl.insertar(parser("10"))));
+        System.out.println("INSERTANDO  30 :"+respuesta(avl.insertar(parser("30"))));
+        System.out.println("INSERTANDO  15 :"+respuesta(avl.insertar(parser("15"))));
+        System.out.println("INSERTANDO  25 :"+respuesta(avl.insertar(parser("25"))));
 
-    private static void rotacionesDerechas(){
-        avl.insertar(1);
-        avl.insertar(2);
-        avl.insertar(3);
-        avl.insertar(4);
-        avl.insertar(5);
-        avl.insertar(6);
-        avl.insertar(7);
-        avl.insertar(8);
-        avl.insertar(9);
-        avl.insertar(10);
-        avl.insertar(11);
-        avl.insertar(12);
-          
+
+        System.out.println(" APLICANDO ROTACION DERECHA INZQUIERDA CON 12 "+respuesta(avl.insertar(parser("12"))));
+        System.out.println("ARBOL ESPERADO :");
+        System.out.println("RAIZ : 20 HI: 12 HD: 30");
+        System.out.println("RAIZ : 12 HI: 10 HD: 15");
+        System.out.println("RAIZ : 30 HI: 25 ");
+        System.out.println("---------------------------------------------------------");
+
+        System.out.println("");
+
+        System.out.println("INSERTANDO  11 :"+respuesta(avl.insertar(parser("11"))));
+        System.out.println("INSERTANDO  5 :"+respuesta(avl.insertar(parser("5"))));
+        System.out.println(avl.toString());
+        
+        System.out.println(" APLICANDO ROTACION DERECHA CON 23 "+respuesta(avl.insertar(parser("23"))));
+        System.out.println("ARBOL ESPERADO :");
+        System.out.println("RAIZ : 20 HI: 12 HD: 25");
+        System.out.println("RAIZ : 12 HI: 10 HD: 15");
+        System.out.println("RAIZ : 10 HI: 5 HD: 11");
+        System.out.println("RAIZ : 25 HI: 23 HD: 30");
+        System.out.println("---------------------------------------------------------");
+
+
         System.out.println(avl.toString());
 
+        System.out.println(" APLICANDO ROTACION DERECHA CON 3 "+respuesta(avl.insertar(parser("3"))));
+        System.out.println("ARBOL ESPERADO :");
+        System.out.println("RAIZ : 20 HI: 10 HD: 25");
+        System.out.println("RAIZ : 10 HI: 5 HD: 12");
+        System.out.println("RAIZ : 5 HI: 3" );
+        System.out.println("RAIZ : 12 HI: 11 HD:15" );
+        System.out.println("RAIZ : 25 HI: 23 HD: 30");
+        System.out.println("---------------------------------------------------------");
+
+        
+        System.out.println(avl.toString());
+
+        System.out.println("INSERTANDO  26 :"+respuesta(avl.insertar(parser("26"))));
+        
+        System.out.println(" APLICANDO ROTACION IZQUIERDA DERECHA CON 27 "+respuesta(avl.insertar(parser("27"))));
+        System.out.println("ARBOL ESPERADO :");
+        System.out.println("RAIZ : 20 HI: 10 HD: 25");
+        System.out.println("RAIZ : 10 HI: 5 HD: 12");
+        System.out.println("RAIZ : 5 HI: 3" );
+        System.out.println("RAIZ : 12 HI: 11 HD:15" );
+        System.out.println("RAIZ : 25 HI: 23 HD: 27");  
+        System.out.println("RAIZ : 27 HI: 26 HD: 30");
+        System.out.println("---------------------------------------------------------");
+
+        
+        System.out.println(avl.toString());
+
+        
+        System.out.println(" PROBANDO INSERTAR DUPLICADO 20 debe dar error "+ respuesta(avl.insertar(parser("20"))));
+        
+        System.out.println("ELIMINANDO  10 :"+respuesta(avl.eliminar(parser("10"))));
+        System.out.println("ELIMINANDO  11 :"+respuesta(avl.eliminar(parser("11"))));
+
+        
+        System.out.println(" APLICANDO ROTACION IZQUIERDA ELIMINANDO 20 caso 3 "+respuesta(avl.eliminar(parser("20"))));
+        System.out.println("ARBOL ESPERADO :");
+        System.out.println("RAIZ : 23 HI: 12 HD: 27");
+        System.out.println("RAIZ : 12 HI: 5 HD: 15");
+        System.out.println("RAIZ : 5 HI: 3" );
+        System.out.println("RAIZ : 27 HI: 25 HD: 30" );
+        System.out.println("RAIZ : 25  HD: 26");
+        System.out.println("---------------------------------------------------------");
+        
+        System.out.println(avl.toString());
+
+      
+        System.out.println("ELIMINANDO  25 CASO 2 :"+respuesta(avl.eliminar(parser("25"))));
+        System.out.println("ELIMINANDO  26 CASO 1 :"+respuesta(avl.eliminar(parser("26"))));
+
+
+    
     }
 
-    private static void rotacionesIzquierdas() {
-        avl3.insertar(40);
-        avl3.insertar(39);
-        avl3.insertar(38);
-        System.out.println(avl3.toString());
+
+
+    private static void insertar_v1(){
+
+        avl.insertar("20");
+        avl.insertar("10");
+        avl.insertar("30");
+        avl.insertar("15");
+        avl.insertar("25");
+        avl.insertar("12");
+        avl.insertar("11");
+        avl.insertar("5");
 
     }
 
-    private static void rotacionesDobles() {
-        avl2.insertar(40);
-        avl2.insertar(60);
-        avl2.insertar(59);
-        System.out.println(avl2.toString());
-    }
-    private static void rotacionesDobles2() {
-        avl2.insertar(40);
-        avl2.insertar(20);
-        avl2.insertar(25);
-        System.out.println(avl2.toString());
-    }
-    private static void borrar(){
-        avl.eliminar(1);
-        avl.eliminar(2);
-        avl.eliminar(8);    
-        avl.eliminar(9);    
-        avl.eliminar(10);
-        System.out.println(avl.toString()   );
 
+    private static String respuesta(boolean resp){
+        return resp?ok:error;
+    }
+    private static Integer parser(String cadena){
+        return Integer.parseInt(cadena);
     }
 }

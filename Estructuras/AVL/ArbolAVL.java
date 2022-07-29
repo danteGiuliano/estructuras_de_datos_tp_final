@@ -18,7 +18,7 @@ public class ArbolAVL {
      * @return true/false
      */
     public boolean insertar(Comparable elemento) {
-        boolean insercion = true;
+        boolean insercion = false;
         NodoAVL nuevaRaiz;
         if (raiz == null) {
             raiz = new NodoAVL(elemento);
@@ -40,8 +40,7 @@ public class ArbolAVL {
             if (comparacion < 0) {
                 if (raiz.get_izquierdo() != null) {
                     insercion = insertar_aux(raiz.get_izquierdo(), elemento);
-                    if (raiz.get_izquierdo() != insercion) { // Significa que hubo rotacion y mi sub-arbol izquierdo es
-                                                             // distinto
+                    if (raiz.get_izquierdo() != insercion ) {
                         raiz.set_izquierdo(insercion);
                         insercion = raiz;
                     }
@@ -51,8 +50,7 @@ public class ArbolAVL {
             } else {
                 if (raiz.get_derecho() != null) {
                     insercion = insertar_aux(raiz.get_derecho(), elemento);
-                    if (raiz.get_derecho() != insercion) { // Significa que hubo rotacion y mi sub-arbol derecho es
-                                                           // distinto
+                    if (raiz.get_derecho() != insercion) { 
                         raiz.set_derecho(insercion);
                         insercion = raiz;
                     }
@@ -74,9 +72,9 @@ public class ArbolAVL {
      * __________________________________________________________________
      * | Balance padre | Balance Hijo | Signo | Rotacion |
      * |-------------------|---------------|----------|------------------|
-     * | 2 | 1 o O | Igual | Simple Derecha |
+     * | 2             | 1 o O | Igual | Simple Derecha |
      * |-------------------|---------------|----------|------------------|
-     * | 2 | -1 | Distinto | Doble Izq-Der |
+     * | 2             | -1 | Distinto | Doble Izq-Der |
      * |-------------------|---------------|----------|------------------|
      * | -2 | -1 o 0 | Igual | Simple Izquierda |
      * |-------------------|---------------|----------|------------------|
@@ -97,9 +95,7 @@ public class ArbolAVL {
             } else {
                 raiz = rotar_izquierda(raiz);
             }
-        } else {
-
-        }
+        } 
         // Aplicar un else. /// Me genera rotaciones extra
         if (balance == 2) {
 
@@ -266,8 +262,7 @@ public class ArbolAVL {
                 padre.set_izquierdo(hijo_derecho);
             }
         }
-        raiz.recalcular_altura();
-        balancear_arbol(raiz);
+        
 
     }
 
