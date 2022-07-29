@@ -1,7 +1,6 @@
 package Estructuras.Grafo;
 
-
-class NodoAdyacente {
+class NodoAdyacente{
     
     private Comparable etiqueta;
     private NodoVertice vertice;
@@ -55,7 +54,6 @@ class NodoAdyacente {
     }
 
     
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -64,24 +62,10 @@ class NodoAdyacente {
         return result;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        NodoAdyacente other = (NodoAdyacente) obj;
-        if (etiqueta == null) {
-            if (other.etiqueta != null)
-                return false;
-        } else if (!etiqueta.equals(other.etiqueta))
-            return false;
-        return true;
-    }
+    
     public int peso_etiqueta(){
-        return (int) etiqueta;
+        String peso = (String)etiqueta;
+        return Integer.parseInt(peso);
     }
 
     

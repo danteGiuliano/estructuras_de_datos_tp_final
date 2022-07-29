@@ -1,6 +1,7 @@
 package Estructuras.Grafo;
 
 import Estructuras.Lista.Lista;
+import Estructuras.Pila.Pila;
 
 public class Grafo {
 
@@ -276,28 +277,28 @@ public class Grafo {
         return masLargo;
     }
 
-    private Lista camino_mas_corto_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largoActual) {
+    private Lista camino_mas_corto_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largo_actual) {
 
-        mas_largoActual.insertar(n.get_elememento(), mas_largoActual.longitud() + 1);
+        mas_largo_actual.insertar(n.get_elememento(), mas_largo_actual.longitud() + 1);
         if (n.get_elememento().equals(destino)) {
             if (mas_largo.esVacia()) {
-                mas_largo = mas_largoActual.clone();
+                mas_largo = mas_largo_actual.clone();
             } else {
-                if (mas_largo.longitud() > mas_largoActual.longitud()) {
+                if (mas_largo.longitud() > mas_largo_actual.longitud()) {
                     mas_largo.vaciar();
-                    mas_largo = mas_largoActual.clone();
+                    mas_largo = mas_largo_actual.clone();
                 }
             }
         } else {
-            NodoAdyacente ady = n.get_primer_nodo();
-            while (ady != null && (mas_largo.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
-                if (mas_largoActual.localizar(ady.get_vertice().get_elememento()) < 0) {
-                    mas_largo = camino_mas_corto_aux(ady.get_vertice(), destino, mas_largo, mas_largoActual);
+            NodoAdyacente ruta = n.get_primer_nodo();
+            while (ruta != null && (mas_largo.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
+                if (mas_largo_actual.localizar(ruta.get_vertice().get_elememento()) < 0) {
+                    mas_largo = camino_mas_corto_aux(ruta.get_vertice(), destino, mas_largo, mas_largo_actual);
                 }
-                ady = ady.get_nodo_adyacente();
+                ruta = ruta.get_nodo_adyacente();
             }
         }
-        mas_largoActual.eliminar(mas_largoActual.longitud());
+        mas_largo_actual.eliminar(mas_largo_actual.longitud());
 
         return mas_largo;
     }
@@ -330,13 +331,13 @@ public class Grafo {
                 es_posible = true;
             }
         } else {
-            NodoAdyacente ady = origen.get_primer_nodo();
-            while (!es_posible && ady != null && (camino.longitud() - 1 <= cantidad || camino_aux.esVacia())) {
-                if (camino.localizar(ady.get_vertice().get_elememento()) < 0) {
-                    es_posible = camino_cantidad_vuelos_aux(ady.get_vertice(), destino, cantidad, camino,
+            NodoAdyacente ruta = origen.get_primer_nodo();
+            while (!es_posible && ruta != null && (camino.longitud() - 1 <= cantidad || camino_aux.esVacia())) {
+                if (camino.localizar(ruta.get_vertice().get_elememento()) < 0) {
+                    es_posible = camino_cantidad_vuelos_aux(ruta.get_vertice(), destino, cantidad, camino,
                             camino_aux, es_posible);
                 }
-                ady = ady.get_nodo_adyacente();
+                ruta = ruta.get_nodo_adyacente();
             }
         }
         camino.eliminar(camino.longitud());
@@ -374,52 +375,40 @@ public class Grafo {
     }
 
     public Lista camino_mas_rapido(Object origen, Object destino) {
-        Lista masLargo = new Lista();
-        NodoVertice verticeOr = buscar_nodo(origen);
-        if (verticeOr != null) {
-            Lista masLargoActual = new Lista();
-            masLargo = camino_mas_rapido_aux(verticeOr, destino, masLargo, masLargoActual);
+        Lista camino_mas_rapido = new Lista();
+        NodoVertice vertice_origen = buscar_nodo(origen);
+        if (vertice_origen != null) {
+            Pila camino_menos_peso = new Pila();
+            camino_menos_peso = camino_mas_rapido_aux(vertice_origen, destino, camino_menos_peso, new Pila());
+            camino_mas_rapido = camino_menos_peso.pila_a_lista();
         }
-        return masLargo;
+        return camino_mas_rapido;
     }
 
-    private Lista camino_mas_rapido_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largo_aux) {
+    private Pila camino_mas_rapido_aux(NodoVertice nodo, Object destino, Pila mas_largo, Pila mas_rapido_aux) {
 
-        mas_largo_aux.insertar(n.get_elememento(), mas_largo_aux.longitud() + 1);
-        if (n.get_elememento().equals(destino)) {
+        mas_rapido_aux.apilar(nodo.get_elememento(), nodo.get_primer_nodo().peso_etiqueta());
+
+        if (nodo.get_elememento().equals(destino)) {
             if (mas_largo.esVacia()) {
-                mas_largo = mas_largo_aux.clone();
+                mas_largo = mas_rapido_aux.clone();
             } else {
-                if (mas_peso(mas_largo, mas_largo_aux)) {
+                if ((mas_largo.obtener_peso() > mas_rapido_aux.obtener_peso())) {
                     mas_largo.vaciar();
-                    mas_largo = mas_largo_aux.clone();
+                    mas_largo = mas_rapido_aux.clone();
                 }
             }
         } else {
-            NodoAdyacente camino = n.get_primer_nodo();
-            while (camino != null && (mas_largo_aux.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
-                if (mas_largo_aux.localizar(camino.get_vertice().get_elememento()) < 0) {
-                    mas_largo = camino_mas_corto_aux(camino.get_vertice(), destino, mas_largo, mas_largo_aux);
+            NodoAdyacente camino = nodo.get_primer_nodo();
+            while (camino != null
+                    && (mas_rapido_aux.obtener_peso() < mas_largo.obtener_peso() || mas_largo.esVacia())) {
+                if (!mas_rapido_aux.bloque_repetido(camino.get_vertice().get_elememento())) {
+                    mas_largo = camino_mas_rapido_aux(camino.get_vertice(), destino, mas_largo, mas_rapido_aux);
                 }
                 camino = camino.get_nodo_adyacente();
             }
         }
-        mas_largo_aux.eliminar(mas_largo_aux.longitud());
-
         return mas_largo;
-    }
-
-    private boolean mas_peso(Lista l1, Lista l2) {
-        return obtener_peso(l1) > obtener_peso(l2);
-    }
-
-    private int obtener_peso(Lista l1) {
-        int suma = 0;
-        for (int i = 0; i < l1.longitud(); i++) {
-            NodoAdyacente nodo = (NodoAdyacente) l1.recuperar(i);
-            suma = nodo.peso_etiqueta();
-        }
-        return suma;
     }
 
 }
