@@ -40,7 +40,7 @@ public class ArbolAVL {
             if (comparacion < 0) {
                 if (raiz.get_izquierdo() != null) {
                     insercion = insertar_aux(raiz.get_izquierdo(), elemento);
-                    if (raiz.get_izquierdo() != insercion ) {
+                    if (raiz.get_izquierdo() != insercion) {
                         raiz.set_izquierdo(insercion);
                         insercion = raiz;
                     }
@@ -50,7 +50,7 @@ public class ArbolAVL {
             } else {
                 if (raiz.get_derecho() != null) {
                     insercion = insertar_aux(raiz.get_derecho(), elemento);
-                    if (raiz.get_derecho() != insercion) { 
+                    if (raiz.get_derecho() != insercion) {
                         raiz.set_derecho(insercion);
                         insercion = raiz;
                     }
@@ -72,9 +72,9 @@ public class ArbolAVL {
      * __________________________________________________________________
      * | Balance padre | Balance Hijo | Signo | Rotacion |
      * |-------------------|---------------|----------|------------------|
-     * | 2             | 1 o O | Igual | Simple Derecha |
+     * | 2 | 1 o O | Igual | Simple Derecha |
      * |-------------------|---------------|----------|------------------|
-     * | 2             | -1 | Distinto | Doble Izq-Der |
+     * | 2 | -1 | Distinto | Doble Izq-Der |
      * |-------------------|---------------|----------|------------------|
      * | -2 | -1 o 0 | Igual | Simple Izquierda |
      * |-------------------|---------------|----------|------------------|
@@ -85,30 +85,32 @@ public class ArbolAVL {
      */
 
     private NodoAVL balancear_arbol(NodoAVL raiz) {
-        int balance = obtener_balance(raiz);
-        if (balance == -2) {
-            if (obtener_balance(raiz.get_derecho()) == 1) {
-                // Rotacion doble a derecha-izquierda
-                NodoAVL aux = rotar_derecha(raiz.get_derecho());
-                raiz.set_derecho(aux);
-                raiz = rotar_izquierda(raiz);
-            } else {
-                raiz = rotar_izquierda(raiz);
-            }
-        } 
-        // Aplicar un else. /// Me genera rotaciones extra
-        if (balance == 2) {
+        if (raiz != null) {
 
-            if (obtener_balance(raiz.get_izquierdo()) == -1) {
-                // Rotacion doble izquierda - derecha
-                NodoAVL aux = rotar_izquierda(raiz.get_izquierdo());
-                raiz.set_izquierdo(aux);
-                raiz = rotar_derecha(raiz);
-            } else {
-                raiz = rotar_derecha(raiz);
+            int balance = obtener_balance(raiz);
+            if (balance == -2) {
+                if (obtener_balance(raiz.get_derecho()) == 1) {
+                    // Rotacion doble a derecha-izquierda
+                    NodoAVL aux = rotar_derecha(raiz.get_derecho());
+                    raiz.set_derecho(aux);
+                    raiz = rotar_izquierda(raiz);
+                } else {
+                    raiz = rotar_izquierda(raiz);
+                }
             }
+            // Aplicar un else. /// Me genera rotaciones extra
+            if (balance == 2) {
+                if (obtener_balance(raiz.get_izquierdo()) == -1) {
+                    // Rotacion doble izquierda - derecha
+                    NodoAVL aux = rotar_izquierda(raiz.get_izquierdo());
+                    raiz.set_izquierdo(aux);
+                    raiz = rotar_derecha(raiz);
+                } else {
+                    raiz = rotar_derecha(raiz);
+                }
+            }
+            raiz.recalcular_altura();
         }
-        raiz.recalcular_altura();
         return raiz;
     }
 
@@ -160,6 +162,7 @@ public class ArbolAVL {
         boolean borrado = false;
         if (this.raiz != null) {
             borrado = auxEliminar(elem, this.raiz, null);
+
         }
         return borrado;
     }
@@ -181,13 +184,13 @@ public class ArbolAVL {
                     if (actual.get_izquierdo() == null || actual.get_derecho() == null) {
                         caso2(elemento, actual, padre);
                     } else {
-                        caso3(actual, actual.get_izquierdo(), actual.get_izquierdo());
+                        caso3(actual, actual.get_derecho(), actual.get_derecho());
+                        actual.set_derecho(balancear_arbol(actual.get_derecho()));
                     }
                 }
-                actual.recalcular_altura();
-                balancear_arbol(actual);
                 borrado = true;
             }
+            
         }
         return borrado;
     }
@@ -249,20 +252,26 @@ public class ArbolAVL {
      */
 
     private void caso3(NodoAVL raiz, NodoAVL padre, NodoAVL hijo) {
-        NodoAVL candidato_A = hijo.get_derecho();
+        NodoAVL candidato_A;
+        if (hijo.get_izquierdo() == null) {
+            candidato_A = hijo;
+        } else {
+            candidato_A = hijo.get_izquierdo();
+        }
 
-        if (candidato_A != null) {
+        if (candidato_A.get_izquierdo() != null) {
             caso3(raiz, hijo, candidato_A);
         } else {
-            raiz.set_elemento(hijo.get_elemento());
-            NodoAVL hijo_derecho = candidato_A;
-            if (raiz.get_izquierdo() == hijo) {
-                raiz.set_izquierdo(hijo_derecho);
+            raiz.set_elemento(candidato_A.get_elemento());
+            NodoAVL hijo_derecho = candidato_A.get_derecho();
+            if (raiz.get_derecho() == candidato_A) {
+                raiz.set_derecho(hijo_derecho);
             } else {
                 padre.set_izquierdo(hijo_derecho);
             }
         }
-        
+        padre.recalcular_altura();
+        raiz.recalcular_altura();
 
     }
 

@@ -69,6 +69,7 @@ public class Test {
         System.out.println(" PROBANDO INSERTAR DUPLICADO 20 debe dar error "+ respuesta(avl.insertar(parser("20"))));
         
         System.out.println("ELIMINANDO  10 :"+respuesta(avl.eliminar(parser("10"))));
+        System.out.println(avl.toString());
         System.out.println("ELIMINANDO  11 :"+respuesta(avl.eliminar(parser("11"))));
 
         
