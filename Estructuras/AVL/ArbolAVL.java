@@ -86,7 +86,7 @@ public class ArbolAVL {
 
     private NodoAVL balancear_arbol(NodoAVL raiz) {
         if (raiz != null) {
-
+            raiz.recalcular_altura();
             int balance = obtener_balance(raiz);
             if (balance == -2) {
                 if (obtener_balance(raiz.get_derecho()) == 1) {
@@ -174,10 +174,16 @@ public class ArbolAVL {
             // Esto es para no recorrer todo el arbol O(log n).
             if (temp < 0) {
                 borrado = auxEliminar(elemento, actual.get_izquierdo(), actual);
+                if(borrado){
+                    actual.set_izquierdo(balancear_arbol(actual.get_izquierdo()));
+                }
             } else if (temp > 0) {
                 borrado = auxEliminar(elemento, actual.get_derecho(), actual);
+                if(borrado){
+                    actual.set_derecho(balancear_arbol(actual.get_derecho()));
+                }
             } else {
-                // Encontro al nodo.
+                // Encontro al nodo-----------------------------------------------------.
                 if (actual.get_izquierdo() == null && actual.get_derecho() == null) {
                     caso1(elemento, padre);
                 } else {
@@ -189,6 +195,10 @@ public class ArbolAVL {
                     }
                 }
                 borrado = true;
+            }
+            if(borrado&&padre!=null){
+                actual.recalcular_altura();
+                padre.recalcular_altura();
             }
             
         }
@@ -245,7 +255,7 @@ public class ArbolAVL {
     }
 
     /**
-     * Usar el candidato A (El mayor del subarbol izquierdo de N, siendo N el
+     * Usar el candidato B (El Menor del subarbol Derecho de N, siendo N el
      * nodo a eliminar).
      *
      * @param actual envia el nodo a eliminar.
@@ -270,9 +280,8 @@ public class ArbolAVL {
                 padre.set_izquierdo(hijo_derecho);
             }
         }
-        padre.recalcular_altura();
         raiz.recalcular_altura();
-
+        padre.recalcular_altura();
     }
 
     public boolean esVacio() {

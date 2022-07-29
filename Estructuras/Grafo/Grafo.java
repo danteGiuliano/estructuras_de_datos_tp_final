@@ -268,13 +268,13 @@ public class Grafo {
     }
 
     public Lista camino_mas_corto(Object origen, Object destino) {
-        Lista masLargo = new Lista();
+        Lista mas_largo = new Lista();
         NodoVertice verticeOr = buscar_nodo(origen);
         if (verticeOr != null) {
             Lista masLargoActual = new Lista();
-            masLargo = camino_mas_corto_aux(verticeOr, destino, masLargo, masLargoActual);
+            mas_largo = camino_mas_corto_aux(verticeOr, destino, mas_largo, masLargoActual);
         }
-        return masLargo;
+        return mas_largo;
     }
 
     private Lista camino_mas_corto_aux(NodoVertice n, Object destino, Lista mas_largo, Lista mas_largo_actual) {
@@ -303,6 +303,16 @@ public class Grafo {
         return mas_largo;
     }
 
+    /**
+     * 
+     * METODO DE DOMINO , NO PROPIO DEL TDA
+     * 
+     * 
+     * @param referencia_origen
+     * @param referencia_destino
+     * @param cantidad Cantidad de vuelos maximos
+     * @return
+     */
     public boolean camino_cantidad_vuelos(Object referencia_origen, Object referencia_destino, int cantidad) {
         NodoVertice origen = buscar_nodo(referencia_origen);
         boolean es_posible = false;
