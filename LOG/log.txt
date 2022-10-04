@@ -20,5 +20,3 @@ Aeropuertos [ Vertices ] : [Etiqueta,Vertice]
 [ Hoja: BB2250]
 
 
-
-Modificacion en Aeropuerto :NEU Nombre :Neuquen Telefono 299-4792345

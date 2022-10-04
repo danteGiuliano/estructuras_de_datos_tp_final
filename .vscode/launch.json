@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TestPila",
+            "request": "launch",
+            "mainClass": "Estructuras.Pila.TestPila",
+            "projectName": "estructuras_de_datos_tp_final_b0cfc2e0"
+        },
+        {
+            "type": "java",
             "name": "Launch Test",
             "request": "launch",
             "mainClass": "Estructuras.AVL.Test",
