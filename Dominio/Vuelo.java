@@ -2,7 +2,7 @@ package Dominio;
 
 import Estructuras.Lista.Lista;
 
-public class Vuelo implements Comparable {
+public class Vuelo  implements Comparable {
 
     private String hora_llegada;
     private String codigo;
@@ -103,5 +103,7 @@ public class Vuelo implements Comparable {
     public String log(){
         return "Vuelo :"+this.codigo+" "+this.aeropuerto_origen+" "+this.aeropuerto_destino+" "+this.hora_salida+" "+this.hora_llegada;
     }
+
+ 
 
 }

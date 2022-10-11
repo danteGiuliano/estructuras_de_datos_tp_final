@@ -269,10 +269,9 @@ public class Grafo {
 
     public Lista camino_mas_corto(Object origen, Object destino) {
         Lista mas_largo = new Lista();
-        NodoVertice verticeOr = buscar_nodo(origen);
-        if (verticeOr != null) {
-            Lista masLargoActual = new Lista();
-            mas_largo = camino_mas_corto_aux(verticeOr, destino, mas_largo, masLargoActual);
+        NodoVertice vertice_origen = buscar_nodo(origen);
+        if (vertice_origen != null) {
+            mas_largo = camino_mas_corto_aux(vertice_origen, destino, mas_largo, new Lista());
         }
         return mas_largo;
     }
@@ -291,7 +290,7 @@ public class Grafo {
             }
         } else {
             NodoAdyacente ruta = n.get_primer_nodo();
-            while (ruta != null && (mas_largo.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
+            while (ruta != null && (mas_largo_actual.longitud() < mas_largo.longitud() || mas_largo.esVacia())) {
                 if (mas_largo_actual.localizar(ruta.get_vertice().get_elememento()) < 0) {
                     mas_largo = camino_mas_corto_aux(ruta.get_vertice(), destino, mas_largo, mas_largo_actual);
                 }
@@ -310,7 +309,7 @@ public class Grafo {
      * 
      * @param referencia_origen
      * @param referencia_destino
-     * @param cantidad Cantidad de vuelos maximos
+     * @param cantidad           Cantidad de vuelos maximos
      * @return
      */
     public boolean camino_cantidad_vuelos(Object referencia_origen, Object referencia_destino, int cantidad) {
@@ -384,41 +383,55 @@ public class Grafo {
         return salida;
     }
 
+    /**
+     * 
+     * 
+     * Version con una Pila de peso
+     * 
+     * 
+     * @param origen
+     * @param destino
+     * @return
+     */
+
     public Lista camino_mas_rapido(Object origen, Object destino) {
-        Lista camino_mas_rapido = new Lista();
+        Pila camino_menos_peso = new Pila();
         NodoVertice vertice_origen = buscar_nodo(origen);
         if (vertice_origen != null) {
-            Pila camino_menos_peso = new Pila();
-            camino_menos_peso = camino_mas_rapido_aux(vertice_origen, destino, camino_menos_peso, new Pila());
-            camino_mas_rapido = camino_menos_peso.pila_a_lista();
+            Pila comienzo = new Pila();
+            comienzo.apilar(vertice_origen, 0);
+            camino_menos_peso = camino_mas_rapido_aux(vertice_origen, destino, camino_menos_peso, comienzo);
         }
-        return camino_mas_rapido;
+        Lista lista =camino_menos_peso.pila_a_lista();
+        lista.eliminar(1);
+        return lista;
     }
 
-    private Pila camino_mas_rapido_aux(NodoVertice nodo, Object destino, Pila mas_largo, Pila mas_rapido_aux) {
-
-        mas_rapido_aux.apilar(nodo.get_elememento(), nodo.get_primer_nodo().peso_etiqueta());
-
+    private Pila camino_mas_rapido_aux(NodoVertice nodo, Object destino, Pila mas_rapido, Pila mas_rapido_aux) {
         if (nodo.get_elememento().equals(destino)) {
-            if (mas_largo.esVacia()) {
-                mas_largo = mas_rapido_aux.clone();
+            if (mas_rapido.esVacia()) {
+                mas_rapido = mas_rapido_aux.clone();
+                mas_rapido_aux.vaciar();
             } else {
-                if ((mas_largo.obtener_peso() > mas_rapido_aux.obtener_peso())) {
-                    mas_largo.vaciar();
-                    mas_largo = mas_rapido_aux.clone();
+                if ((mas_rapido.obtener_peso() > mas_rapido_aux.obtener_peso())) {
+                    mas_rapido.vaciar();
+                    mas_rapido = mas_rapido_aux.clone();
                 }
             }
         } else {
             NodoAdyacente camino = nodo.get_primer_nodo();
-            while (camino != null
-                    && (mas_rapido_aux.obtener_peso() < mas_largo.obtener_peso() || mas_largo.esVacia())) {
-                if (!mas_rapido_aux.bloque_repetido(camino.get_vertice().get_elememento())) {
-                    mas_largo = camino_mas_rapido_aux(camino.get_vertice(), destino, mas_largo, mas_rapido_aux);
+            while (camino != null && (mas_rapido_aux.obtener_peso() < mas_rapido.obtener_peso() || mas_rapido.esVacia())) {
+
+                if (!mas_rapido_aux.bloque_repetido(camino.get_vertice())) {
+                    //||camino.get_vertice().equals(destino) caso especial?
+                    mas_rapido_aux.apilar(camino.get_vertice(), camino.peso_etiqueta());
+                    mas_rapido = camino_mas_rapido_aux(camino.get_vertice(), destino, mas_rapido, mas_rapido_aux);
                 }
                 camino = camino.get_nodo_adyacente();
             }
+            mas_rapido_aux.desapilar();
         }
-        return mas_largo;
+        return mas_rapido;
     }
 
 }

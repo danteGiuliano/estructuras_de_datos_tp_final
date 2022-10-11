@@ -13,21 +13,19 @@ import Estructuras.Lista.Nodo;
 public class Pila {
     private Nodo tope;
     int peso;
-    Map<Object, Integer> tabla_peso;
+    HashMap<Object, Integer> tabla_peso;
 
     public Pila() {
-
         this.tope = null;
-        peso = 0;
-        tabla_peso = new HashMap<Object, Integer>();
+        this.peso = 0;
+        this.tabla_peso = new HashMap<Object, Integer>();
     }
 
     // La estructura en si misma el tope apunta siempre SIEMPRE A null;
     public boolean apilar(Object aux, int peso) {
-
         Nodo t = new Nodo(aux, this.tope);
-        peso += peso;
-        tabla_peso.put(aux, peso);
+        this.peso += peso;
+        this.tabla_peso.put(aux, peso);
         this.tope = t;
         // el tope va de derecha a izquierda. tope siempre esta en el final
         return true;
@@ -40,7 +38,7 @@ public class Pila {
             Nodo aux = this.tope.get_enlace();
             this.tope = aux;
             this.peso -= tabla_peso.get(tope);
-            tabla_peso.remove(tope);
+            this.tabla_peso.remove(tope);
             flag = true;
         }
         return flag;
@@ -60,6 +58,8 @@ public class Pila {
 
     public void vaciar() {
         this.tope = null;
+        this.peso=0;
+        this.tabla_peso=new HashMap<Object, Integer>();
     }
 
     public boolean esVacia() {
@@ -85,6 +85,8 @@ public class Pila {
 
     public Pila clone() {
         Pila clon = new Pila();
+        clon.peso=this.peso;
+        clon.tabla_peso=(HashMap<Object, Integer>) this.tabla_peso.clone();
         return cloneAux(clon, this.tope);
     }
 
@@ -98,7 +100,7 @@ public class Pila {
     }
 
     public boolean bloque_repetido(Object aux) {
-        return tabla_peso.containsKey(aux);
+        return this.tabla_peso.containsKey(aux);
     }
 
     public Lista pila_a_lista() {
