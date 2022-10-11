@@ -11,8 +11,10 @@ public class TestGrafo {
         Grafo grafo = ORM.get_aeropuertos();
         System.out.println(grafo.toString());
         //System.out.println(grafo.toString());
-        Lista l = grafo.camino_mas_rapido("NQN", "CBA");
+        Lista l = grafo.camino_mas_rapido("NQN", "NDM");
+        Lista l2= grafo.camino_mas_rapido("NDM","ETC");
         mostrar(l);
+        mostrar(l2);
         
 
     }

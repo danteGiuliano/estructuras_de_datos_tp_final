@@ -1,0 +1,22 @@
+
+Aeropuertos [ Vertices ] : [Etiqueta,Vertice] 
+[ SJM ] :[ 1 , AMB ] [ 3 , NDM ] [ 2 , ANJ ] 
+[ ETC ] :[ 3 , NDM ] [ 2 , ANJ ] 
+[ ANJ ] :[ 2 , SJM ] [ 4 , NDM ] [ 5 , AEP ] [ 2 , ETC ] 
+[ AMB ] :[ 1 , SJM ] 
+[ NDM ] :[ 6 , APV ] [ 3 , CBA ] [ 4 , ACS ] [ 3 , SJM ] [ 3 , ETC ] [ 4 , ANJ ] 
+[ APV ] :[ 6 , NDM ] [ 2 , NQN ] 
+[ ACS ] :[ 4 , NDM ] [ 1 , AEP ] [ 2 , NQN ] 
+[ CBA ] :[ 3 , NDM ] [ 1 , NQN ] 
+[ AEP ] :[ 5 , ANJ ] [ 1 , ACS ] [ 4 , NQN ] 
+[ NQN ] :[ 1 , CBA ] [ 2 , APV ] [ 2 , ACS ] [ 4 , AEP ] 
+ 
+ Clientes Nodo: DNI39804522[ HI: DNI12807582 ][ HD: DNI40807582 ]
+[ Hoja: DNI12807582]
+[ Hoja: DNI40807582]
+
+ Pasajes {11171278=[BB2250,AA2279], -19482148=[AA2279,AA2279]}
+ Vuelos Nodo: AA2279[ HI: null ][ HD: BB2250 ]
+[ Hoja: BB2250]
+
+
